@@ -1,0 +1,60 @@
+---
+title: "Exploratory"
+format:
+  html:
+    theme: default
+---
+Library
+```{r}
+library(tidyverse)
+library(here)
+```
+
+Load Data
+```{r}
+copies<- read_csv(here("data", "processed_data", "clean_data_date.csv")) #This is the clean_data.csv from copies_calculator but with date manually added in,
+```
+
+Make mini dataframes for each site
+```{r}
+copies2<- copies %>%
+  select(date,copies_mL,site) %>%
+drop_na()
+
+bo<- copies2 %>% filter(site %in% "BO")
+c2 <- copies2 %>% filter(site %in% "C2")
+rd<- copies2 %>% filter(site %in% "RD")
+summary(copies2)
+```
+
+```{r}
+rd %>%
+  ggplot() +geom_line(
+    aes(x = date,
+        y = copies_mL)
+  )
+```
+
+```{r}
+c2 %>%
+  ggplot() +geom_line(
+    aes(x = date,
+        y = copies_mL)
+  )
+```
+
+```{r}
+bo %>%
+  ggplot() +geom_line(
+    aes(x = date,
+        y = copies_mL)
+  )
+```
+```{r}
+copies2 %>% ggplot()+geom_line(
+  aes(x = date,
+      y = copies_mL,
+      color = site))+
+  facet_wrap(~site)
+```
+
