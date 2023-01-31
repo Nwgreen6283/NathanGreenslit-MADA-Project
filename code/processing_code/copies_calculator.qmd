@@ -31,7 +31,7 @@ data3<- data2 %>%
     copies_rxn = sq*10, #SQ*Reaction Volume
     copies_uL_1_10 = copies_rxn/2.5, #Copies/RXN / DNA Template Volume
     copies_uL_extract = copies_uL_1_10 *dilution, #(Copies/uL of 1:10)*(1 if there was no sample dilution // *10 if there was a 1:10 dilution etc.)
-    concentration_factor = 100/filter_amt, #(Concentration factor = amount of eulted DNA from ZYMO) / (filter amount from vacuum filtration)
+    concentration_factor = 100/filter_amt, #(Concentration factor = amount of eluted DNA from ZYMO) / (filter amount from vacuum filtration)
     copies_mL = copies_uL_extract*concentration_factor) %>%
     
   select(Sample,copies_mL)
@@ -48,7 +48,7 @@ Take the average of qPCR triplicates
 ```{r}
 data5<- data4%>% group_by(Sample,site) %>% #Group all chr together. All that should be left out is the numeric vector we want to work with (in this case, copies_mL)
   summarize_if(is.numeric, mean) %>%
-  ungroup() 
+  ungroup() #Ungroup to spit everything back out
 ```
 
 Save as RDS and CSV
