@@ -4,6 +4,8 @@ format:
   html:
     theme: default
 ---
+*This script takes Cq value outputs from the CFX and computes it to copies of gene targets of Vibrio*
+
 Libraries
 ```{r}
 library(tidyverse)
@@ -81,6 +83,8 @@ monthly_final<- monthly3 %>% group_by(Sample,site,Type) %>% #Group all chr toget
 
 ```{r}
 copies_final<- full_join(monthly_final,daily_final)
+summary(copies_final)
+str(copies_final)
 ```
 
 
