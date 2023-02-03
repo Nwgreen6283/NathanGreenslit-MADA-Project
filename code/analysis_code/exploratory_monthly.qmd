@@ -13,7 +13,7 @@ library(here)
 
 Load Data
 ```{r}
-copies<- read_csv(here("data", "processed_data", "clean_data_date.csv")) #This is the clean_data.csv from copies_calculator but with date manually added in,
+copies<- read_csv(here("data", "processed_data", "clean_data_copies.csv")) #This is the clean_data.csv from copies_calculator but with date manually added in,
 ```
 
 Make mini dataframes for each site

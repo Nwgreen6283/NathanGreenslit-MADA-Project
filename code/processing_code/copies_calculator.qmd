@@ -90,8 +90,8 @@ str(copies_final)
 
 Save as RDS and CSV
 ```{r}
-saveRDS(copies_final, file= here("data","processed_data","clean_data.rds"))
-write.csv(copies_final,file= here("data","processed_data","clean_data.csv")) 
+saveRDS(copies_final, file= here("data","processed_data","clean_copies.rds"))
+write.csv(copies_final,file= here("data","processed_data","clean_copies.csv")) 
 
 ```
 

@@ -38,12 +38,11 @@ dust_sum<- aggregate(dust_tot$dust, by=list(date=dust_tot$date),FUN=sum) %>%
  #left_join(dust_sum)
 ```
 
+Save Dataframes as RDS
 ```{r}
-dust_sum %>% ggplot() +geom_line(
-  aes(x = date, 
-      y = x)
-)
+saveRDS(dust_sum, file = here("data", "processed_data", "dust_sum.rds"))
 ```
+
 
 
 

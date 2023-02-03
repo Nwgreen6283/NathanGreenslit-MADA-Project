@@ -1,0 +1,39 @@
+---
+title: "Exploratory Dust"
+format:
+  html:
+    theme: default
+---
+Library
+```{r}
+library(here)
+library(tidyverse)
+```
+
+Load Data
+```{r}
+dust_sum<-readRDS(file = here("data", "processed_data", "dust_sum.rds"))
+```
+
+Daily Dataframe
+```{r}
+daily_dust_sum<- dust_sum %>%
+filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19')))
+```
+
+Plot Daily Dust Conc
+```{r}
+daily_dust_sum %>% ggplot() +geom_line(
+  aes(x = date,
+      y = dust)
+)
+```
+
+Plot Total Dust Conc
+```{r}
+dust_sum %>% ggplot() +geom_line(
+  aes(x = date,
+      y = dust)
+)
+```
+
