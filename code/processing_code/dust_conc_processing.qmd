@@ -1,0 +1,50 @@
+---
+title: "Dust Concentration"
+format:
+  html:
+    theme: default
+---
+Library
+```{r}
+library(tidyverse)
+library(here)
+```
+
+Load Data
+```{r}
+nrl<- read_csv(here("data","raw_data","nrl_conc.csv"))
+```
+
+Make new dataframes 
+```{r}
+dust_tot<- nrl %>%  #Dust data for all hours
+  select(dust,date,hr)
+
+dust_0<- dust_tot %>% #Dust data at t = 0
+  filter(hr %in% "0")
+
+dust_6<-dust_tot %>% #Dust data at t = 6
+  filter(hr %in% "6")
+
+dust_12<- dust_tot %>% #Dust data at t =12
+  filter(hr %in% "12")
+
+dust_18<- dust_tot %>% #Dust data at t = 18
+  filter(hr %in% "18")
+
+dust_sum<- aggregate(dust_tot$dust, by=list(date=dust_tot$date),FUN=sum) %>%
+  rename("dust" = "x")
+#dust_sum<- dust_sum %>%
+ #left_join(dust_sum)
+```
+
+```{r}
+dust_sum %>% ggplot() +geom_line(
+  aes(x = date, 
+      y = x)
+)
+```
+
+
+
+
