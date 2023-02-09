@@ -15,14 +15,15 @@ library(ggpubr)
 Data
 ```{r}
 vv<- read_csv(file = here("data", "processed_data", "vv_clean_copies_date.csv")) #This file had dates manually added
-sq <-read_csv(here("data", "raw_data", "vv_qPCR_daily_0.csv"))
+#sq <-read_csv(here("data", "raw_data", "vv_qPCR_daily_0.csv"))
+redo<- read_csv(here("data", "processed_data", "vv_clean_copies_redo_date.csv"))
 ```
 
 Vv Standard Curve
 ```{r}
-std<- sq %>%
-  filter(Content %in% "Std",
-         Fluor %in% "HEX") #%>%
+#std<- sq %>%
+ # filter(Content %in% "Std",
+        # Fluor %in% "HEX") #%>%
   #ggplot() + geom_point(
   #  aes(x = log(SQ),
       #  y = Cq))
@@ -128,13 +129,39 @@ all<- vv %>%
   labs(
     x = "Date", 
     y = "Copies/mL",
-    title = "Vibrio vulnificus Levels Across Dust Time Series")+
+    title = "Vibrio vulnificus Levels Across Dust Time Series: Trial 1")+
   theme(
     legend.position = "none",
     axis.text.x = element_text(angle = 45, hjust = 1),
     plot.title = element_text(hjust = 0.5)) 
   
 all
+```
+All Redo
+```{r}
+all_redo<- redo %>% 
+  mutate(site = recode(site, "BO" = "Blind Oso",
+                              "C2" = "Canals",
+                              "RD" = "Gulf")) %>%
+  ggplot() + geom_line(
+    aes(x = date,
+        y = copies_mL,
+        color = site)) + 
+  scale_color_manual( values = c("Blind Oso" = "darkgreen",
+                                "Canals" = "darkred",
+                                "Gulf" = "darkblue"))+
+  theme_bw()+
+  facet_wrap(~site)+
+  labs(
+    x = "Date", 
+    y = "Copies/mL",
+    title = "Vibrio vulnificus Levels Across Dust Time Series: Trial 2")+
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(hjust = 0.5)) 
+  
+all_redo
 ```
 
 Save Vv at all sites as PNG
@@ -143,5 +170,8 @@ png(file = here("results", "plots", "vv_all_sites.png")) #Saving c2
 all
 dev.off()
 
+png(file = here("results", "plots", "vv_all_sites_redo.png")) #Saving c2
+all_redo
+dev.off()
 
 ```

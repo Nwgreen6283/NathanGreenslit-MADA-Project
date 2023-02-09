@@ -14,7 +14,7 @@ library(here)
 
 Load data
 ```{r}
-sq <-read_csv(here("data", "raw_data", "vp_qPCR_0.csv")) #Manually replaced NaN with 0 for no amplifcation 
+sq <-read_csv(here("data", "raw_data", "vp_qPCR.csv")) 
 ```
 Filter for HEX dye (samples). Cy5 is for IAC
 ```{r}
@@ -45,10 +45,11 @@ copies2<- copies %>%
   mutate(site = substr(copies$Sample,1,2)) #Creates new column `Site` from the first two letters in `Sample` (BO16 becomes BO)
 ```
 
-Drop NAs
+Change NA to 0 and drop STD CRV NAs
 ```{r}
-copies3<- copies2 %>% filter(!is.na(copies_mL)) %>% #Dropping NAs from STD Curve
-  select(copies_mL,site, Sample)
+copies3<- copies2 %>% 
+ mutate(copies_mL = ifelse(is.na(copies_mL), 0, copies_mL)) %>%
+filter(!is.na(Sample))  #Dropping NAs from STD Curve
 ```
 *Dropping NAs got rid of BO completely*
 

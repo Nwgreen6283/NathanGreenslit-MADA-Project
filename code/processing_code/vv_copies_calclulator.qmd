@@ -14,8 +14,8 @@ library(here)
 
 Load data
 ```{r}
-sq <-read_csv(here("data", "raw_data", "vv_qPCR_daily_0.csv")) #Manually replaced NaN with 0 for no amplifcation, added filter_amt and dilution
-redo<- read_csv(here("data", "raw_data", "vv_qPCR_daily_0_redo.csv")) #Manually replaced NaN with 0 for no amplifcation, added filter_amt and dilution
+sq <-read_csv(here("data", "raw_data", "vv_run_daily_TX_dust_2_7_23 -  Quantification Summary.csv")) #Manually replaced NaN with 0 for no amplifcation, added filter_amt and dilution
+redo<- read_csv(here("data", "raw_data", "vv_run_daily_TX_dust_2_9_23 -  Quantification Summary.csv")) #Manually replaced NaN with 0 for no amplifcation, added filter_amt and dilution
 ```
 
 Filter for HEX dye (samples). Cy5 is for IAC
@@ -25,37 +25,54 @@ sq2<- sq %>%
   filter(Fluor %in% "HEX")
 
 redo2<- redo %>% 
-  select(filter_amt,Cq, Sample, Fluor, dilution) %>%
+  select(filter_amt,Cq, Sample, Fluor, dilution, Well) %>%
+  filter(Fluor %in% "HEX",
+         !Well %in% "K19")
+
+SQ_test<- sq %>% 
+  select(filter_amt,SQ,Cq, Sample, Fluor, dilution) %>%
   filter(Fluor %in% "HEX")
 
 
 ```
 
-SQ --> Copies/mL
+Cq --> Copies/mL
 ```{r}
 copies<- sq2 %>%
-    mutate(
-    log_sq = ((Cq-34.934)/-3.1444), #Equation of the line to get log(SQ)
+   mutate(
+   log_sq = ((Cq-36.497)/-3.166), #Equation of the line to get log(SQ)
     sq = 10^log_sq, #Unlog 
     copies_rxn = sq*15, #SQ*Reaction Volume
     copies_uL_1_10 = copies_rxn/1.2, #Copies/RXN / DNA Template Volume
     copies_uL_extract = copies_uL_1_10 *dilution, #(Copies/uL of 1:10)*(1 if there was no sample dilution // *10 if there was a 1:10 dilution etc.)
     concentration_factor = 100/filter_amt, #(Concentration factor = amount of eluted DNA from ZYMO) / (filter amount from vacuum filtration)
-    copies_mL = copies_uL_extract*concentration_factor)%>%
+    copies_mL = copies_uL_extract*concentration_factor) %>%
     
-  select(Sample,copies_mL)
+select(Sample,copies_mL)
 
 copies_redo<- redo2 %>%
     mutate(
-    log_sq = ((Cq-34.934)/-3.1444), #Equation of the line to get log(SQ)
+    log_sq = ((Cq-36.497)/-3.166), #Equation of the line to get log(SQ)
     sq = 10^log_sq, #Unlog 
     copies_rxn = sq*15, #SQ*Reaction Volume
     copies_uL_1_10 = copies_rxn/1.2, #Copies/RXN / DNA Template Volume
     copies_uL_extract = copies_uL_1_10 *dilution, #(Copies/uL of 1:10)*(1 if there was no sample dilution // *10 if there was a 1:10 dilution etc.)
     concentration_factor = 100/filter_amt, #(Concentration factor = amount of eluted DNA from ZYMO) / (filter amount from vacuum filtration)
-    copies_mL = copies_uL_extract*concentration_factor)%>%
+    copies_mL = copies_uL_extract*concentration_factor) %>%
     
-  select(Sample,copies_mL)
+select(Sample,copies_mL)
+
+SQ_test1<- sq %>%
+    mutate(
+   # log_sq = ((Cq-36.497)/-3.166), #Equation of the line to get log(SQ)
+   # sq = 10^log_sq, #Unlog 
+    copies_rxn = SQ*15, #SQ*Reaction Volume
+    copies_uL_1_10 = copies_rxn/1.2, #Copies/RXN / DNA Template Volume
+    copies_uL_extract = copies_uL_1_10 *dilution, #(Copies/uL of 1:10)*(1 if there was no sample dilution // *10 if there was a 1:10 dilution etc.)
+    concentration_factor = 100/filter_amt, #(Concentration factor = amount of eluted DNA from ZYMO) / (filter amount from vacuum filtration)
+    copies_mL = copies_uL_extract*concentration_factor) %>%
+    
+select(Sample,copies_mL)
 ```
 
 Create Site Column from Sample Name 
@@ -68,15 +85,16 @@ copies2_redo<- copies_redo %>%
 
 ```
 
-Drop NAs
+Replace NaN with 0 for copies/mL
 ```{r}
 copies3<- copies2 %>% 
-  filter(!is.na(copies_mL)) %>% #Dropping NAs from STD Curve
-  select(copies_mL,site, Sample)
+ mutate(copies_mL = ifelse(is.na(copies_mL), 0, copies_mL)) %>%
+filter(!is.na(Sample))  #Dropping NAs from STD Curve
+
 
 copies3_redo<- copies2_redo %>%
-   filter(!is.na(copies_mL)) %>% #Dropping NAs from STD Curve
-  select(copies_mL,site, Sample)
+ mutate(copies_mL = ifelse(is.na(copies_mL), 0, copies_mL)) %>%
+filter(!is.na(Sample))  #Dropping NAs from STD Curve
 ```
 
 Take the average of qPCR triplicates 
