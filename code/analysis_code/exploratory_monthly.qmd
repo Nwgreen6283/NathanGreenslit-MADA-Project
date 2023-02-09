@@ -13,7 +13,7 @@ library(here)
 
 Load Data
 ```{r}
-copies<- read_csv(here("data", "processed_data", "clean_data_copies.csv")) #This is the clean_data.csv from copies_calculator but with date manually added in,
+copies<- read_csv(here("data", "processed_data", "clean_copies_date.csv")) #This is the clean_data.csv from copies_calculator but with date manually added in,
 ```
 
 Make mini dataframes for each site
@@ -81,7 +81,7 @@ bo_monthly %>%
 
 Total Monthly Vibrio
 ```{r}
-monthly %>% ggplot()+geom_line(
+tot_vib_allsites_monthly <- monthly %>% ggplot()+geom_line(
   aes(x = date,
       y = copies_mL,
       color = site))+
@@ -94,4 +94,13 @@ monthly %>% ggplot()+geom_line(
   theme(plot.title = element_text(hjust = 0.5)) + #center title
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + #Tilt x axis labels 
   theme(legend.position = "none") #Removes legend 
+
+tot_vib_allsites_monthly
 ```
+Save as PNG
+```{r}
+png(file = here("results","plots", "tot_vib_allsites_monthly.png"))
+tot_vib_allsites_monthly
+dev.off()
+```
+

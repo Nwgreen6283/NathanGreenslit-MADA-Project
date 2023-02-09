@@ -10,30 +10,50 @@ library(here)
 library(tidyverse)
 ```
 
-Load Data
+Load Data that has just DUST CONC
 ```{r}
-dust_sum<-readRDS(file = here("data", "processed_data", "dust_sum.rds"))
+dust_sum<-readRDS(file = here("data", "processed_data", "dust_sum.rds")) #Dataframe with copies_mL and dust concentration for 2022
+dust_0 <- readRDS(here("data", "processed_data", "dust_0.rds"))
+dust_6 <- readRDS(here("data", "processed_data", "dust_6.rds"))
+dust_12 <- readRDS(here("data", "processed_data", "dust_12.rds"))
+dust_18 <- readRDS(here("data", "processed_data", "dust_18.rds"))
+
 ```
 
-Daily Dataframe
+Daily Dataframe with Sum dust
 ```{r}
 daily_dust_sum<- dust_sum %>%
-filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19')))
+filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19'))) #We do not have copies_mL for 2022-07-10
 ```
+
 
 Plot Daily Dust Conc
 ```{r}
-daily_dust_sum %>% ggplot() +geom_line(
+dust_sum_daily<- daily_dust_sum %>% ggplot() +geom_line(
   aes(x = date,
-      y = dust)
-)
+      y = dust))
+
+dust_sum_daily
 ```
 
 Plot Total Dust Conc
 ```{r}
-dust_sum %>% ggplot() +geom_line(
+dust_sum_2022<- dust_sum %>% ggplot() +geom_line(
   aes(x = date,
-      y = dust)
-)
+      y = dust))
+
+dust_sum_2022
 ```
+
+Save as PNG
+```{r}
+png(file = here("results","plots", "dust_sum_daily.png"))
+dust_sum_daily
+dev.off()
+
+png(file = here("results","plots", "dust_sum_2022.png"))
+dust_sum_2022
+dev.off()
+```
+
 

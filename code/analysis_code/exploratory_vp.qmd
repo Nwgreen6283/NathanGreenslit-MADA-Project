@@ -1,0 +1,98 @@
+---
+title: "Vp Explore"
+format:
+  html:
+    theme: default
+---
+
+Libraries
+```{r}
+library(tidyverse)
+library(here)
+```
+
+Data
+```{r}
+vp<- read_csv(file = here("data", "processed_data", "vp_clean_copies_date.csv")) #This file had dates manually added
+sq <-read_csv(here("data", "raw_data", "vp_qPCR_0.csv")) #Manually replaced NaN with 0 for no amplifcation 
+```
+Standard Curve
+```{r}
+std<- sq %>%
+  filter(
+    Fluor %in% "HEX",
+    Content %in% "Std")
+
+
+
+std %>%
+  ggplot() + geom_point(
+    aes(x = log10(SQ),
+        y = Cq))
+  
+```
+
+
+Make Site df
+```{r}
+rd6<- vp %>%
+  filter(site %in% "RD")
+
+c2<- vp %>%
+  filter(site %in% "C2")
+```
+
+Plot Vp at C2
+```{r}
+c2_vp<- c2 %>% ggplot() + geom_line(
+  aes(x = date,
+      y = copies_mL),
+  color = "purple") +
+  geom_point(
+    aes(x = date,
+      y = copies_mL),
+  color = "purple")+
+  theme_bw() +
+  labs(x = "Date",
+       y = "Copies/mL",
+       title = "Vp at Canals") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+c2_vp
+```
+
+Plot Vp at RD
+```{r}
+rd_vp<- rd6 %>% ggplot() + geom_line(
+  aes(x = date,
+      y = copies_mL),
+  color = "red")+
+  geom_point(
+    aes(x = date,
+      y = copies_mL),
+  color = "red")+
+  theme_bw() +
+  labs(x = "Date",
+       y = "Copies/mL",
+       title = "Vp at Gulf") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+rd_vp
+```
+
+Save Vp C2/RD as PNG
+```{r}
+png(file = here("results", "plots", "vp_c2.png")) #Saving c2
+c2_vp
+dev.off()
+
+png(file = here("results", "plots","vp_rd6.png")) #Saving RD
+rd_vp
+dev.off()
+```
+
+
+
+

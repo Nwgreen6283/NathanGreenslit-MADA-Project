@@ -1,0 +1,30 @@
+---
+title: "vp_bo_inh"
+format:
+  html:
+    theme: default
+---
+
+```{r}
+library(tidyverse)
+library(here)
+```
+Load Data
+```{r}
+data<- read_csv(here("data", "raw_data", "vp_inh_bo.csv"))
+```
+```{r}
+inh_b<- data %>% ggplot() +
+  geom_boxplot(
+    aes(x = sample,
+        y = cq)
+  )
+```
+
+
+Save as PNG
+```{r}
+png(file = here("results","plots", "vp_bo_inh.png"))
+inh_b
+dev.off()
+```
