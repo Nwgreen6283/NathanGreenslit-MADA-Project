@@ -15,13 +15,19 @@ library(here)
 Load data
 ```{r}
 sq <-read_csv(here("data", "raw_data", "vv_qPCR_daily_0.csv")) #Manually replaced NaN with 0 for no amplifcation, added filter_amt and dilution
+redo<- read_csv(here("data", "raw_data", "vv_qPCR_daily_0_redo.csv")) #Manually replaced NaN with 0 for no amplifcation, added filter_amt and dilution
 ```
 
 Filter for HEX dye (samples). Cy5 is for IAC
 ```{r}
 sq2<- sq %>% 
-  select(filter_amt,SQ, Sample, Fluor, dilution) %>%
+  select(filter_amt,SQ,Cq, Sample, Fluor, dilution) %>%
   filter(Fluor %in% "HEX")
+
+redo2<- redo %>% 
+  select(filter_amt,Cq, Sample, Fluor, dilution) %>%
+  filter(Fluor %in% "HEX")
+
 
 ```
 
@@ -29,9 +35,21 @@ SQ --> Copies/mL
 ```{r}
 copies<- sq2 %>%
     mutate(
-    #log_sq = ((Cq-36.114)/-3.3844), #Equation of the line to get log(SQ)
-    #sq = 10^log_sq, #Unlog 
-    copies_rxn = SQ*15, #SQ*Reaction Volume
+    log_sq = ((Cq-34.934)/-3.1444), #Equation of the line to get log(SQ)
+    sq = 10^log_sq, #Unlog 
+    copies_rxn = sq*15, #SQ*Reaction Volume
+    copies_uL_1_10 = copies_rxn/1.2, #Copies/RXN / DNA Template Volume
+    copies_uL_extract = copies_uL_1_10 *dilution, #(Copies/uL of 1:10)*(1 if there was no sample dilution // *10 if there was a 1:10 dilution etc.)
+    concentration_factor = 100/filter_amt, #(Concentration factor = amount of eluted DNA from ZYMO) / (filter amount from vacuum filtration)
+    copies_mL = copies_uL_extract*concentration_factor)%>%
+    
+  select(Sample,copies_mL)
+
+copies_redo<- redo2 %>%
+    mutate(
+    log_sq = ((Cq-34.934)/-3.1444), #Equation of the line to get log(SQ)
+    sq = 10^log_sq, #Unlog 
+    copies_rxn = sq*15, #SQ*Reaction Volume
     copies_uL_1_10 = copies_rxn/1.2, #Copies/RXN / DNA Template Volume
     copies_uL_extract = copies_uL_1_10 *dilution, #(Copies/uL of 1:10)*(1 if there was no sample dilution // *10 if there was a 1:10 dilution etc.)
     concentration_factor = 100/filter_amt, #(Concentration factor = amount of eluted DNA from ZYMO) / (filter amount from vacuum filtration)
@@ -44,26 +62,40 @@ Create Site Column from Sample Name
 ```{r}
 copies2<- copies %>%
   mutate(site = substr(copies$Sample,1,2)) #Creates new column `Site` from the first two letters in `Sample` (BO16 becomes BO)
+
+copies2_redo<- copies_redo %>%
+  mutate(site = substr(copies_redo$Sample,1,2)) #Creates new column `Site` from the first two letters in `Sample` (BO16 becomes BO)
+
 ```
 
 Drop NAs
 ```{r}
-copies3<- copies2 %>% filter(!is.na(copies_mL)) %>% #Dropping NAs from STD Curve
+copies3<- copies2 %>% 
+  filter(!is.na(copies_mL)) %>% #Dropping NAs from STD Curve
+  select(copies_mL,site, Sample)
+
+copies3_redo<- copies2_redo %>%
+   filter(!is.na(copies_mL)) %>% #Dropping NAs from STD Curve
   select(copies_mL,site, Sample)
 ```
 
 Take the average of qPCR triplicates 
 ```{r}
-copies4<- copies3 %>% group_by(site, Sample) %>% #Group all chr together. All that should be left out is the numeric vector we want to work with (in this case, copies_mL)
+copies4<- copies3 %>% 
+  group_by(site, Sample) %>% #Group all chr together. All that should be left out is the numeric vector we want to work with (in this case, copies_mL)
   summarize_if(is.numeric, mean) %>%
   ungroup() #Ungroup to spit everything back out 
   
-
+copies4_redo<- copies3_redo %>% 
+  group_by(site, Sample) %>% #Group all chr together. All that should be left out is the numeric vector we want to work with (in this case, copies_mL)
+  summarize_if(is.numeric, mean) %>%
+  ungroup() #Ungroup to spit everything back out 
 ```
 
 Save as RDS and manually add date in excel
 ```{r}
 write.csv(copies4, file= here("data","processed_data","vv_clean_copies.csv"))
+write.csv(copies4_redo, file= here("data","processed_data","vv_clean_copies_redo.csv"))
 ```
 
 
