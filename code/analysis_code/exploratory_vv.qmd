@@ -14,9 +14,9 @@ library(ggpubr)
 
 Data
 ```{r}
-vv<- read_csv(file = here("data", "processed_data", "vv_clean_copies_date.csv")) #This file had dates manually added
+vv<- read_csv(file = here("data", "processed_data", "vv_clean_copies.csv")) 
 #sq <-read_csv(here("data", "raw_data", "vv_qPCR_daily_0.csv"))
-redo<- read_csv(here("data", "processed_data", "vv_clean_copies_redo_date.csv"))
+redo<- read_csv(here("data", "processed_data", "vv_clean_copies_redo.csv"))
 ```
 
 Vv Standard Curve
