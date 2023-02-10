@@ -13,23 +13,15 @@ library(here)
 
 Data
 ```{r}
-vp<- read_csv(file = here("data", "processed_data", "vp_clean_copies_date.csv")) #This file had dates manually added
-sq <-read_csv(here("data", "raw_data", "vp_qPCR.csv")) #Manually replaced NaN with 0 for no amplifcation 
+vp<- read_csv(file = here("data", "processed_data", "vp_clean_copies.csv")) #This file had dates manually added
+#sq <-read_csv(here("data", "raw_data", "vp_qPCR.csv")) #Manually replaced NaN with 0 for no amplifcation 
 ```
 Standard Curve
 ```{r}
-std<- sq %>%
-  filter(
-    Fluor %in% "HEX",
-    Content %in% "Std")
-
-
-
-std %>%
-  ggplot() + geom_point(
-    aes(x = log10(SQ),
-        y = Cq))
-  
+#std<- sq %>%
+  #filter(
+    #Fluor %in% "HEX",
+    #Content %in% "Std")
 ```
 
 

@@ -35,8 +35,8 @@ redo2<- redo %>%
 
 Create Site Column from Sample Name 
 ```{r}
-site<- sq %>%
-  mutate(site = substr(sq$Sample,1,2)) #Creates new column `Site` from the first two letters in `Sample` (BO16 becomes BO)
+site<- sq2 %>%
+  mutate(site = substr(sq2$Sample,1,2)) #Creates new column `Site` from the first two letters in `Sample` (BO16 becomes BO)
 
 site_redo<- redo2 %>%
   mutate(site = substr(redo2$Sample,1,2)) #Creates new column `Site` from the first two letters in `Sample` (BO16 becomes BO)
@@ -46,7 +46,7 @@ site_redo<- redo2 %>%
 Add Dilution Column and Filter column
 ```{r}
 dilution<- site%>%
-  mutate(DIL = case_when(site == "BO"~"10",
+  mutate(dilution = case_when(site == "BO"~"10",
                               site  == "C2"~ "1",
                               site == "RD"~"1"), 
         dilution = as.numeric(dilution)) 
@@ -60,7 +60,7 @@ dilution_redo<- site_redo%>%
 
 
 filter<- dilution %>%
-   mutate(FIL = case_when(Sample == "BO_7"~"100",
+   mutate(filter_amt = case_when(Sample == "BO_7"~"100",
                           Sample == "BO_8"~"100",
                           Sample == "BO_9"~"100",
                           Sample == "BO_9"~"100",
@@ -197,6 +197,7 @@ final_redo<- date_redo %>%
 
 Save as RDS and manually add date in excel
 ```{r}
+#stop() #Write error so it wont overwrite
 write.csv(final, file= here("data","processed_data","vv_clean_copies.csv"))
 write.csv(final_redo, file= here("data","processed_data","vv_clean_copies_redo.csv"))
 ```
