@@ -13,7 +13,7 @@ library(here)
 
 Load Data
 ```{r}
-copies<- read_csv(here("data", "processed_data", "clean_copies_date.csv")) #This is the clean_data.csv from copies_calculator but with date manually added in,
+copies<- read_csv(here("data", "processed_data", "total_clean_copies.csv")) #This is the clean_data.csv from copies_calculator but with date manually added in,
 ```
 
 Make mini dataframes for each site
@@ -22,7 +22,7 @@ Make mini dataframes for each site
 #Monthly All sites
 monthly<- copies %>%
   select(date,copies_mL,site,Type) %>%
-  filter(Type %in% "Monthly")
+  filter(Type %in% "Monthly") #Need to add July date here somehow
 
 
 #Monthly by Site
@@ -81,16 +81,22 @@ bo_monthly %>%
 
 Total Monthly Vibrio
 ```{r}
-tot_vib_allsites_monthly <- monthly %>% ggplot()+geom_line(
+tot_vib_allsites_monthly <- monthly %>%
+  ggplot()+geom_line(
   aes(x = date,
       y = copies_mL,
       color = site))+
+  geom_point(
+    aes(x = date,
+        y = copies_mL,
+        color = site ))+
   facet_wrap(~site) +
   theme_bw()+
   labs(
     x = "Date",
     y = "Copies/mL",
-    title = "Total Monthly Vibrio at all Sites") +
+    title = "Total Monthly Vibrio at all Sites",
+    caption = "This includes 3 May events and does not include July") +
   theme(plot.title = element_text(hjust = 0.5)) + #center title
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + #Tilt x axis labels 
   theme(legend.position = "none") #Removes legend 

@@ -6,8 +6,6 @@ format:
 ---
 *This dataset is Daily Vp qPCR*
 
-*This dataset is Daily Vv qPCR*
-
 Libraries
 ```{r}
 library(tidyverse)
@@ -46,8 +44,8 @@ dilution<- site%>%
 
 filter<- dilution %>%
    mutate(filter_amt = case_when(Sample == "BO_7"~"100",
+                          Sample == "BO_7"~"100",
                           Sample == "BO_8"~"100",
-                          Sample == "BO_9"~"100",
                           Sample == "BO_9"~"100",
                           Sample == "BO_11"~"100",
                           Sample == "BO_12"~"50",
@@ -91,7 +89,7 @@ filter(!is.na(Sample))   #Dropping NAs from STD Curve
 Date Column
 ```{r}
 date<- replace %>%
-  mutate(day = substr(replace$Sample,4,5)) %>% #Creates new column `date` 
+  mutate(day = substr(replace$Sample,4,5)) %>% #Creates new column `day` 
   mutate(date = case_when(day == "7"~"2022-07-07",
                          day ==  "8"~"2022-07-08",
                          day ==  "9"~"2022-07-09",
