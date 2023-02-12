@@ -133,7 +133,8 @@ all<- vv %>%
   theme(
     legend.position = "none",
     axis.text.x = element_text(angle = 45, hjust = 1),
-    plot.title = element_text(hjust = 0.5)) 
+    plot.title = element_text(hjust = 0.5),
+    axis.text.y = element_text(size = 15)) 
   
 all
 ```
@@ -159,9 +160,17 @@ all_redo<- redo %>%
   theme(
     legend.position = "none",
     axis.text.x = element_text(angle = 45, hjust = 1),
-    plot.title = element_text(hjust = 0.5)) 
+    plot.title = element_text(hjust = 0.5),
+    axis.text.y = element_text(size = 15)) 
   
 all_redo
+```
+
+Compare Trial 1 and 2
+```{r, fig.height=7, fig.width=7}
+figure2<- ggarrange(all, all_redo,
+                    ncol = 1, nrow = 2)
+figure2
 ```
 
 Save Vv at all sites as PNG
