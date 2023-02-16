@@ -9,6 +9,7 @@ Library
 ```{r}
 library(tidyverse)
 library(here)
+library(lubridate)
 ```
 
 Load Data
@@ -18,17 +19,27 @@ copies<- read_csv(here("data", "processed_data", "total_clean_copies.csv")) #Thi
 
 Make mini dataframes for each site
 ```{r}
+copies<- copies %>%
+  mutate(site= recode(site, "BO" = "Blind Oso",
+                       "C2" = "Canals",
+                       "RD" = "Gulf"))
 
-#Monthly All sites
-monthly<- copies %>%
-  select(date,copies_mL,site,Type) %>%
-  filter(Type %in% "Monthly") #Need to add July date here somehow
+#Monthly All sites: Includes 3 Sample events in May 
+monthly_may<- copies %>%
+  mutate(monthly = case_when(date == "2022-07-07" ~ "Monthly", #This adds a July date to be included in monthly analysis
+                             Type == "Monthly" ~ "Monthly")) %>%
+  select(date,copies_mL,site,monthly) %>%
+  filter(monthly %in% "Monthly") 
+
+#Monthly All sites: Includes ONE sample from May 
+monthly<- monthly_may %>%
+  filter(!date %in% as.Date(c("2022-05-20", "2022-05-24")))
 
 
 #Monthly by Site
-bo_monthly <- monthly %>% filter(site %in% "BO") #Blind Oso Bay
-c2_monthly <- monthly %>% filter(site %in% "C2") #Canals
-rd_monthly <- monthly %>% filter(site %in% "RD") #Gulf Site
+bo_monthly <- monthly %>% filter(site %in% "Blind Oso") #Blind Oso Bay
+c2_monthly <- monthly %>% filter(site %in% "Canals") #Canals
+rd_monthly <- monthly %>% filter(site %in% "Gulf") #Gulf Site
 
 
 ```
@@ -39,7 +50,8 @@ rd_monthly %>%
   ggplot() +geom_line(
     aes(x = date,
         y = copies_mL),
-    color = "darkblue") +
+    color = "#4c848c",
+    size = 1) +
   theme_bw() +
   labs(
     x = "Date",
@@ -55,7 +67,8 @@ c2_monthly %>%
   ggplot() +geom_line(
     aes(x = date,
         y = copies_mL),
-    color = "darkorange") +
+    color = "#ba4716",
+    size = 1) +
   theme_bw() +
   labs(
     x = "Date",
@@ -70,7 +83,8 @@ bo_monthly %>%
   ggplot() +geom_line(
     aes(x = date,
         y = copies_mL),
-    color = "darkgreen") +
+    color = "#809C52",
+    size =1) +
   theme_bw() +
   labs(
     x = "Date",
@@ -85,22 +99,22 @@ tot_vib_allsites_monthly <- monthly %>%
   ggplot()+geom_line(
   aes(x = date,
       y = copies_mL,
-      color = site))+
-  geom_point(
-    aes(x = date,
-        y = copies_mL,
-        color = site ))+
+      color = site),
+  size = 1)+
   facet_wrap(~site) +
   theme_bw()+
   labs(
     x = "Date",
     y = "Copies/mL",
-    title = "Total Monthly Vibrio at all Sites",
-    caption = "This includes 3 May events and does not include July") +
-  theme(plot.title = element_text(hjust = 0.5)) + #center title
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + #Tilt x axis labels 
-  theme(legend.position = "none") #Removes legend 
-
+    title = "Total Monthly Vibrio at all Sites") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 15),  #center title
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    axis.text.y = element_text(size = 10),
+    legend.position = "none")+ #Removes legend 
+scale_color_manual(values = c("Blind Oso" = "#809C52",
+                              "Canals" = "#ba4716",
+                              "Gulf" = "4c848c"))
 tot_vib_allsites_monthly
 ```
 Save as PNG

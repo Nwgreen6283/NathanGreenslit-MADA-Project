@@ -8,6 +8,7 @@ Library
 ```{r}
 library(here)
 library(tidyverse)
+library(lubridate)
 ```
 
 Load Data that has just DUST CONC
@@ -20,10 +21,15 @@ dust_18 <- readRDS(here("data", "processed_data", "dust_18.rds"))
 
 ```
 
-Daily Dataframe with Sum dust
+New Dataframes
 ```{r}
+#Daily Dataframe with Sum dust
 daily_dust_sum<- dust_sum %>%
 filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19'))) #We do not have copies_mL for 2022-07-10
+
+#Dataframe with just month dates
+dust_month <- dust_sum %>%
+  filter(date %in% as.Date(c("2022-02-16", "2022-03-09", "2022-04-20", "2022-05-11", "2022-06-14", "2022-07-07", "2022-08-09", "2022-09-13", "2022-10-18", "2022-11-15", "2022-12-13")))
 ```
 
 
@@ -39,8 +45,31 @@ dust_sum_daily
 Plot Total Dust Conc
 ```{r}
 dust_sum_2022<- dust_sum %>% ggplot() +geom_line(
+ aes(x = date,
+      y = dust),
+  color = "#935d2e",
+  size = 1)+
+  theme_bw()+
+  labs(
+    x = "Date",
+    y = "Dust Aerosol Optical Density")+
+  theme(
+    axis.title.y = element_text(size = 15),
+    axis.text.y = element_text(size = 10),
+    axis.text.x = element_text(angle = 45, hjust = 1))+
+  geom_vline(aes(xintercept =as.Date("2022-07-07")), linetype = "dotdash", color = "4c848c")+
+  geom_vline(aes(xintercept =as.Date("2022-07-19")), linetype = "dotdash", color = "4c848c")+
+  scale_x_date(date_breaks = "months" , date_labels = "%b") +
+
+#Plot Month Sample Dates over
+geom_point(
+  data=dust_month,
   aes(x = date,
-      y = dust))
+      y = dust),
+  color = "4c848c",
+  size = 3,
+  shape = 4,
+  stroke = 1)
 
 dust_sum_2022
 ```

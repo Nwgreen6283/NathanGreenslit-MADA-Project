@@ -17,6 +17,7 @@ Data
 vv<- read_csv(file = here("data", "processed_data", "vv_clean_copies.csv")) 
 #sq <-read_csv(here("data", "raw_data", "vv_qPCR_daily_0.csv"))
 redo<- read_csv(here("data", "processed_data", "vv_clean_copies_redo.csv"))
+t3<-  read_csv(here("data", "processed_data", "vv_clean_copies_trial3.csv"))
 ```
 
 Vv Standard Curve
@@ -33,13 +34,13 @@ Vv Standard Curve
 
 Make Site df
 ```{r}
-rd6<- vv %>%
+rd6<- t3 %>%
   filter(site %in% "RD")
 
-c2<- vv %>%
+c2<- t3 %>%
   filter(site %in% "C2")
 
-bo<- vv %>%
+bo<- t3 %>%
   filter(site %in% "BO")
 ```
 
@@ -111,7 +112,7 @@ figure<- ggarrange(c2_vv, bo_vv, rd_vv + font("x.text", size = 10),
 figure
 ```
 
-All sites
+All sites Trial 1
 ```{r}
 all<- vv %>% 
   mutate(site = recode(site, "BO" = "Blind Oso",
@@ -138,7 +139,8 @@ all<- vv %>%
   
 all
 ```
-All Redo
+
+All Site Trial 2
 ```{r}
 all_redo<- redo %>% 
   mutate(site = recode(site, "BO" = "Blind Oso",
@@ -166,10 +168,39 @@ all_redo<- redo %>%
 all_redo
 ```
 
+All Sites Trial 3
+```{r}
+all_t3<- t3 %>% 
+  mutate(site = recode(site, "BO" = "Blind Oso",
+                              "C2" = "Canals",
+                              "RD" = "Gulf")) %>%
+  ggplot() + geom_line(
+    aes(x = date,
+        y = copies_mL,
+        color = site)) + 
+  scale_color_manual( values = c("Blind Oso" = "darkgreen",
+                                "Canals" = "darkred",
+                                "Gulf" = "darkblue"))+
+  theme_bw()+
+  facet_wrap(~site)+
+  labs(
+    x = "Date", 
+    y = "Copies/mL",
+    title = "Vibrio vulnificus Levels Across Dust Time Series: Trial 3")+
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(hjust = 0.5),
+    axis.text.y = element_text(size = 15)) 
+  
+all_t3
+```
+
+
 Compare Trial 1 and 2
 ```{r, fig.height=7, fig.width=7}
-figure2<- ggarrange(all, all_redo,
-                    ncol = 1, nrow = 2)
+figure2<- ggarrange(all, all_redo, all_t3,
+                    ncol = 1, nrow = 3)
 figure2
 ```
 

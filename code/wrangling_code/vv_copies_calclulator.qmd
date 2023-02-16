@@ -22,13 +22,13 @@ redo<- read_csv(here("data", "raw_data", "vv_run_daily_TX_dust_2_9_23 -  Quantif
 Filter for HEX dye (samples). Cy5 is for IAC
 ```{r}
 sq2<- sq %>% 
-  select(filter_amt,SQ,Cq, Sample, Fluor, dilution) %>%
+  select(SQ,Cq, Sample, Fluor) %>%
   filter(Fluor %in% "HEX")
 
 redo2<- redo %>% 
   select(Cq, Sample, Fluor, Well) %>%
   filter(Fluor %in% "HEX",
-         !Well %in% "K19")
+        !Well %in% "K19") #This triplicate amplified 
 
 ```
 
@@ -101,7 +101,7 @@ Cq --> Copies/mL
 ```{r}
 copies<- filter %>%
    mutate(
-   log_sq = ((Cq-36.497)/-3.166), #Equation of the line to get log(SQ)
+   log_sq = ((Cq-37.606)/-3.409), #Equation of the line to get log(SQ). Equation is from Oyster STD Curve.
     sq = 10^log_sq, #Unlog 
     copies_rxn = sq*15, #SQ*Reaction Volume
     copies_uL_1_10 = copies_rxn/1.2, #Copies/RXN / DNA Template Volume
@@ -114,7 +114,7 @@ select(Sample,copies_mL,site,Fluor) %>%
 
 copies_redo<- filter_redo %>%
     mutate(
-    log_sq = ((Cq-36.497)/-3.166), #Equation of the line to get log(SQ)
+    log_sq = ((Cq-37.606)/-3.409), #Equation of the line to get log(SQ). Equation is from Oyster STD CUrve.
     sq = 10^log_sq, #Unlog 
     copies_rxn = sq*15, #SQ*Reaction Volume
     copies_uL_1_10 = copies_rxn/1.2, #Copies/RXN / DNA Template Volume
@@ -255,6 +255,33 @@ ggarrange(fig1, fig2,
 
 ```
 
+Cimpare Cq between OG and Redo
+```{r}
+#Deop NAs from +/- and lok at HEX
+sq0<- sq %>%
+  filter(
+    !is.na(Sample),
+    Fluor %in% "HEX")
+
+redo0<- redo %>%
+  filter(!is.na(Sample),
+         Fluor %in% "HEX")
+
+#copies0<- copies %>%
+ # filter(!is.na(Sample))
+
+#copies_redo0<- copies_redo %>%
+ # filter(!is.na(Sample))
+
+#Merge df
+cq_comp<- 
+  cbind(redo0, Cq_og= sq0$Cq) %>%
+  #cbind(copies_redo0, copies_redo1 = sq0$copies_mL) %>%
+ # cbind(copies0, copies_og1 = copies0$copies_mL) %>%
+  select(Sample, Cq, Cq_og) %>%
+  rename("Cq_redo" = "Cq")
+
+```
 
 
 
