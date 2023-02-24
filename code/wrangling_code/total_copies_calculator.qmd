@@ -4,7 +4,7 @@ format:
   html:
     theme: default
 ---
-*This script takes Cq value outputs from the CFX and computes it to copies of gene targets of Vibrio*
+*This script is for cleaning qPCR results on Total Vibrio enumeration. It takes Cq value outputs from the CFX (qPCR machine) and computes it to copies of gene targets of Vibrio. The data set contains a daily and monthly time series. We will be examining daily.*
 
 Libraries
 ```{r}
@@ -37,11 +37,11 @@ site_monthly<- monthly %>%
   mutate(site = substr(monthly$Sample,1,2)) #Creates new column `Site` from the first two letters in `Sample` (BO16 becomes BO)
 ```
 
-Add Dilution Column and Filter column
+Add Dilution Column and Filter column. The dilution column applies if samples were diluted prior to qPCR. For example, if I diluted a sample 1:10, my dilution column would denote "10".  The filter column pertains to the amount of water sample (mL) that was concentrated onto a water filter prior to qPCR. 
 ```{r}
 dilution_daily<- site_daily %>%
   mutate(dilution = case_when(
-                          Sample == "BO7"~"10",
+                          Sample == "BO7"~"10", #BO site was diluted 1:10
                           Sample == "BO8"~"10",
                           Sample == "BO9"~"10",
                           Sample == "BO11"~"10",
@@ -53,7 +53,7 @@ dilution_daily<- site_daily %>%
                           Sample == "BO17"~"10",
                           Sample == "BO18"~"10",
                           Sample == "BO19"~"10",
-                              site  == "C2"~ "1",
+                              site  == "C2"~ "1", #Canals and Gulf were not diluted
                               site == "RD"~"1"), 
         dilution = as.numeric(dilution)) 
 
@@ -67,7 +67,7 @@ dilution_monthly<- site_monthly %>%
 
 
 filter_daily<- dilution_daily %>%
-   mutate(filter_amt = case_when(Sample == "BO_7"~"100",
+   mutate(filter_amt = case_when(Sample == "BO_7"~"100", #100mL concnetrated onto filter
                           Sample == "BO7"~"100",
                           Sample == "BO8"~"100",
                           Sample == "BO9"~"100",
@@ -76,7 +76,7 @@ filter_daily<- dilution_daily %>%
                           Sample == "BO13"~"50",
                           Sample == "BO14"~"50",
                           Sample == "BO15"~"50",
-                          Sample == "BO16REDO"~"30",
+                          Sample == "BO16REDO"~"30", #30 mL concentrated onto filter 
                           Sample == "BO17"~"30",
                           Sample == "BO18"~"30",
                           Sample == "BO19"~"30",
@@ -108,10 +108,10 @@ Go from CQ --> Copies/mL
 ```{r}
 copies_daily<- filter_daily %>%
     mutate(
-    log_sq = ((Cq-36.114)/-3.3844), #Equation of the line to get log(SQ)
+    log_sq = ((Cq-36.114)/-3.3844), #Equation of the line to get log(SQ):  This comes from running a standard curve during qPCR. 
     sq = 10^log_sq, #Unlog 
-    copies_rxn = sq*10, #SQ*Reaction Volume
-    copies_uL_1_10 = copies_rxn/2.5, #Copies/RXN / DNA Template Volume
+    copies_rxn = sq*10, #SQ*Reaction Volume: Each qPCR reaction was 10µL
+    copies_uL_1_10 = copies_rxn/2.5, #Copies/RXN / DNA Template Volume: Each 10µL reaction had 2.5µL of DNA added. 
     copies_uL_extract = copies_uL_1_10 *dilution, #(Copies/uL of 1:10)*(1 if there was no sample dilution // *10 if there was a 1:10 dilution etc.)
     concentration_factor = 100/filter_amt, #(Concentration factor = amount of eluted DNA from ZYMO) / (filter amount from vacuum filtration)
     copies_mL = copies_uL_extract*concentration_factor) %>%
@@ -133,7 +133,7 @@ copies_monthly<- filter_monthly %>%
 ```
 
 
-Replace NaN with 0 for copies/mL
+Some samples did not amplify: Replace NaN with 0 for copies/mL
 ```{r}
 replace_daily<- copies_daily %>% 
  mutate(copies_mL = ifelse(is.na(copies_mL), 0, copies_mL)) %>%
@@ -144,7 +144,7 @@ replace_monthly<- copies_monthly %>%
 filter(!is.na(Sample))   #Dropping NAs from STD Curve 
 ```
 
-Date Column
+Date Column: This adds a date correpsonding the a number in the sample name. 
 ```{r}
 date_daily<- replace_daily %>%
   mutate(day = substr(replace_daily$Sample,3,4)) %>% #Creates new column `day` 
@@ -182,7 +182,7 @@ date_monthly<- replace_monthly %>%
 ```
 
 
-Take the average of qPCR triplicates 
+Each sample (Date) was done in triplicate for qPCR: We need to take the average of qPCR triplicates 
 ```{r}
 final_daily<- date_daily %>% group_by(date,site,Type) %>% #Group all chr together. All that should be left out is the numeric vector we want to work with (in this case, copies_mL)
   summarize_if(is.numeric, mean) %>%
@@ -196,7 +196,7 @@ final_monthly<- date_monthly %>% group_by(date,site,Type) %>% #Group all chr tog
 
 
 
-Combine Daily and Monthly 
+Combine Daily and Monthly data sets back togthether. 
 ```{r}
 copies_final<- full_join(final_monthly,final_daily)
 summary(copies_final)
@@ -206,7 +206,7 @@ str(copies_final)
 
 Save as RDS and CSV
 ```{r}
-saveRDS(copies_final, file= here("data","processed_data","total_clean_copies.rds"))
+#saveRDS(copies_final, file= here("data","processed_data","total_clean_copies.rds"))
 write.csv(copies_final,file= here("data","processed_data","total_clean_copies.csv")) 
 
 ```

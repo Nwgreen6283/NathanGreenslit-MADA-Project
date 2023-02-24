@@ -4,6 +4,8 @@ format:
   html:
     theme: default
 ---
+This data set is sourced from the Naval Research Lab. Aerosol optical thickness (AOT) was measures at 4 time points per day (t = 0,6,12,18). 
+
 Library
 ```{r}
 library(tidyverse)
@@ -12,11 +14,11 @@ library(here)
 
 Load Data
 ```{r}
-nrl<- read_csv(here("data","raw_data","nrl_conc.csv"))
-copies<- read_csv(here("data", "processed_data", "clean_copies_date.csv"))
+nrl<- read_csv(here("data","raw_data","nrl_conc.csv")) #Dust concentration data set
+copies<- read_csv(here("data", "processed_data", "total_clean_copies.csv")) #Vibrio counts data set from qPCR
 ```
 
-Make new dataframes  for Date and Dust for Exploratory 
+Make new data frames for each time point as well as sum AOT per day
 ```{r}
 dust_tot<- nrl %>%  #Dust data for all hours
   select(dust,date,hr)
@@ -33,55 +35,50 @@ dust_12<- dust_tot %>% #Dust data at t =12
 dust_18<- dust_tot %>% #Dust data at t = 18
   filter(hr %in% "18")
 
-dust_sum<- aggregate(dust_tot$dust, by=list(date=dust_tot$date),FUN=sum) %>% #could also use groupby
+dust_sum<- aggregate(dust_tot$dust, by=list(date=dust_tot$date),FUN=sum) %>% #Sum of AOT by day
   rename("dust" = "x")
-#dust_sum<- dust_sum %>%
- #left_join(dust_sum)
+
 ```
 
-Make dataframe with Dates, Copies, and Concentration For Stats anaylsis
+Make dataframe with Dates, Copies/mL, and Dust Concentration For Stats analysis. Here we are combining dust data with copies/mL data. 
 ```{r}
+#Condense copies dateset
 copies2 <- copies %>% select(
   date, copies_mL, site) 
-  
-dust_sum_copies<- dust_sum %>% left_join(copies2) #Takes df on right of pipe and joins to the df on the left of pipe 
 
-dust_t0 <- dust_0 %>% right_join(copies2)
+#Takes df on right of pipe and joins to the df on the left of pipe 
+dust_copies_sum<- dust_sum %>% left_join(copies2) #Dust at all time points
+dust_copies_0 <- dust_0 %>% right_join(copies2) #T0
+dust_copies_6 <- dust_6 %>% right_join(copies2) #T6
+dust_copies_12<- dust_12 %>% right_join(copies2) #T12
+dust_copies_18<- dust_18 %>% right_join(copies2) #T18
+```
 
-dust_t6 <- dust_6 %>% right_join(copies2)
+Save **dust/copies** dataframes as RDS for Stats
+```{r}
+saveRDS(dust_copies_sum, file = here("data", "processed_data", "dust_copies", "dust_copies_sum.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
 
-dust_t12<- dust_12 %>% right_join(copies2)
+saveRDS(dust_copies_0, file = here("data", "processed_data",  "dust_copies","dust_copies_0.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
 
-dust_t18<- dust_18 %>% right_join(copies2)
-                              
+saveRDS(dust_copies_6, file = here("data", "processed_data", "dust_copies", "dust_copies_6.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
+
+saveRDS(dust_copies_12, file = here("data", "processed_data",  "dust_copies","dust_copies_12.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
+
+saveRDS(dust_copies_18, file = here("data", "processed_data",  "dust_copies","dust_copies_18.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
 
 ```
 
-Save Dataframes as RDS for STATS (Copies and Dust)
+Save **Dust Concentration** data frames as RDS (good for Dust plots)
 ```{r}
-saveRDS(dust_sum_copies, file = here("data", "processed_data", "dust_sum_copies.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
+saveRDS(dust_sum, file = here("data", "processed_data", "dust_conc", "dust_sum.rds")) #Dataframe with dust concentration 
 
-saveRDS(dust_t0, file = here("data", "processed_data", "dust_0_copies.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
+saveRDS(dust_0, file = here("data", "processed_data","dust_conc", "dust_0.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
 
-saveRDS(dust_t6, file = here("data", "processed_data", "dust_6_copies.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
+saveRDS(dust_6, file = here("data", "processed_data","dust_conc", "dust_6.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
 
-saveRDS(dust_t12, file = here("data", "processed_data", "dust_12_copies.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
+saveRDS(dust_12, file = here("data", "processed_data","dust_conc", "dust_12.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
 
-saveRDS(dust_t18, file = here("data", "processed_data", "dust_18_copies.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
-
-```
-
-Save Dataframes as RDS for EXPLORE (Dust)
-```{r}
-saveRDS(dust_sum, file = here("data", "processed_data", "dust_sum.rds")) #Dataframe with dust concentration 
-
-saveRDS(dust_0, file = here("data", "processed_data", "dust_0.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
-
-saveRDS(dust_6, file = here("data", "processed_data", "dust_6.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
-
-saveRDS(dust_12, file = here("data", "processed_data", "dust_12.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
-
-saveRDS(dust_18, file = here("data", "processed_data", "dust_18.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
+saveRDS(dust_18, file = here("data", "processed_data","dust_conc", "dust_18.rds")) #Dataframe with copuies_mL AND dust concentration (for stat analysis)
 ```
 
 

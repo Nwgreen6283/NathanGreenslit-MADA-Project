@@ -1,0 +1,102 @@
+---
+title: "Environmental Parameters"
+format:
+  html:
+    theme: default
+---
+*This data set contains environmental parameters: Temp and Salinity. I am waiting on an updated Nutrient data set*
+
+Libraries
+```{r}
+library(tidyverse)
+library(here)
+library(ggpubr)
+```
+
+Load Data
+```{r}
+d1<- read_csv(here("data", "raw_data", "ysi_.csv"))
+```
+
+Daily data frame
+```{r}
+d1<- d1 %>%
+  mutate(site = recode(site, "BO" = "Blind Oso",
+                             "C2" = "Canals",
+                            "RD" = "Gulf"))
+daily<- d1 %>%
+  filter(type %in% "Daily")
+
+```
+
+Plotting Daily Temperature 
+```{r}
+temp<- daily %>% ggplot() + geom_line(
+  aes(
+    x = date,
+    y = temp,
+    color = site),
+  size = 1)+
+  theme_bw()+
+  labs(
+    x = "Date",
+    y = "Temperature (°C)",
+    title = "Temperature across Daily Time Series by Site",
+    color = "Site")+
+  theme(
+    plot.title= element_text(hjust = 0.5, size = 20),
+    axis.title.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.y = element_text(size = 15),
+    legend.position = c(0.1,0.2),
+    legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
+    scale_color_manual(values = c("Blind Oso" = "#809C52",
+                                "Canals" = "#ba4716",
+                                "Gulf" = "4c848c"))
+
+temp
+  
+```
+
+Plotting Daily Salinity
+```{r}
+sal<- daily %>% ggplot() + geom_line(
+  aes(
+    x = date,
+    y = salinity,
+    color = site),
+  size = 1)+
+  theme_bw()+
+  labs(
+    x = "Date",
+    y = "Salinity",
+    title = "Salinity across Daily Time Series by Site",
+    color = "Site")+
+  theme(
+    plot.title= element_text(hjust = 0.5, size = 20),
+    axis.title.x = element_text(size = 15),
+    axis.title.y = element_text(size = 15),
+    axis.text.x = element_text(size = 10),
+    axis.text.y = element_text(size = 10),
+    legend.position = "none")+
+    scale_color_manual(values = c("Blind Oso" = "#809C52",
+                                "Canals" = "#ba4716",
+                                "Gulf" = "4c848c"))
+
+sal
+```
+Combine Temperature and Salinity Plots 
+```{r, fig.width= 4, fig.height=4}
+fig<- ggarrange(temp,sal + font("x.text", size = 10), ncol = 1, nrow = 2,align = "v")
+
+fig
+```
+
+Save as PNG
+```{r}
+png(file = here("results", "plots", "temp_sal.png"))
+fig
+dev.off()
+```
+

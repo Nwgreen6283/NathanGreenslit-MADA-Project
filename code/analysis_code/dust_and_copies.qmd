@@ -15,23 +15,14 @@ library(ggpubr)
 Load Data that has just DUST CONC
 ```{r}
 #Summed Dust Concentration per day
-dust_sum<-readRDS(file = here("data", "processed_data", "dust_sum.rds")) 
-#Dust Conc at t = 0
-#dust_0 <- readRDS(here("data", "processed_data", "dust_0.rds"))
-#Dust Conc at t = 6
-#dust_6 <- readRDS(here("data", "processed_data", "dust_6.rds"))
-#Dust Conc at t = 12
-#dust_12 <- readRDS(here("data", "processed_data", "dust_12.rds"))
-#Dust Conc at t = 18
-#dust_18 <- readRDS(here("data", "processed_data", "dust_18.rds"))
-#Copies 
+dust_sum<-readRDS(file = here("data", "processed_data", "dust_copies", "dust_copies_sum.rds")) 
 copies<- read_csv(here("data", "processed_data", "total_clean_copies.csv")) 
 ```
 
-Daily Dataframe with Summed dust by day
+Daily Data frame with Summed dust by day
 ```{r}
 daily_dust_sum<- dust_sum %>%
-  filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19'))) #We do not have copies_mL for 2022-07-10
+  filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19'))) #We do not have copies_mL for 2022-07-10. No sampling occured then. 
 
 copies_d <- copies %>%
   filter(Type %in% "Daily") %>%
@@ -39,12 +30,10 @@ copies_d <- copies %>%
                              "C2" = "Canals",
                             "RD" = "Gulf"))
 
-
-
 ```
 
 
-Plot Daily Dust Conc
+Plot Daily Dust Concentration
 ```{r}
 dust_fig<- daily_dust_sum %>% ggplot() +geom_line(
   aes(x = date,
@@ -57,8 +46,9 @@ dust_fig<- daily_dust_sum %>% ggplot() +geom_line(
     y = "Dust Aerosol Optical Density")+
   theme(
     axis.title.y = element_text(size = 15),
-    axis.text.y = element_text(size = 10)
-  )
+    axis.text.y = element_text(size = 10),
+    axis.title.x = element_text(size = 15),
+    axis.text.x = element_text(size = 10))
   
 
 dust_fig
@@ -95,9 +85,15 @@ tot_vib
 ```
 
 Combine Dust and Copies
-```{r, fig.height = 7, fig.width= 7}
+```{r, fig.height = 4, fig.width= 4}
 fig<- ggarrange(tot_vib, dust_fig + font("x.text", size = 10), ncol = 1, nrow = 2,align = "v")
 
 fig
 ```
 
+Save as PNG
+```{r}
+png(file = here("results", "plots", "vib_dust_daily.png"))
+fig
+dev.off()
+```
