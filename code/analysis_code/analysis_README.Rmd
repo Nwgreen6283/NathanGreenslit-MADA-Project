@@ -1,1 +1,5 @@
-This folder contains code for analyzing cleaned data sets on Tempertature, Salinity, Dust, and Vibrio counts. `daily.qmd` assesses Vibrio counts over the daily time series, `dust.qmd` pertains to the dust concentrations sourced from NRL, `dust_and_copies.qmd` look at the former two data sets in tandem, and `env_par.qmd` looks at temperature and salinity. 
+This folder contains code for analyzing cleaned data sets and aids in visualization of parameters of interest.\
+(1) The dust subfolder contains `daily_dust.qmd`, which looks at dust concentration over the daily time series. It also contains `dust_and_copies.qmd` which combine Vibrio enumeration with dust data.\
+(2) The env sub-folder contains `env_par.qmd` that examines temperature and salinity over the time series.\
+(3) The qPCR sub-folder contains `daily_qmd` that has data on Vibrio enumeration. \
+(4) The stats folder contains `env_and_dust_stats.qmd` that runs models on variables of interest. \

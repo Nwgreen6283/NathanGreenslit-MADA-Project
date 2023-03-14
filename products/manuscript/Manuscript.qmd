@@ -40,19 +40,19 @@ How do Saharan dust events influence Vibrio populations in high nutrient coastal
 
 # Methods
 
-## Data aquisition
+## Data acquisition
 
 Data was collected at 3 sites in Corpus Christi, TX before, during, and after a Saharan dust event (starting on July 7th and ending on July 19th, 2022). Sites represent a gradient in background nutrient levels (Blind Oso and Canals are high, the Gulf is low). Water samples were collected for inorganic nutrients, dissolved and particulate organic matter, and microbial analysis. Vertical profiles of salinity, temperature, pH, and dissolved oxygen were obtained using a YSI ProPlus sonde.
 
-Variables will include `Temperature (°C)`, `Salinity`, `Nitrate`, `Phosphate`, `Copies/mL` produced using quantitative PCR. Provides gene copies of Vibrio bacteria (I am hoping to also get data about specific species), and `Dust Concentration (AOT)` from the naval research laboratory satellite data.
+Variables will include `Temperature (°C)`, `Salinity`, `Nitrate`, `Phosphate`, `Copies/mL` produced using quantitative PCR, and `Dust Concentration (AOT)` from the naval research laboratory satellite data.
 
 ## Data import and cleaning
 
-This project works with three primary data sets. (1) Enumeration of Vibrio bacteria as copies/mL from quantitative PCR (copies_master.csv), (2) Dust concentrations as aerosol optical thickness (AOT) derived from the Naval Research Lab (nrl_conc.csv), and (3) Temperature and Salinity across the daily time series (ysi\_.csv). Below is a brief summary of how each data set was cleaned. More details can be found in the supplementary files, containing the code and comments describing what each line does. Please refer to the `project_README.md` file located in the NathanGreenslit-MADA-Project folder for details on the repository contents and  instructions on reproducibility
+This project works with three primary data sets. (1) Enumeration of Vibrio bacteria as copies/mL from quantitative PCR (copies_master.csv), (2) Dust concentrations as aerosol optical thickness (AOT) derived from the Naval Research Lab (nrl_conc.csv), and (3) Temperature and Salinity across the daily time series (ysi_2.csv). Below is a brief summary of how each data set was cleaned. More details can be found in the supplementary files, containing the code and comments describing what each line does. Please refer to the `project_README.md` file located in the NathanGreenslit-MADA-Project folder for details on the repository contents and instructions on reproducibility
 
 ### Cleaning of Total Vibrio Enumerations Data set
 
-Quantitative PCR provides enumeration results as "cycle threshold or Cq" values. This depicts the cycle number in which enough of the DNA target was detectable to be amplified. Lower Cq values correspond to higher target concentrations (as it takes less cycles to amplify), and vice verse for higher Cq values. The cleaning of this data set consisted of converting these Cq values into something that can be used to quantify Vibrio (copies of target per mL of seawater). To do so, I needed to take into account the amount of water sample that was concentrated on a filter, the total amount of DNA that was eluted following a DNA extraction, and the amount of DNA template added to each mix for qPCR (to name a few). Taking these into account, we are able to calculate our way from Cq values to copies of Vibrio per mL of seawater. qPCR was conducted in triplicate, so the last step was to take the average of the three replicates to have a final value per sample. A date column was also added for each sample.
+Quantitative PCR provides enumeration results as "cycle threshold or Cq" values. This depicts the cycle number in which enough of the DNA target was present to be amplified and thus detected. Lower Cq values correspond to higher target concentrations (as it takes less cycles to amplify), and vice verse for higher Cq values. The cleaning of this data set consisted of converting these Cq values into something that can be used to quantify Vibrio (copies of target per mL of seawater). To do so, I needed to take into account the amount of water sample that was concentrated on a filter, the total amount of DNA that was eluted following a DNA extraction, and the amount of DNA template added to each mix for qPCR (to name a few). Taking these into account, we are able to calculate our way from Cq values to copies of Vibrio per mL of seawater. qPCR was conducted in triplicate, so the last step was to take the average of the three replicates to have a final value per sample. A date column was also added for each sample.
 
 ### Cleaning of Dust Concentration (AOT) Data set
 
@@ -70,15 +70,15 @@ This data set did not require any cleaning.
 
 ### Dust
 
-![](images/dust_sum_daily.png)
+![](images/paste-0FE55FAA.png)
 
-This figure depicts the summed dust concentration (time points 0hr-18hr) across the daily time series. During the time series, two small period of higher dust AOT occurred on the 9th and 13th respectively. A much larger spike in AOT was observed on the 16th.
+This figure depicts the summed dust concentration 24hr prior to sample collection (time points 13hr--> 7hr the next day) across the daily time series. During the time series, two small periods of higher dust AOT occurred on the 9th and 13th respectively. A much larger spike in AOT was observed on the 16th.
 
 ### Daily Vibrio
 
-![](images/vib_dust_daily.png)
+![](images/paste-C33B6E43.png)
 
-The top portion of the figure depicts total enumerated Vibrio as copies per mL, with color by site. There is a noticeable shift in copies in the Gulf site, a less noticeable but still present shift in Blind Oso Bay, and practically no changes in the Canal site. The bottom portion of the figure depicts the dust concentration (AOT) across the daily time series. Initial shift in copies per mL at the Guld and Blind Oso occur around initial dust introduction on the 13th, and experience another shift around the time of higher dust input on the 16th.
+The top portion of the figure depicts total enumerated Vibrio as copies per mL, with color by site. There is a noticeable shift in copies in the Gulf site, a less noticeable but still present shift in Blind Oso Bay, and practically no changes in the Canal site. The bottom portion of the figure depicts the dust concentration (AOT) across the daily time series. Initial shift in copies per mL at the Gulf and Blind Oso occur 24-48hr following initial dust introduction on the 13th, and experience another shift around 24-48hr of higher dust input on the 16th.
 
 ### Temperature and Salinity
 

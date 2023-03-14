@@ -1,1 +1,3 @@
-This folder contains dust concentrations in AOT from the Naval Reserach lab, environmental parameters (temperature and salinity) that were collected during the summer at the three sites, and  qPCR results for Total Vibrio. 
+This folder contains three raw data sets:\
+(1) `dust.csv`:dust concentrations in AOT from the Naval Research lab. Concentrations (AOT) were collected at 4 time points (UTC): T0,T6,T12, and T18.\
+(2) `copies_master.csv`:  qPCR results for Total Vibrio enumeration. 

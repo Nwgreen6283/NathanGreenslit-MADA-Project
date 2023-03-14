@@ -133,7 +133,7 @@ copies_monthly<- filter_monthly %>%
 ```
 
 
-Some samples did not amplify: Replace NaN with 0 for copies/mL
+Some samples did not amplify and have no values: Replace NaN with 0 for copies/mL
 ```{r}
 replace_daily<- copies_daily %>% 
  mutate(copies_mL = ifelse(is.na(copies_mL), 0, copies_mL)) %>%
@@ -144,7 +144,7 @@ replace_monthly<- copies_monthly %>%
 filter(!is.na(Sample))   #Dropping NAs from STD Curve 
 ```
 
-Date Column: This adds a date correpsonding the a number in the sample name. 
+Date Column: This adds a date corresponding the a number in the sample name. 
 ```{r}
 date_daily<- replace_daily %>%
   mutate(day = substr(replace_daily$Sample,3,4)) %>% #Creates new column `day` 
@@ -182,7 +182,7 @@ date_monthly<- replace_monthly %>%
 ```
 
 
-Each sample (Date) was done in triplicate for qPCR: We need to take the average of qPCR triplicates 
+Each sample (Date) was done in triplicate for qPCR (technical replicates): We need to take the average of qPCR triplicates 
 ```{r}
 final_daily<- date_daily %>% group_by(date,site,Type) %>% #Group all chr together. All that should be left out is the numeric vector we want to work with (in this case, copies_mL)
   summarize_if(is.numeric, mean) %>%
@@ -196,7 +196,7 @@ final_monthly<- date_monthly %>% group_by(date,site,Type) %>% #Group all chr tog
 
 
 
-Combine Daily and Monthly data sets back togthether. 
+Combine Daily and Monthly data sets back together. 
 ```{r}
 copies_final<- full_join(final_monthly,final_daily)
 summary(copies_final)

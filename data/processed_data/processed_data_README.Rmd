@@ -1,0 +1,8 @@
+---
+
+This folder contains processed data that has been cleaned from code in the `wrangling` folder.\
+(1) `total_clean_copies`: Vibrio enumeration (as copies per mL) across time series.\
+(2) `dust_clean.rds`: Cleaned dust data
+(3) `ysi_2.csv`: Environmental parameter data
+(4) `tx_master.csv` which is a compilation of all relevant data. 
+(5)`dust_master.csv`: Manually created dust data examining different time points, sums, avereages (helpful for statistics)

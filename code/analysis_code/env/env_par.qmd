@@ -4,30 +4,28 @@ format:
   html:
     theme: default
 ---
-*This data set contains environmental parameters: Temp and Salinity. I am waiting on an updated Nutrient data set*
+*This data set contains environmental parameters: Temp and Salinity, among other environmental parameters.*
 
 Libraries
 ```{r}
 library(tidyverse)
 library(here)
 library(ggpubr)
+library(lubridate)
 ```
 
 Load Data
 ```{r}
-d1<- read_csv(here("data", "raw_data", "ysi_.csv"))
+d1<- read_csv(here("data", "processed_data", "tx_master.csv"))
 ```
 
 Daily data frame
 ```{r}
-d1<- d1 %>%
-  mutate(site = recode(site, "BO" = "Blind Oso",
-                             "C2" = "Canals",
-                            "RD" = "Gulf"))
 daily<- d1 %>%
-  filter(type %in% "Daily")
-
+  filter(date %in% c(as.Date("2022-07-07"):as.Date("2022-07-19"))) %>%
+  select(!...1)
 ```
+
 
 Plotting Daily Temperature 
 ```{r}
@@ -64,7 +62,7 @@ Plotting Daily Salinity
 sal<- daily %>% ggplot() + geom_line(
   aes(
     x = date,
-    y = salinity,
+    y = sal,
     color = site),
   size = 1)+
   theme_bw()+
