@@ -88,6 +88,30 @@ Temperature and salinity at the Canal site is relatively high and consistent as 
 
 ## Basic statistical analysis
 
+### Cross-correlation Analysis
+
+Previous literature has shown that Vibrio respond 12-24 hours following dust deposition events. Based on this, we need to look at lags between the two times series for dust data and growth data. To do this, we can set up a cross-correlation analysis, which allows us to examine the lag/lead relationship between the two variables.
+
+![](images/00003f.png){width="475"}
+
+![](images/000043.png){width="473"}
+
+![](images/000047.png){width="473"}
+
+According to the ccf plots, BO has a significant lag relationship a value of -1. In other words, dust occurs, and one day later, we see a response in copies_mL. C2 has a lag at -2, and RD at -1.
+
+[**One important thing to note**]{.ul}: Our data set contains dust data for all of 2022. Our copies_mL data only contains values from 7/7/22 --> 7/19/22. Therefore, these CCA were made with only this time series. This limits our analysis, as we have dust data prior that can explain copies_mL on the earlier dates 7/7 or 7/8. But we cannot incorporate this into the CCA as we have NA for copies_mL for those early days. Below we will run linear models that DO contain these prior dust days. And since we have identified a lag, we can shift the dust data to line up with the copies_mL that it corresponds with directly - and we no longer have NAs. But this ultiamtely means that the lag identified above. may not be the best fit for our model below, so some additional work is needed that tests other lags in the code.
+
+### Linear Regression Models
+
+![](images/00000f.png){width="382"}
+
+![](images/00000b.png){width="381"}
+
+![](images/000013.png){width="381"}
+
+Above are linear regressions that examine the relationship between dust concentration and copies_mL. As mentioned above, the lags identified may not correspond to the most significant relationship between the two variables. While a lag of -1 for Blind Oso and -2 for the Canals expalins the data well, a lag of -2 for the Gulf site was more fitting. This makes sense, as taking a look at the copies_mL plot above, we do see a \~2 day lag in response, where we have a spike in dust, and 2 days later, a spike in copies_mL.
+
 ## Full analysis
 
 {{< pagebreak >}}
