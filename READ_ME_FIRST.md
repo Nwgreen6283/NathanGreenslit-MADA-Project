@@ -5,7 +5,7 @@ date: "1/30/2023"
 output: html_document
 ---
 
-This project utilizes three data sets that examine different parameters across a daily time series: (1) Enumeration of Vibrio (copies_master.csv), (2) Dust concentration (dust.csv), and (3) Environmental Parameters(ysi_2.csv). The first two are found in the raw_data folder. The third did not require cleaning and can be found in the processed_data folder. Within this folder, clean data sets of Enumeration of Vibrio (total_clean_copies), Dust Concentration (dust_clean.rds), and Environmental Parameters (ysi_2.csv) can be found. An additional manually altered data set titles dust_master.csv was made to look at different time points, sums, and averages of dust. This will become useful in statistcal analyses.\
+This project utilizes three data sets that examine different parameters across a daily time series: (1) Enumeration of Vibrio (copies_master.csv), (2) Dust concentration (dust.csv), and (3) Environmental Parameters(ysi_2.csv). The first two are found in the raw_data folder. The third did not require cleaning and can be found in the processed_data folder. Within this folder, clean data sets of Enumeration of Vibrio (total_clean_copies), Dust Concentration (dust_clean.rds), and Environmental Parameters (ysi_2.csv) can be found. An additional manually altered data set titled dust_master.csv was made to look at different dust permutations: time points, sums, and averages of dust. This will become useful in statistical analyses.\
 
 
 In order to reproduce the work from this project, one needs to follow these steps:\
@@ -23,10 +23,10 @@ In order to reproduce the work from this project, one needs to follow these step
 - `env_par.qmd`: Examines Temperature and Salinity across time series\
 3. qPCR:\
 - `daily_qmd`: examines Vibrio enumeration over daily time series. This is also done as part of the `daily_dusts.qmd` code. \
-4. stats:\
-- `env_and_dust_stats.qmd`: For exploring dust-vibrio-environmental parameters relationship.\
 \
 (4) **STATISTCS**: Open and run the code found in `analysis_code/stats` folder for the respective data of interest.\
+1. stats:\
+- `dust_copies_stats.qmd`: For exploring dust-vibrio-environmental parameters relationship.
 
 
 
