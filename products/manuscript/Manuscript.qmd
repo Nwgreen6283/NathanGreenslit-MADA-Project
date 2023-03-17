@@ -110,7 +110,13 @@ According to the ccf plots, BO has a significant lag relationship a value of -1.
 
 ![](images/000013.png){width="381"}
 
-Above are linear regressions that examine the relationship between dust concentration and copies_mL. As mentioned above, the lags identified may not correspond to the most significant relationship between the two variables. While a lag of -1 for Blind Oso and -2 for the Canals expalins the data well, a lag of -2 for the Gulf site was more fitting. This makes sense, as taking a look at the copies_mL plot above, we do see a \~2 day lag in response, where we have a spike in dust, and 2 days later, a spike in copies_mL.
+Above are linear regressions that examine the relationship between dust concentration and copies_mL. As mentioned above, the lags identified may not correspond to the most significant relationship between the two variables. While a lag of -1 for Blind Oso and -2 for the Canals explains the data well, a lag of -2 for the Gulf site was more fitting. This makes sense, as taking a look at the copies_mL plot above, we do see a \~2 day lag in response, where we have a spike in dust, and 2 days later, a spike in copies_mL.
+
+[A few things to note:]{.ul}
+
+-   My stats code contains some chunks that create predicted values based off of the current data set. Since my data set is small, I am not able to portion of \~25% to use to test my model. Therefore, plotting the predicted vs. actual will give an R2 of 1.00. I am continuing to find a good validation method.
+
+-   I am also planning on running a multi-variate model to look at multiple predictors of interests (temp, salinity, nutrients), but am currently running into an issue with my model output, where rather than getting values, I receive NaN. This code can be found in my `dust_copies_stats.qmd` code.
 
 ## Full analysis
 
