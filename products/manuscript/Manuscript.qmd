@@ -114,9 +114,31 @@ Above are linear regressions that examine the relationship between dust concentr
 
 [A few things to note:]{.ul}
 
--   My stats code contains some chunks that create predicted values based off of the current data set. Since my data set is small, I am not able to portion of \~25% to use to test my model. Therefore, plotting the predicted vs. actual will give an R2 of 1.00. I am continuing to find a good validation method.
+-   My stats code contains some chunks that create predicted values based off of the current data set. Since my data set is small, I am not able to portion of \~25% to use to test my model as it could impact the strength of my model. Therefore, plotting the predicted vs. actual will give an R2 of 1.00. I am continuing to find a good validation method.
+
+    -   After reviewing module 9, it looks like Information Criteria may be a proper alternative (REF: MOD9/Model Performance and Overfitting).
+
+        -   Will need to interpret findings as exploratory and hypothesis generating, and will need to be careful about trying to draw generalizable conclusions.
+
+        -   AIC:
+
+            -   Blind Oso = 271.25
+
+            -   Canals = 243.97
+
+            -   Gulf = 292.13
 
 -   I am also planning on running a multi-variate model to look at multiple predictors of interests (temp, salinity, nutrients), but am currently running into an issue with my model output, where rather than getting values, I receive NaN. This code can be found in my `dust_copies_stats.qmd` code.
+
+### Residuals: 
+
+Instead of (or in addition to) plotting observed versus predicted for continuous outcomes, you can plot the difference between the two. These differences are called the residuals. What you are looking for is a cloud of points with no discernible pattern. If there is a pattern (e.g., an overall skew, or more points above the 0 y-axes than below), it again suggests that there is still some pattern/signal in the data that the model didn't capture.
+
+![](images/00000b-01.png){width="406"}
+
+![](images/00000f-01.png){width="404"}
+
+![](images/000009%20(1)-01.png){width="404"}
 
 ## Full analysis
 
