@@ -48,6 +48,39 @@ master<- master %>%
   select(copies_mL, t7sum, site, date) 
 ```
 
+# Check Distributions
+
+### Copies per mL
+
+```{r}
+
+#Normal
+master %>% 
+  ggplot() + geom_histogram(
+    aes(
+      x = copies_mL)) +
+  labs(title = "Non-Log")+ 
+  facet_wrap(~site)
+
+#Log-Transformed
+master %>% 
+  ggplot() + geom_histogram(
+    aes(
+      x = log(copies_mL))) +
+  labs(title = "LOG-TRANS")+ 
+  facet_wrap(~site)
+```
+
+**We will use the log-transformed data as it has a \~ normal distribution.**
+
+## Log-transform Copies
+
+```{r}
+#master <- 
+ # master %>%
+ # mutate(copies_mL = log(master$copies_mL))
+```
+
 ### Make Site DF
 
 ```{r}
@@ -322,7 +355,7 @@ aug_test_rd %>% ggplot(aes(lag, copies_mL)) +
   labs(title = "LM DustxCopies (RD+2)")
 ```
 
-## 
+
 
 # Multivariate Models
 
@@ -333,7 +366,7 @@ aug_test_rd %>% ggplot(aes(lag, copies_mL)) +
 ```{r}
 master2<- dust0 %>% full_join(data) %>%
   filter(hr_cst %in% "01") %>%
-  select(!c(t1, t7, t13, t19, hr_cst, tsum, t7sum, ...1, SUM, dust,  Type, date )) %>%
+  select(site, sal, temp, amm, nn,orthop, copies_mL, t7sum) %>%
   na.omit()
 ```
 
@@ -374,7 +407,7 @@ Growth_wflow<-
 growth_fit_bo<- Growth_wflow %>%
   fit(data = bo_a)
 
-#View as Tibble 
+#Pull model fit using parsnip()
 growth_fit_bo %>%
   extract_fit_parsnip() %>%
   tidy()
@@ -388,7 +421,34 @@ tidy(growth_fit_bo) %>%
          whisker_args = list(color = "black"),
          vline = geom_vline(xintercept = 0, colour = "grey50", linetype = 2))
 ```
+### Use model to test data
 
+```{r}
+aug_test_bo_a <- augment(growth_fit_bo, bo_a)
+```
+
+### RMSE and R2 to test model performance
+
+```{r}
+rmse <- aug_test_bo_a %>% rmse(truth = copies_mL, .pred)
+rsq <- aug_test_bo_a %>% rsq(truth = copies_mL, .pred)
+bo_a_metrics<- full_join(rmse, rsq)
+```
+
+### AIC to assess Performance
+
+```{r}
+bo_a_mod<- lm(copies_mL ~ ., data = bo_a)
+AIC(bo_a_mod)
+```
+
+### Residuals
+
+```{r}
+res_bo_a<- resid(bo_a_mod)
+plot(fitted(bo_a_mod), res_bo_a)
+abline(0,0)
+```
 ## C2: Using all Variables vs. Growth
 
 ```{r}
@@ -424,7 +484,34 @@ tidy(growth_fit_c2) %>%
          whisker_args = list(color = "black"),
          vline = geom_vline(xintercept = 0, colour = "grey50", linetype = 2))
 ```
+### Use model to test data
 
+```{r}
+aug_test_c2_a <- augment(growth_fit_c2, c2_a)
+```
+
+### RMSE and R2 to test model performance
+
+```{r}
+rmse <- aug_test_c2_a %>% rmse(truth = copies_mL, .pred)
+rsq <- aug_test_c2_a %>% rsq(truth = copies_mL, .pred)
+c2_a_metrics<- full_join(rmse, rsq)
+```
+
+### AIC to assess Performance
+
+```{r}
+c2_a_mod<- lm(copies_mL ~ ., data = c2_a)
+AIC(c2_a_mod)
+```
+
+### Residuals
+
+```{r}
+res_c2_a<- resid(c2_a_mod)
+plot(fitted(c2_a_mod), res_c2_a)
+abline(0,0)
+```
 ## RD: Using all Variables vs. Growth
 
 ```{r}
@@ -459,4 +546,32 @@ tidy(growth_fit_rd) %>%
   dwplot(dot_args = list(size = 2, color = "black"),
          whisker_args = list(color = "black"),
          vline = geom_vline(xintercept = 0, colour = "grey50", linetype = 2))
+```
+### Use model to test data
+
+```{r}
+aug_test_rd_a <- augment(growth_fit_rd, rd_a)
+```
+
+### RMSE and R2 to test model performance
+
+```{r}
+rmse <- aug_test_rd_a %>% rmse(truth = copies_mL, .pred)
+rsq <- aug_test_rd_a %>% rsq(truth = copies_mL, .pred)
+rd_a_metrics<- full_join(rmse, rsq)
+```
+
+### AIC to assess Performance
+
+```{r}
+rd_a_mod<- lm(copies_mL ~ ., data = rd_a)
+AIC(rd_a_mod)
+```
+
+### Residuals
+
+```{r}
+res_rd_a<- resid(rd_a_mod)
+plot(fitted(rd_a_mod), res_rd_a)
+abline(0,0)
 ```
