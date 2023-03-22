@@ -26,7 +26,9 @@ In order to reproduce the work from this project, one needs to follow these step
 \
 (4) **STATISTCS**: Open and run the code found in `analysis_code/stats` folder for the respective data of interest.\
 1. stats:\
-- `dust_copies_stats.qmd`: For exploring dust-vibrio-environmental parameters relationship.
+- `distributiom.qmd`: Checks distribution of variables of interest
+- `multi_variate.qmd`: runs multivariate models on variable of interest (copies_mL)
+- `uni_variate.qmd` : runs univariate models on variable and predictors of interest. 
 
 
 

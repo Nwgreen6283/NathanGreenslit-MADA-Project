@@ -48,39 +48,6 @@ master<- master0 %>%
   select(copies_mL, t7sum, site, date) 
 ```
 
-# Check Distributions
-
-### Copies per mL
-
-```{r}
-
-#Normal
-master %>% 
-  ggplot() + geom_histogram(
-    aes(
-      x = copies_mL)) +
-  labs(title = "Non-Log")+ 
-  facet_wrap(~site)
-
-#Log-Transformed
-master %>% 
-  ggplot() + geom_histogram(
-    aes(
-      x = log(copies_mL))) +
-  labs(title = "LOG-TRANS")+ 
-  facet_wrap(~site)
-```
-
-**We will use the log-transformed data as it has a \~ normal distribution.**
-
-## Log-transform Copies
-
-```{r}
-#master <- 
- # master %>%
- # mutate(copies_mL = log(master$copies_mL))
-```
-
 ### Make Site DF
 
 ```{r}
@@ -358,6 +325,3 @@ aug_test_rd %>% ggplot(aes(lag, copies_mL)) +
 # TEMPERATURE
 
 ### Blind Oso
-
-```{}
-```
