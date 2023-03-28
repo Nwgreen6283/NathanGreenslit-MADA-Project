@@ -7,7 +7,7 @@ format:
 
 ### Libraries
 
-```{r}
+```{r, include = FALSE}
 library(tidyverse)
 library(here)
 library(Hmisc) #For lag function
@@ -20,7 +20,7 @@ library(dotwhisker) #Fpr visualization
 
 ### Data
 
-```{r}
+```{r, include = FALSE}
 dust0<- read_csv(here("data", "processed_data","dust_master.csv")) #Different Dust attributes
 data0<- read_csv(here("data", "processed_data", "tx_master.csv")) #Master Data
 ```
@@ -89,9 +89,9 @@ title("Gulf DustxCopies CCA", line =1)
 
 **A negative Lag value indicates that x is a predictor of y, or in this case, dust is a predictor of copies_mL- so we will be looking at these negative values. A positive ACF indicates a positive relationship between the two variables, where a negative ACF indicates a negative relationship. According to the ccf plots, BO has a significant lag relationship a value of -1. In other words, dust occurs, and one day later, we see a response in copies_mL. C2 has a lag at -2, and RD at -1**
 
-## Blind Oso Site:
+# Blind Oso Site:
 
-#### Add one day lag
+### Add one day lag
 
 ```{r}
 bo2<- bo%>% mutate(
@@ -99,7 +99,18 @@ bo2<- bo%>% mutate(
 filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19')))
 ```
 
-#### Create a linear model
+### Plot
+
+```{r}
+bo2 %>% ggplot(aes(x = lag, y = copies_mL)) +
+  geom_point() +
+  stat_smooth(method = "lm")+
+  stat_poly_eq(aes(x = lag, y = copies_mL),
+               rr.digits = 4) +
+  labs(title = "LM DustxCopies (BO+1)")
+```
+
+### Create a linear model
 
 ```{r}
 #Create Recipe for Growth 
@@ -157,18 +168,7 @@ plot(fitted(bo_mod), res_bo)
 abline(0,0)
 ```
 
-### Plot
-
-```{r}
-aug_test_bo %>% ggplot(aes(copies_mL, .pred)) +
-  geom_point() +
-  stat_smooth(method = "lm")+
-  stat_poly_eq(aes(x = lag, y = copies_mL),
-               rr.digits = 4) +
-  labs(title = "LM DustxCopies (BO+1)")
-```
-
-## Canals:
+# Canals:
 
 #### Add two day lag
 
@@ -178,7 +178,18 @@ c22<- c2%>% mutate(
 filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19')))
 ```
 
-#### Create a linear model
+### Plot
+
+```{r}
+c22 %>% ggplot(aes(x = lag, y = copies_mL)) +
+  geom_point() +
+  stat_smooth(method = "lm")+
+  stat_poly_eq(aes(x = lag, y = copies_mL),
+               rr.digits = 4) +
+  labs(title = "LM DustxCopies (C2+2)")
+```
+
+### Create a linear model
 
 ```{r}
 #Create Recipe for Growth 
@@ -234,20 +245,9 @@ plot(fitted(c2_mod), res_c2)
 abline(0,0)
 ```
 
-### Plot
-
-```{r}
-aug_test_c2 %>% ggplot(aes(copies_mL, .pred)) +
-  geom_point() +
-  stat_smooth(method = "lm")+
-  stat_poly_eq(aes(x = lag, y = copies_mL),
-               rr.digits = 4) +
-  labs(title = "LM DustxCopies (C2+2)")
-```
-
 ## Gulf Site:
 
-#### Add two day lag
+### Add two day lag
 
 ```{r}
 rd2<- rd%>% mutate(
@@ -255,7 +255,18 @@ rd2<- rd%>% mutate(
 filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19')))
 ```
 
-#### Create a linear model
+### Plot
+
+```{r}
+rd2 %>% ggplot(aes(lag, copies_mL)) +
+  geom_point() +
+  stat_smooth(method = "lm")+
+  stat_poly_eq(aes(x = lag, y = copies_mL),
+               rr.digits = 4) +
+  labs(title = "LM DustxCopies (RD+2)")
+```
+
+### Create a linear model
 
 ```{r}
 #Create Recipe for Growth 
@@ -309,17 +320,6 @@ AIC(rd_mod)
 res_rd<- resid(rd_mod)
 plot(fitted(rd_mod), res_rd)
 abline(0,0)
-```
-
-### Plot
-
-```{r}
-aug_test_rd %>% ggplot(aes(lag, copies_mL)) +
-  geom_point() +
-  stat_smooth(method = "lm")+
-  stat_poly_eq(aes(x = lag, y = copies_mL),
-               rr.digits = 4) +
-  labs(title = "LM DustxCopies (RD+2)")
 ```
 
 # TEMPERATURE
