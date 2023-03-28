@@ -7,7 +7,7 @@ format:
 
 ### Libraries
 
-```{r}
+```{r, include = FALSE}
 library(tidyverse)
 library(here)
 library(Hmisc) #For lag function
@@ -46,35 +46,48 @@ master<-
   filter(hr_cst %in% "01") #While this is technically not for hour 1, this gets ride of all duplicates for the sake of analysis.
 
 master<- master %>%
-  select(site, sal, temp, copies_mL) %>%
-  na.omit()
+  select(site, sal, temp, copies_mL,t7sum, date) #%>%
+ # na.omit()
 ```
 
 # Multivariate Models
 
 [This code is still in progress. For now, please ignore:]{.ul}
 
-###  Site-specific Data sets
+### Site-specific Data sets and Clean df
 
 ```{r}
 bo_a<- master %>%
-  filter(site %in% "Blind Oso") %>%
-  select(!site)
+  filter(site %in% "Blind Oso" | date %in% as.Date('2022-07-05') : as.Date('2022-07-06'))
+bo_a<- bo_a %>%
+mutate(
+  lag =Lag(bo_a$t7sum, shift  = 1)) %>% #Create 1 day lag
+filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19'))) %>%
+select(!c(date,t7sum,site))
 
 c2_a<- master %>%
-  filter(site %in% "Canals")%>%
-  select(!site)
-
+  filter(site %in% "Canals" | date %in% as.Date('2022-07-05') : as.Date('2022-07-06'))
+c2_a<- c2_a %>%
+mutate(
+  lag =Lag(c2_a$t7sum, shift  = 2)) %>% #Make 2 day lag
+filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19')))%>%
+select(!c(date,t7sum,site))
+ 
+       
 rd_a<- master %>%
-  filter(site %in% "Gulf")%>%
-  select(!site)
+  filter(site %in% "Gulf" | date %in% as.Date('2022-07-05') : as.Date('2022-07-06')) 
+rd_a<- rd_a %>%
+mutate(
+  lag =Lag(rd_a$t7sum, shift  = 2)) %>% #Make 2 day lag
+filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19')))%>%
+select(!c(date,t7sum,site))
 ```
 
-## BO: Using all Variables vs. Growth
+## BO: Growth\~ Sal+Dust
 
 ```{r}
 #Create Recipe for Growth and all other parameters
-growth_recipe_bo<- recipe(copies_mL ~ ., data = bo_a)
+growth_recipe_bo<- recipe(copies_mL ~ sal+lag, data = bo_a)
 
 #Set up linear model
 lm_mod_all<- linear_reg() %>%
@@ -123,7 +136,7 @@ bo_a_metrics<- full_join(rmse, rsq)
 ### AIC to assess Performance
 
 ```{r}
-bo_a_mod<- lm(copies_mL ~ ., data = bo_a)
+bo_a_mod<- lm(copies_mL ~ temp+sal+lag, data = bo_a)
 AIC(bo_a_mod)
 ```
 
