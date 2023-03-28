@@ -44,7 +44,7 @@ dust_fig<- daily_dust_sum %>% ggplot() +geom_line(
     x = "Date",
     y = "Dust Aerosol Optical Density")+
   theme(
-    axis.title.y = element_text(size = 15),
+    axis.title.y = element_text(size = 10),
     axis.text.y = element_text(size = 10),
     axis.title.x = element_text(size = 15),
     axis.text.x = element_text(size = 10))
@@ -72,7 +72,7 @@ tot_vib<- copies_d %>% ggplot()+geom_line(
     axis.text.x = element_blank(),
     axis.title.x = element_blank(),
     axis.ticks.x = element_blank(),
-    axis.title.y = element_text(size = 15),
+    axis.title.y = element_text(size = 10),
     axis.text.y = element_text(size = 10),
     legend.position = c(0.1, 0.8),
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -84,7 +84,7 @@ tot_vib
 ```
 
 Combine Dust and Copies
-```{r, fig.height = 4, fig.width= 4}
+```{r}
 fig<- ggarrange(tot_vib, dust_fig + font("x.text", size = 10), ncol = 1, nrow = 2,align = "v")
 
 fig
