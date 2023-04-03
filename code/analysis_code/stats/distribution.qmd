@@ -24,7 +24,7 @@ dust<- read_csv(here("data", "processed_data","dust_master.csv"))
 
 #### Clean Data
 
-##### Metadata 
+##### Metadata
 
 ```{r}
 d_clean<- d %>%
@@ -105,7 +105,7 @@ ggqqplot(rd$copies_mL)
     shapiro.test(rd$copies_mL)
     ```
 
-    A p-value > 0.05 implies that the distribution of the data is **not significantly differen**t from normal distribution. In other words, **we can assume the normality.**
+    A p-value > 0.05 implies that the distribution of the data is **not significantly differen**t from normal distribution. In other words, **we can assume the normality for the copies_mL data.**
 
 ## \[Dust\]
 
@@ -124,3 +124,5 @@ ggqqplot(daily$t7sumlog)
 shapiro.test(daily$t7sum) #Normal data
 shapiro.test(daily$t7sumlog) #Log trans data
 ```
+
+**Based on the Shapiro test, the dust permutation that we are using (t7sum) is not normally distributed. After log transforming, we see that this is now normally distributed. For downstream analysis, we will need to use the log10(dust).**
