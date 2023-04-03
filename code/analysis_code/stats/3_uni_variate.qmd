@@ -273,7 +273,7 @@ r<-
   filter(site %in% "Gulf")
 ```
 
-## Plot 
+## Plot
 
 #### Temperature
 
