@@ -16,6 +16,10 @@ library(here)
 library(knitr)
 ```
 
+# Questions for Dr. Handel:
+
+1.  
+
 # Summary/Abstract
 
 {{< pagebreak >}}
@@ -86,9 +90,15 @@ The top portion of the figure depicts total enumerated Vibrio as copies per mL, 
 
 Temperature and salinity at the Canal site is relatively high and consistent as compared to the other sites. Blind Oso Bay experiences some shifts in temperatures and drastic fluctuations in salinity. The Gulf site had a drop in temperature (possibly due to upwelling) and relatively consistent ocean salinities
 
+<!--# Let's add Nutrient of interest Data -->
+
 ## Basic statistical analysis
 
-### Cross-correlation Analysis
+### Check Distributions:
+
+<!--# Add distribution statement -->
+
+### Cross-correlation Analysis:
 
 Previous literature has shown that Vibrio respond 12-24 hours following dust deposition events. Based on this, we need to look at lags between the two times series for dust data and growth data. To do this, we can set up a cross-correlation analysis, which allows us to examine the lag/lead relationship between the two variables.
 
@@ -103,6 +113,8 @@ According to the ccf plots, BO has a significant lag relationship a value of -1.
 [**One important thing to note**]{.ul}: Our data set contains dust data for all of 2022. Our copies_mL data only contains values from 7/7/22 --> 7/19/22. Therefore, these CCA were made with only this time series. This limits our analysis, as we have dust data prior that can explain copies_mL on the earlier dates 7/7 or 7/8. But we cannot incorporate this into the CCA as we have NA for copies_mL for those early days. Below we will run linear models that DO contain these prior dust days. And since we have identified a lag, we can shift the dust data to line up with the copies_mL that it corresponds with directly - and we no longer have NAs. But this ultiamtely means that the lag identified above. may not be the best fit for our model below, so some additional work is needed that tests other lags in the code.
 
 ### Linear Regression Models
+
+<!--# Need to update these plots -->
 
 ![](images/00000f.png){width="382"}
 

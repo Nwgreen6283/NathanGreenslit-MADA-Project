@@ -5,7 +5,7 @@ format:
     theme: default
 ---
 
-# Libs/Data
+# Libraries/Data
 
 #### Libraries
 
@@ -18,8 +18,8 @@ library(ggpubr)
 #### Data
 
 ```{r}
-d<- read_csv(here("data", "processed_data","tx_master.csv"))
-dust<- read_csv(here("data", "processed_data","dust_master.csv"))
+d<- read_csv(here("data", "processed_data","tx_master.csv")) #Data containing copies_mL
+dust<- read_csv(here("data", "processed_data","dust_master.csv"))#Dust data
 ```
 
 #### Clean Data
