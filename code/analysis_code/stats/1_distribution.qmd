@@ -5,6 +5,8 @@ format:
     theme: default
 ---
 
+**This code is for checking the distribution of our variables of interest.**
+
 # Libraries/Data
 
 #### Libraries
@@ -22,9 +24,9 @@ d<- read_csv(here("data", "processed_data","tx_master.csv")) #Data containing co
 dust<- read_csv(here("data", "processed_data","dust_master.csv"))#Dust data
 ```
 
-#### Clean Data
+# Cleaning
 
-##### Metadata
+#### Meta Data
 
 ```{r}
 d_clean<- d %>%
@@ -34,7 +36,7 @@ d_clean<- d %>%
 
 master<- d_clean %>%
   select(copies_mL,site, date) %>%
-  filter(!is.na(site))
+  filter(!is.na(site)) #Drop NAs
 
 #Site Specific datasets
 bo<- 
@@ -48,7 +50,7 @@ rd<-
   filter(site %in% "Gulf")
 ```
 
-##### Dust
+#### Dust Data
 
 ```{r}
 #Daily df

@@ -5,7 +5,11 @@ format:
     theme: default
 ---
 
-### Libraries
+**This code runs uni-variate models on parameters of interest.**
+
+# Getting Started
+
+#### Libraries
 
 ```{r, include = FALSE}
 library(tidyverse)
@@ -16,14 +20,14 @@ library(ggpmisc) #For R2 equation on graph
 library(dotwhisker) #Fpr visualization
 ```
 
-# LOADING AND CLEANING DATA
-
-### Data
+#### Data
 
 ```{r, include = FALSE}
 dust0<- read_csv(here("data", "processed_data","dust_master.csv")) #Different Dust permutations
 data0<- read_csv(here("data", "processed_data", "tx_master.csv")) #Master Data containing copies_mL and nutrients 
 ```
+
+# Cleaning
 
 ### Clean and Trim
 
@@ -68,7 +72,7 @@ rd<- master %>%
 
 # DUST
 
-### Add lags
+#### Add Lag from `2_cca.qmd`
 
 ```{r}
 bo2<- bo%>% mutate(
@@ -80,11 +84,11 @@ c22<- c2%>% mutate(
 filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19')))
 
 rd2<- rd%>% mutate(
-  lag =Lag(rd$t7sum, shift  = 2)) %>% #Make lag from ccf
+  lag =Lag(rd$t7sum, shift  = 1)) %>% #Make lag from ccf
 filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19')))
 ```
 
-### Plot
+#### Plot
 
 ```{r}
 bo2 %>% ggplot(aes(x = lag, y = copies_mL)) +
@@ -112,7 +116,7 @@ rd2 %>% ggplot(aes(lag, copies_mL)) +
        x = "log(dust)")
 ```
 
-### Create a linear model
+#### Create Linear Model
 
 ##### BLIND OSO:
 

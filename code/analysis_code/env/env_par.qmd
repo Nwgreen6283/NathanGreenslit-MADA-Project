@@ -4,9 +4,13 @@ format:
   html:
     theme: default
 ---
-*This data set contains environmental parameters: Temp and Salinity, among other environmental parameters.*
 
-Libraries
+**This data set contains environmental parameters: Temp and Salinity, among other environmental parameters.**
+
+# Getting Started
+
+#### Libraries
+
 ```{r}
 library(tidyverse)
 library(here)
@@ -14,20 +18,26 @@ library(ggpubr)
 library(lubridate)
 ```
 
-Load Data
+#### Load Data
+
 ```{r}
 d1<- read_csv(here("data", "processed_data", "tx_master.csv"))
 ```
 
-Daily data frame
+# Cleaning
+
+#### Daily data frame
+
 ```{r}
 daily<- d1 %>%
   filter(date %in% c(as.Date("2022-07-07"):as.Date("2022-07-19"))) %>%
   select(!...1)
 ```
 
+# Visualization
 
-Plotting Daily Temperature 
+#### Plotting Daily Temperature
+
 ```{r}
 temp<- daily %>% ggplot() + geom_line(
   aes(
@@ -57,7 +67,8 @@ temp
   
 ```
 
-Plotting Daily Salinity
+#### Plotting Daily Salinity
+
 ```{r}
 sal<- daily %>% ggplot() + geom_line(
   aes(
@@ -84,17 +95,19 @@ sal<- daily %>% ggplot() + geom_line(
 
 sal
 ```
-Combine Temperature and Salinity Plots 
+
+#### Combine Temperature and Salinity Plots
+
 ```{r, fig.width= 4, fig.height=4}
 fig<- ggarrange(temp,sal + font("x.text", size = 10), ncol = 1, nrow = 2,align = "v")
 
 fig
 ```
 
-Save as PNG
+#### Save as PNG
+
 ```{r}
 png(file = here("results", "plots", "temp_sal.png"))
 fig
 dev.off()
 ```
-

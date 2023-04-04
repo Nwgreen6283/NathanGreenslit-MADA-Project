@@ -10,21 +10,33 @@ format:
     highlight-style: github
 ---
 
+# Questions for Dr. Handel:
+
+1.  Does my overall workflow in `code/analysis_code/stats/3_uni_variate.qmd` make sense? Is there anything that I am missing, or be a better option for analysis?
+
+    -   Script Flow for Dust: Plot Dust and Copies --> Create Model --> Assess Performance (AIC/RMSE/R2) --> Plot Residuals.
+
+    -   If this looks good, I plan to do the same workflow for all of the environmental parameters as well. For now, I just have plots to see what may be worth diving into.
+
+2.  Looking at `code/analysis_code/stats/4_multi_variate.qmd` , I am a little stuck on how to best create a multivariate model.
+
+    -   Example: We can see this Salinity at Blind Oso drop at the same time that dust is coming in. This will most likely have an impact of Vibrio growth, but Salinity is probably non-linear.
+
+    -   Taking a look at the section titled Blind Oso: Growth \~Salinity + Dust, does my overall workflow look correct?
+
+3.  Looking at my statistics/models, is there anything that you think is strikingly missing?
+
 ```{r, echo=FALSE, message=FALSE}
 # load a few R packages
 library(here)
 library(knitr)
 ```
 
-# Questions for Dr. Handel:
-
-1.  Does my overall workflow in `code/analysis_code/stats/3_uni_variate.qmd` make sense? Is there anything that I am missing, or be a better option for analysis?
-
-    -   Flow for Dust: Plot Dust and Copies --> Create Model --> Assess Performance (AIC/RMSE/R2) --> Plot Residuals.
-
-    -   If this looks good, I plan to do the same workflow for all of the environmental parameters as well. For now, I just have plots to see what may be worth diving into,
-
 # Summary/Abstract
+
+Each year, plumes of
+Saharan dust travel across the Atlantic to be deposited in the surface waters of the Caribbean and Gulf of Mexico. Dust aerosols serve as a significant source of nutrients that can elicit a fertilization effect on marine coastal waters, leading to rapid and potentially harmful blooms (e.g. red tides). Previous work has characterized the response of the marine bacteria *Vibrio* to dust input under the oligotrophic settings of the Florida Keys, but less is (1) quantify *Vibrio* population dynamics and composition, and (2) characterize
+potential microbial blooms and community shifts in response to dust input in coastal sites with higher ambient nutrient levels. Monthly and daily sampling influences on microbialpopulations and to capture before, during, and after a Saharan dust event. Culturable *Vibrio* were enumerated as CFU ml^-1^ via spread plating on selective media. qPCRwill be used to estimate total counts of *Vibrio* and of pathogenic *Vibrio* species (*V. cholerae, V. parahaemolyticus, V. vulnificus,* and *V. alginolyticus*) while *Vibrio* composition will be determined using hsp60 gene or 16S rRNA amplicon sequencing. Microbial community composition will be determined using 16S rRNA and 18S rRNA gene amplicon sequencing to examine shifts in prokaryotic and eukaryotic composition over time. This study will provide an increasedunderstanding of the conditions that can elicit potentially harmful blooms, highlighting the need for further research to understand effects of dust
 
 {{< pagebreak >}}
 

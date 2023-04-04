@@ -1,22 +1,31 @@
-zx---
+---
 title: "Exploratory"
 format:
   html:
     theme: default
 ---
-**This code looks at Vibrio enumeration over the daily time series. This information can also be found in `dust_and_copies.qmd`
-Library
+
+**This code looks at Vibrio enumeration over the daily time series. This information can also be found in `dust_and_copies.qmd`**
+
+# Getting Started
+
+#### Libraries
+
 ```{r}
 library(tidyverse)
 library(here)
 ```
 
-Load Data
+#### Data
+
 ```{r}
 data<- read_csv(here("data", "processed_data", "tx_master.csv")) 
 ```
 
-Make mini dataframes for each site
+# Cleaning
+
+#### Make mini dataframes for each site
+
 ```{r}
 #Daily All Sites
 daily<- data %>%
@@ -34,7 +43,10 @@ rd_daily <- daily %>% filter(site %in% "Gulf") #Gulf Site
 
 ```
 
-Total Daily Vibrio at Gulf
+# Visualization
+
+#### Total Daily Vibrio at Gulf
+
 ```{r}
 rd_daily %>%
   ggplot() +geom_line(
@@ -49,7 +61,8 @@ rd_daily %>%
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-Total Daily Vibrio at Canals
+#### Total Daily Vibrio at Canals
+
 ```{r}
 c2_daily %>%
   ggplot() +geom_line(
@@ -63,7 +76,9 @@ c2_daily %>%
     title = "Total Daily Vibrio at Canals") +
   theme(plot.title = element_text(hjust = 0.5))
 ```
-Total Daily Vibrio at Blind Oso
+
+#### Total Daily Vibrio at Blind Oso
+
 ```{r}
 bo_daily %>%
   ggplot() +geom_line(
@@ -78,7 +93,8 @@ bo_daily %>%
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-Total Daily Vibrio
+#### Total Daily Vibrio
+
 ```{r}
 tot_vib<- daily %>% ggplot()+geom_line(
   aes(x = date,
@@ -96,10 +112,11 @@ tot_vib<- daily %>% ggplot()+geom_line(
 
 tot_vib
 ```
-Save as PNG
+
+#### Save as PNG
+
 ```{r}
 png(file = here("results", "plots", "tot_vib_allsites_daily.png"))
 tot_vib
 dev.off()
 ```
-

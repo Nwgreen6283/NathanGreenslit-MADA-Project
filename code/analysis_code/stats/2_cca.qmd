@@ -5,21 +5,25 @@ format:
     theme: default
 ---
 
-# Libraries
+**This code is for running cross-correlation analyses to assess significant lag in our time series.**
+
+# Getting Started
+
+#### Libraries
 
 ```{r, include = FALSE}
 library(tidyverse)
 library(here)
 ```
 
-# LOADING AND CLEANING DATA
-
-### Data
+#### Data
 
 ```{r, include = FALSE}
 dust0<- read_csv(here("data", "processed_data","dust_master.csv")) #Different Dust permutations
 data0<- read_csv(here("data", "processed_data", "tx_master.csv")) #Master Data containing copies_mL
 ```
+
+# Cleaning
 
 ### Clean and Trim
 
@@ -93,10 +97,8 @@ title("Gulf DustxCopies CCA", line =1)
 |------|-----|
 | BO   | 1   |
 | C2   | 2   |
-| RD   | 2\* |
+| RD   | 1   |
 
-: \*[**One important thing to note**]{.ul}: Our data set contains dust data for all of 2022. Our copies_mL data only contains values from 7/7/22 --> 7/19/22. We cannot have NAs when running CCA, therefore, these CCA were made with only this time series. This limits our analysis, as we have dust data prior that can explain copies_mL on the earlier dates 7/7 or 7/8. But we cannot incorporate this into the CCA as we have NA for copies_mL for those early days. Below we will run linear models that DO contain these prior dust days. And since we have identified a lag, we can shift the dust data to line up with the copies_mL that it corresponds with directly - and we no longer have NAs. But this ultiamtely means that the lag identified above may not be the best fit for our model below, so some additional work is needed that tests other lags in the code. Using a combination of visualization and CCA would be helpful. For the guld site, although CCA identified a lag of 1 day being significant, we can see in our exploratory analysis, that there is a \~2 day lag.
-
-<!--# May need to update this last statement after meeting with Erin. 1 day lag may be the best. -->
+: \*[**One important thing to note**]{.ul}: Our data set contains dust data for all of 2022. Our copies_mL data only contains values from 7/7/22 --> 7/19/22. We cannot have NAs when running CCA, therefore, these CCA were made with only this time series. This limits our analysis, as we have dust data prior that can explain copies_mL on the earlier dates 7/7 or 7/8. But we cannot incorporate this into the CCA as we have NA for copies_mL for those early days. Below we will run linear models that DO contain these prior dust days. And since we have identified a lag, we can shift the dust data to line up with the copies_mL that it corresponds with directly - and we no longer have NAs. But this ultimately means that the lag identified above may not be the best fit for our model below, so some additional work is needed that tests other lags in the code. Using a combination of visualization and CCA would be helpful.
 
 <!--# May need to include nutrient data for cca -->

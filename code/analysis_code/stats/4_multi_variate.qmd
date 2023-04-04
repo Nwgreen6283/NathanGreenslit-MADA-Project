@@ -5,7 +5,9 @@ format:
     theme: default
 ---
 
-### Libraries
+# Getting Started
+
+#### Libraries
 
 ```{r, include = FALSE}
 library(tidyverse)
@@ -17,16 +19,16 @@ library(dotwhisker) #Fpr visualization
 library(lubridate)#Dates
 ```
 
-# LOADING AND CLEANING DATA
-
-### Data
+#### Data
 
 ```{r}
 dust<- read_csv(here("data", "processed_data","dust_master.csv")) #Different Dust attributes
 data<- read_csv(here("data", "processed_data", "tx_master.csv")) #Master Data
 ```
 
-### Clean and Trim
+# Cleaning
+
+#### Clean and Trim
 
 ```{r}
 dust<- dust %>%
@@ -38,7 +40,7 @@ data<- data %>%
   filter(date %in% as.Date("2022-07-04"):as.Date("2022-07-19"))
 ```
 
-### Combine into one big data set
+#### Make into one data set
 
 ```{r}
 master<- 
@@ -78,7 +80,7 @@ rd_a<- master %>%
   filter(site %in% "Gulf" | date %in% as.Date('2022-07-05') : as.Date('2022-07-06')) 
 rd_a<- rd_a %>%
 mutate(
-  lag =Lag(rd_a$t7sum, shift  = 2)) %>% #Make 2 day lag
+  lag =Lag(rd_a$t7sum, shift  = 1)) %>% #Make 2 day lag
 filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19')))%>%
 select(!c(date,t7sum,site))
 ```
