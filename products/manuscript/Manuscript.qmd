@@ -18,7 +18,11 @@ library(knitr)
 
 # Questions for Dr. Handel:
 
-1.  
+1.  Does my overall workflow in `code/analysis_code/stats/3_uni_variate.qmd` make sense? Is there anything that I am missing, or be a better option for analysis?
+
+    -   Flow for Dust: Plot Dust and Copies --> Create Model --> Assess Performance (AIC/RMSE/R2) --> Plot Residuals.
+
+    -   If this looks good, I plan to do the same workflow for all of the environmental parameters as well. For now, I just have plots to see what may be worth diving into,
 
 # Summary/Abstract
 
