@@ -91,7 +91,7 @@ filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19')))
 #### Plot
 
 ```{r}
-bo2 %>% ggplot(aes(x = lag, y = copies_mL)) +
+fig1<- bo2 %>% ggplot(aes(x = lag, y = copies_mL)) +
   geom_point() +
   stat_smooth(method = "lm")+
   stat_poly_eq(aes(x = lag, y = copies_mL),
@@ -99,7 +99,7 @@ bo2 %>% ggplot(aes(x = lag, y = copies_mL)) +
   labs(title = "LM DustxCopies (BO+1)",
        x = "log(dust)")
 
-c22 %>% ggplot(aes(x = lag, y = copies_mL)) +
+fig2<- c22 %>% ggplot(aes(x = lag, y = copies_mL)) +
   geom_point() +
   stat_smooth(method = "lm")+
   stat_poly_eq(aes(x = lag, y = copies_mL),
@@ -107,13 +107,21 @@ c22 %>% ggplot(aes(x = lag, y = copies_mL)) +
   labs(title = "LM DustxCopies (C2+2)",
        x = "log(dust)")
 
-rd2 %>% ggplot(aes(lag, copies_mL)) +
+fig3<- rd2 %>% ggplot(aes(lag, copies_mL)) +
   geom_point() +
   stat_smooth(method = "lm")+
   stat_poly_eq(aes(x = lag, y = copies_mL),
                rr.digits = 4) +
   labs(title = "LM DustxCopies (RD+2)",
        x = "log(dust)")
+```
+
+#### Stack and Save
+
+```{r}
+png(file = here("results", "plots", "stats", "lm.png"))
+ggarrange(fig1, fig2, fig3 + font("x.text", size = 10), ncol = 1, nrow = 3)
+dev.off()
 ```
 
 #### Create Linear Model
