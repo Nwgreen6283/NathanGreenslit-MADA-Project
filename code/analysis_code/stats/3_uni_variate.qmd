@@ -18,6 +18,7 @@ library(Hmisc) #For lag function
 library(tidymodels) #For modeling
 library(ggpmisc) #For R2 equation on graph
 library(dotwhisker) #Fpr visualization
+library(ggpubr) #For plot stacking
 ```
 
 #### Data
@@ -124,6 +125,95 @@ ggarrange(fig1, fig2, fig3 + font("x.text", size = 10), ncol = 1, nrow = 3)
 dev.off()
 ```
 
+## Null Model:
+
+#### 5-Fold Cross Validation
+
+```{r}
+fold_bo <- vfold_cv(bo2, v = 5, repeats = 5) #Data was too small to stratify (<20)
+fold_c2 <- vfold_cv(c22, v = 5, repeats = 5) #Data was too small to stratify (<20)
+fold_rd <- vfold_cv(rd2, v = 5, repeats = 5) #Data was too small to stratify (<20)
+```
+
+#### Create Null Model
+
+```{r}
+#Create Null Recipe for Growth at all three sites
+null_bo<- recipe(copies_mL ~ 1, data = bo2) 
+null_c2<- recipe(copies_mL ~ 1, data = c22)
+null_rd<- recipe(copies_mL ~ 1, data = rd2)
+
+#Set up linear model
+lm_mod<- linear_reg() %>%
+  set_engine("lm") %>%
+  set_mode("regression")
+
+#Workflow that adds recipe to model for three sites
+null_wflow_bo<- 
+  workflow() %>%
+  add_model(lm_mod) %>%
+  add_recipe(null_bo)
+
+null_wflow_c2<- 
+  workflow() %>%
+  add_model(lm_mod) %>%
+  add_recipe(null_c2)
+
+null_wflow_rd<- 
+  workflow() %>%
+  add_model(lm_mod) %>%
+  add_recipe(null_rd)
+
+#Use workflow to fit model to  data set
+null_fit_bo<-
+  fit_resamples(null_wflow_bo, resamples = fold_bo)
+
+null_fit_c2<-
+  fit_resamples(null_wflow_c2, resamples = fold_c2)
+                
+null_fit_rd<-
+  fit_resamples(null_wflow_rd, resamples = fold_rd)
+```
+
+#### Get Metrics for Null
+
+##### RMSE
+
+```{r}
+null_met_bo <- 
+  collect_metrics(null_fit_bo)
+
+null_met_c2 <- 
+  collect_metrics(null_fit_c2)
+
+null_met_rd <- 
+  collect_metrics(null_fit_rd)
+
+null_met_bo
+null_met_c2
+null_met_rd
+```
+
+##### AIC
+
+```{r}
+bo_null_mod<- 
+  lm(copies_mL ~ 1, data = bo2)
+AIC(bo_null_mod)
+
+c2_null_mod<- 
+  lm(copies_mL ~ 1, data = c22)
+AIC(c2_null_mod)
+
+rd_null_mod<- 
+  lm(copies_mL ~ 1, data = rd2)
+AIC(rd_null_mod)
+```
+
+We will come back to these metrics once we run the models on our actual data.
+
+## Actual Data for Model
+
 #### Create Linear Model
 
 ##### BLIND OSO:
@@ -207,7 +297,9 @@ growth_fit_rd %>%
   tidy()
 ```
 
-### RMSE and R2 to test model performance
+#### Metrics
+
+##### RMSE and R2
 
 ```{r}
 aug_test_bo <- augment(growth_fit_bo, bo2)
@@ -229,7 +321,7 @@ rd_metrics<- full_join(rmse, rsq)
 rd_metrics
 ```
 
-### AIC to assess Performance
+##### AIC
 
 Approaches based on such selection criteria essentially try to guess how the model would perform if it were to be fit to new data, without actually trying to do it (in contrast to CV). For AIC, a rule of thumb is that a difference of 10 between 2 models is meaningful.
 
@@ -244,7 +336,7 @@ rd_mod<- lm(copies_mL ~ lag, data = rd2)
 AIC(rd_mod)
 ```
 
-### Plot Residuals
+#### Plot Residuals
 
 ```{r}
 res_bo<- resid(bo_mod)
@@ -259,6 +351,21 @@ res_rd<- resid(rd_mod)
 plot(fitted(rd_mod), res_rd)
 abline(0,0)
 ```
+
+## Conclusion
+
+| Site | Model Type | RMSE     | AIC      |
+|------|------------|----------|----------|
+| BO   | Null       | 20472.82 | 275.9331 |
+| BO   | Actual     | 14422.91 | 269.8923 |
+| C2   | Null       | 8472.898 | 253/1876 |
+| C2   | Actual     | 5191.22  | 245.3679 |
+| RD   | Null       | 50386.56 | 296.9821 |
+| RD   | Actual     | 36132.11 | 291.933  |
+
+AIC and RMSE are lower (better performance) than the null.
+
+<!--# Why are these so high? -->
 
 # OTHER ENVIRONMENTAL PARAMETERS
 
