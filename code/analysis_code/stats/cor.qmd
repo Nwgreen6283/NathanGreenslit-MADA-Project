@@ -1,0 +1,130 @@
+---
+title: "cor"
+format:
+  html:
+    theme: default
+---
+
+**This code creates a correlation matrix to look at relationships between variables.**
+
+[**THIS CODE IS STILL IN THE WORKS**]{.ul}
+
+Link: http://www.sthda.com/english/wiki/correlation-matrix-a-quick-start-guide-to-analyze-format-and-visualize-a-correlation-matrix-using-r-software
+
+# Getting Started
+
+#### Libraries
+
+```{r}
+library(tidyverse)
+library(here)
+library(Hmisc)#Cor Tables
+library(corrplot) #Cor Plots
+```
+
+#### Data
+
+```{r, include = FALSE}
+dust0<- read_csv(here("data", "processed_data","dust_master.csv")) #Different Dust permutations
+data0<- read_csv(here("data", "processed_data", "tx_master.csv")) #Master Data containing copies_mL and nutrients 
+```
+
+# Cleaning
+
+### Clean and Trim
+
+```{r}
+dust<- dust0 %>%
+  filter(!is.na(date),
+         date %in% as.Date("2022-07-04"):as.Date("2022-07-19")) %>%
+  mutate(t7sum = log10(t7sum)) #Log transform Dust conc (as it is not normal) 
+
+
+data<- data0 %>%
+  filter(date %in% as.Date("2022-07-04"):as.Date("2022-07-19"))
+```
+
+### Combine into one big data set
+
+```{r}
+master0<- 
+  dust %>% full_join(data) %>%
+  filter(hr_cst %in% "01") %>% #While this is technically not for hour 1, this gets ride of all duplicates for the sake of analysis.
+  select(!c(date,hr_cst,...1,Type, t1,t7,t13,t19,tsum,tavg,SUM,t7sum,t7avg))
+
+
+
+```
+
+#### Site DF
+
+```{r}
+bo<- 
+  master0 %>%
+  filter(site %in% "Blind Oso") %>%
+  select(!site)
+
+c2<- 
+  master0 %>%
+  filter(site %in% "Canals") %>%
+  select(!site)
+
+rd<- 
+  master0 %>%
+  filter(site %in% "Gulf") %>%
+  select(!site)
+```
+
+# Correlation Matrix
+
+#### Compute Correlation Matrix
+
+```{r}
+b<- 
+  cor(bo)
+c<- 
+  cor(c2)
+r<- cor(rd)
+```
+
+#### Make Matrix
+
+```{r}
+bo2<- rcorr(as.matrix(bo))
+c22<- 
+
+```
+
+#### Function to Format
+
+```{r}
+flattenCorrMatrix <- function(cormat, pmat) {
+  ut <- upper.tri(cormat)
+  data.frame(
+    row = rownames(cormat)[row(cormat)[ut]],
+    column = rownames(cormat)[col(cormat)[ut]],
+    cor  =(cormat)[ut],
+    p = pmat[ut]
+    )
+}
+```
+
+#### Look at Matrix again
+
+```{r}
+b<- rcorr(as.matrix(bo))
+flattenCorrMatrix(b$r, b$P)
+```
+
+#### Visualize
+
+```{r}
+corrplot(b, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+
+corrplot(c, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+
+corrplot(r, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+```

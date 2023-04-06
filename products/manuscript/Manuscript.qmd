@@ -15,9 +15,7 @@ bibliography: MADA.bib
 
 1.  Does my overall workflow in `code/analysis_code/stats/3_uni_variate.qmd` make sense? Is there anything that I am missing, or be a better option for analysis?
 
-    -   Script Flow for Dust: Plot Dust and Copies --> Create Model --> Assess Performance (AIC/RMSE/R2) --> Plot Residuals.
-
-        -   Why are my RMSE and AIC so high?
+    -   Why are my RMSE and AIC so high?
 
     -   If this looks good, I plan to do the same workflow for all of the environmental parameters as well. For now, I just have plots to see what may be worth diving into.
 
@@ -27,7 +25,7 @@ bibliography: MADA.bib
 
     -   Taking a look at the section titled Blind Oso: Growth \~Salinity + Dust, does my overall workflow look correct?
 
-3.  Ultimately, I feel as though I am missing some "oomph"when it comes to my statistical analysis. The linear models seem adequate, but I know that there are multiple variables at play at these sites (and we have the nutrient data for this). I am open to any suggestions that may diversify and expand my analyses!
+3.  Ultimately, I feel as though I am missing some "oomph"when it comes to my statistical analysis. The linear models seem adequate, but I know that there are multiple variables at play at these sites (and we have data to explore some of this). I am open to any suggestions that may diversify and expand my analyses!
 
 ```{r, echo=FALSE, message=FALSE}
 # load a few R packages
@@ -73,7 +71,7 @@ How do Saharan dust events influence Vibrio populations in high nutrient coastal
 
 ## Description of Study Area
 
-Sampling took place at three locations in Corpus Christi, TX: Blind Oso Bay, a residential canal system on Padre Island, and the Gulf. Sites were chosen based on differing baseline nutrient levels. Blind Oso Bay is a shallow tributary that is popular amongst wadefisherman and kayakers. The Bay is often impacted by fluctuating salinities and high levels of nutrients and chlorophyl due to its proximity to a wastewater treatment plant [@wetz] Additionally, the Bay has persistent issues with high levels of fecal indicator bacteria, placing it on the U.S. impaired waters list ([Nicolau & Hill, 2014](https://www.tceq.texas.gov/downloads/water-quality/tmdl/oso-bay-oyster-harvesting-assessment-103/103-oso-bay-monitoring-report-2013.pdf), [Texas Commission on Environmental Quality, 2022](https://www.tceq.texas.gov/downloads/water-quality/assessment/integrated-report-2022/2022-303d.pdf)). The residential canal system is also impacted by high nutrients and chlorophyl from storm water runoff, and salinity is primarily driven by precipitation. The Gulf site is characterized by constant salinities (\~36) and low nutrient levels.
+Sampling took place at three locations in Corpus Christi, TX: Blind Oso Bay, a residential canal system on Padre Island, and the Gulf. Sites were chosen based on differing baseline nutrient levels. Blind Oso Bay is a shallow tributary that is popular amongst wadefisherman and kayakers. The Bay is often impacted by fluctuating salinities and high levels of nutrients and chlorophyl due to its proximity to a wastewater treatment plant [@wetz] Additionally, the Bay has persistent issues with high levels of fecal indicator bacteria, placing it on the U.S. impaired waters list ([Nicolau & Hill, 2014](https://www.tceq.texas.gov/downloads/water-quality/tmdl/oso-bay-oyster-harvesting-assessment-103/103-oso-bay-monitoring-report-2013.pdf), [Texas Commission on Environmental Quality, 2022](https://www.tceq.texas.gov/downloads/water-quality/assessment/integrated-report-2022/2022-303d.pdf)). The residential canal system is also impacted by high nutrients and chlorophyl from storm water runoff, and salinity is primarily driven by precipitation. The Gulf site is characterized by constant salinities (\~36) and low nutrient levels. <!--# update these citations -->
 
 ## Sample Collection and Processing
 
@@ -119,11 +117,9 @@ The top portion of the figure depicts total enumerated Vibrio as copies per mL, 
 
 ![](images/000031.png)
 
-Temperature and salinity at the Canal site is relatively high and consistent as compared to the other sites. Blind Oso Bay experiences some shifts in temperatures and drastic fluctuations in salinity. The Gulf site had a drop in temperature (possibly due to upwelling) and relatively consistent ocean salinities
+Temperature and salinity at the Canal site is relatively high and consistent as compared to the other sites. Blind Oso Bay experiences some shifts in temperatures and drastic fluctuations in salinity. The Gulf site had a drop in temperature (possibly due to upwelling) and relatively consistent ocean salinities.
 
-#### Other Environmental Parameters
-
-<!--# Let's add Nutrient of interest Data -->
+<!--# Add detail on other env variables -->
 
 ## Basic statistical analysis
 
@@ -149,35 +145,34 @@ According to the ccf plots, BO has a significant lag relationship a value of -1.
 
 ![](images/lm.png){width="329"}
 
-Above are linear regressions that examine the relationship between dust concentration and copies_mL. As mentioned above, the lags identified may not correspond to the most significant relationship between the two variables. While a lag of -1 for Blind Oso and -2 for the Canals explains the data well, a lag of -2 for the Gulf site was more fitting. This makes sense, as taking a look at the copies_mL plot above, we do see a \~2 day lag in response, where we have a spike in dust, and 2 days later, a spike in copies_mL.
+Above are linear regressions that examine the relationship between dust concentration and copies_mL. As mentioned above, the lags identified may not correspond to the most significant relationship between the two variables.
+
+| Site | Model Type | RMSE     | AIC      |
+|------|------------|----------|----------|
+| BO   | Null       | 20472.82 | 275.9331 |
+| BO   | Actual     | 14422.91 | 269.8923 |
+| C2   | Null       | 8472.898 | 253.1876 |
+| C2   | Actual     | 5191.22  | 245.3679 |
+| RD   | Null       | 50386.56 | 296.9821 |
+| RD   | Actual     | 36132.11 | 291.933  |
 
 [A few things to note:]{.ul}
 
--   My stats code contains some chunks that create predicted values based off of the current data set. Since my data set is small, I am not able to portion of \~25% to use to test my model as it could impact the strength of my model. Therefore, plotting the predicted vs. actual will give an R2 of 1.00. I am continuing to find a good validation method.
+-   My stats code contains some chunks that create predicted values based off of the current data set. Since my data set is small, I am not able to portion of \~25% to use to test my model as it could impact the strength of my model. Therefore, plotting the predicted vs. actual will give an R2 of 1.00. I am using AIC as a metric of model performance and comparing data produced models to null models.
 
-    -   After reviewing module 9, it looks like Information Criteria may be a proper alternative (REF: MOD9/Model Performance and Overfitting).
+    -   Will need to interpret findings as exploratory and hypothesis generating, and will need to be careful about trying to draw generalizable conclusions.
 
-        -   Will need to interpret findings as exploratory and hypothesis generating, and will need to be careful about trying to draw generalizable conclusions.
-
-        -   AIC:
-
-            -   Blind Oso = 271.25
-
-            -   Canals = 243.97
-
-            -   Gulf = 292.13
-
--   I am also planning on running a multi-variate model to look at multiple predictors of interests (temp, salinity, nutrients), but am currently running into an issue with my model output, where rather than getting values, I receive NaN. This code can be found in my `dust_copies_stats.qmd` code.
+-   I am also planning on running a multi-variate model to look at multiple predictors of interests (temp, salinity, nutrients). This code can be found in my `dust_copies_stats.qmd` code.
 
 ### Residuals:
 
 Instead of (or in addition to) plotting observed versus predicted for continuous outcomes, you can plot the difference between the two. These differences are called the residuals. What you are looking for is a cloud of points with no discernible pattern. If there is a pattern (e.g., an overall skew, or more points above the 0 y-axes than below), it again suggests that there is still some pattern/signal in the data that the model didn't capture.
 
-![](images/000005-02.png){width="342"}
+![](images/000005-02.png){width="299"}
 
-![](images/000009.png){width="341"}
+![](images/000009.png){width="300"}
 
-![](images/00000d.png)
+![](images/00000d.png){width="296"}
 
 ## Full analysis
 
