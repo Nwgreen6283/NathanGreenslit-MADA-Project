@@ -7,9 +7,9 @@ format:
 
 **This script is good for visualizing copies per mL data and dust data.**
 
-# Getting Started 
+# Getting Started
 
-#### Libraries 
+#### Libraries
 
 ```{r}
 library(here)

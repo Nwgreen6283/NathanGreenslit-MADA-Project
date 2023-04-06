@@ -349,7 +349,7 @@ abline(0,0)
 
 res_rd<- resid(rd_mod)
 plot(fitted(rd_mod), res_rd)
-abline(0,0)
+abline(0,0
 ```
 
 ## Conclusion
