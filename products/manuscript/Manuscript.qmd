@@ -13,21 +13,21 @@ bibliography: MADA.bib
 
 # Questions for Dr. Handel:
 
-1.  Does my overall workflow in `code/analysis_code/stats/3_uni_variate.qmd` make sense? Is there anything that I am missing, or be a better option for analysis?
+1.  In my `code/analysis_code/stats/3_uni_variate.qmd` code I was playing around with R2 for my linear models. Previously I have been plotting R2 onto the graphs using `stat_poly_equation()` and have also checked through `tidymodeling`. But then I came across the `stat_correlation()` command. When specifying "pearson" as the method, I get a **MUCH** higher R2 value for the models (\~0.48 to \~0.70). I have been trying to figure out what `stat_poly_equation` uses as its method and why there is such a difference. Additionally, my actual model produces the same lower R2 values (using `rsq()`) as the `stat_poly_equation()`. Is there some serious error that I am making here?
+
+2.  Does my overall workflow in `code/analysis_code/stats/3_uni_variate.qmd` make sense? Is there anything that I am missing, or be a better option for analysis?
 
     -   Why are my RMSE and AIC so high (see table under *Conclusion* section)?
 
-    -   If this looks good, I plan to do the same workflow for all of the environmental parameters as well. For now, I just have plots to see what may be worth diving into.
+    -   If this looks good, I plan to do the same workflow for all of the environmental parameters (that seem to have a relationship) as well. For now, I just have plots to see what may be worth diving into.
 
-2.  Looking at `code/analysis_code/stats/4_multi_variate.qmd` , I am a little stuck on how to best create a multivariate model.
+3.  Looking at `code/analysis_code/stats/4_multi_variate.qmd` , I am a little stuck on how to best create a multivariate model.
 
     -   Example: We can see this Salinity at Blind Oso drop at the same time that dust is coming in. This will most likely have an impact of Vibrio growth, but Salinity is probably non-linear.
 
     -   Taking a look at the section titled Blind Oso: Growth \~Salinity + Dust, does my overall workflow look correct?
 
-3.  Ultimately, I feel as though I am missing some "oomph"when it comes to my statistical analysis. The linear models seem adequate, but I know that there are multiple variables at play at these sites (and we have data to explore some of this). I am open to any suggestions that may diversify and expand my analyses!
-
-4.  In my `code/analysis_code/stats/3_uni_variate.qmd` code I was playing around with R2 for my linear models. Previously I have been plotting R2 onto the graphs using `stat_poly_equation()` but then I came across the `stat_correlation()` command. When specifying "pearson" as the method, I get a MUCH higher R2 value for the models (\~0.48 to \~0.70). I have been trying to figure out what `stat_poly_equation` uses as its method and why there is such a difference. At least with dust and copies_mL, I expect Pearson's to be a good method. But is there some serious error that I am making here?
+4.  Ultimately, I feel as though I am missing some "oomph" when it comes to my statistical analysis. The linear models seem adequate, but I know that there are multiple variables at play at these sites (and we have data to explore some of this). I am open to any suggestions that may diversify and expand my analyses! I am thinking some sort of PCA that depicts which predictor variables have the greatest influence on the outcome.
 
 ```{r, echo=FALSE, message=FALSE}
 # load a few R packages

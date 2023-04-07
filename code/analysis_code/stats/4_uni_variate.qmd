@@ -110,7 +110,7 @@ fig3<- rd2 %>% ggplot(aes(lag, copies_mL)) +
   geom_point() +
   stat_smooth(method = "lm")+
   stat_correlation(method = "pearson")+
-  labs(title = "LM DustxCopies (RD+2)",
+  labs(title = "LM DustxCopies (RD+1)",
        x = "log(dust)")
 ```
 
@@ -314,6 +314,7 @@ rmse <- aug_test_rd %>% rmse(truth = copies_mL, .pred)
 rsq <- aug_test_rd %>% rsq(truth = copies_mL, .pred)
 rd_metrics<- full_join(rmse, rsq)
 rd_metrics
+
 ```
 
 ##### AIC
