@@ -76,7 +76,7 @@ rd<- master %>%
 #### Add Lag from `2_cca.qmd`
 
 ```{r}
-bo2<- bo%>% mutate(
+bo2<- bo %>% mutate(
   lag =Lag(bo$t7sum, shift  = 1)) %>% #Make lag from ccf
 filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19')))
 
@@ -95,34 +95,29 @@ filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19')))
 fig1<- bo2 %>% ggplot(aes(x = lag, y = copies_mL)) +
   geom_point() +
   stat_smooth(method = "lm")+
-  stat_poly_eq(aes(x = lag, y = copies_mL),
-               rr.digits = 4) +
+  stat_correlation(method = "pearson")+
   labs(title = "LM DustxCopies (BO+1)",
        x = "log(dust)")
 
 fig2<- c22 %>% ggplot(aes(x = lag, y = copies_mL)) +
   geom_point() +
   stat_smooth(method = "lm")+
-  stat_poly_eq(aes(x = lag, y = copies_mL),
-               rr.digits = 4) +
+  stat_correlation(method = "pearson")+
   labs(title = "LM DustxCopies (C2+2)",
        x = "log(dust)")
 
 fig3<- rd2 %>% ggplot(aes(lag, copies_mL)) +
   geom_point() +
   stat_smooth(method = "lm")+
-  stat_poly_eq(aes(x = lag, y = copies_mL),
-               rr.digits = 4) +
+  stat_correlation(method = "pearson")+
   labs(title = "LM DustxCopies (RD+2)",
        x = "log(dust)")
 ```
 
-#### Stack and Save
+#### Stac
 
 ```{r}
-png(file = here("results", "plots", "stats", "lm.png"))
 ggarrange(fig1, fig2, fig3 + font("x.text", size = 10), ncol = 1, nrow = 3)
-dev.off()
 ```
 
 ## Null Model:
@@ -370,6 +365,8 @@ AIC and RMSE are lower (better performance) than the null.
 # OTHER ENVIRONMENTAL PARAMETERS
 
 <!--# Is there a lag for Nutrient data too? -->
+
+<!--# Need to change R2 input here too -->
 
 ## Create New Master Data set
 

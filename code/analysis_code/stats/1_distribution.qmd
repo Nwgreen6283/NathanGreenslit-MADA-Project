@@ -62,6 +62,8 @@ daily<-
 
 # Check Distributions of Data
 
+<!--# Need to do this with all data -->
+
 ## \[Copies/mL\]
 
 #### Visualization
