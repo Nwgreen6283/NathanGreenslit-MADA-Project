@@ -21,29 +21,32 @@ In order to reproduce the work from this project, one needs to follow these step
 
 (1) dust:
 
-(i) \`daily_dusts.qmd\`: interpretations of dust concentrations(sum, average, individual hours). This becomes important in statistical analysis.
+    1.  \`daily_dusts.qmd\`: interpretations of dust concentrations(sum, average, individual hours). This becomes important in statistical analysis.
 
-(ii)\`dust_and_copies.qmd\`: This is nice for visualizing potential relationships between dust days and Vibrio growth.
+    2.  dust_and_copies.qmd\`: This is nice for visualizing potential relationships between dust days and Vibrio growth.
 
 (2) env:
 
-(i) env_par.qmd\`: Examines Temperature and Salinity across time series
+    1.  env_par.qmd\`: Examines Temperature and Salinity across time series
 
+```{=html}
+<!-- -->
+```
 (3) qPCR:
 
-(i)\`daily_qmd\`: examines Vibrio enumeration over daily time series. This is also done as part of the \`daily_dusts.qmd\` code.
+    1.  \`daily_qmd\`: examines Vibrio enumeration over daily time series. This is also done as part of the \`daily_dusts.qmd\` code.
 
 \
 (IV) **STATISTCS**: Open and run the code found in `analysis_code/stats` folder for the respective data of interest.
 
 (1) stats:
 
-(i) \`1_distributiom.qmd\`: Checks distribution of variables of interest
+    1.  \`1_distributiom.qmd\`: Checks distribution of variables of interest
 
-(ii) \`2_cca.qmd\`: Runs cross-correlation analysis to assess significant lags in timeseries data
+    2.  \`2_cca.qmd\`: Runs cross-correlation analysis to assess significant lags in timeseries data
 
-(iii) \`3_correlation.qmd\`: Runs Correlation matrices on all variables
+    3.  \`3_correlation.qmd\`: Runs Correlation matrices on all variables
 
-(iv)\`4_uni_variate.qmd\` : runs univariate models on variable and predictors of interest.
+    4.  \`4_uni_variate.qmd\` : runs univariate models on variable and predictors of interest.
 
-(v) \`5_multi_variate.qmd\`: runs multivariate models on variable of interest (copies_mL)
+    5.  \`5_multi_variate.qmd\`: runs multivariate models on variable of interest (copies_mL)
