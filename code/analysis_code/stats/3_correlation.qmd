@@ -37,8 +37,7 @@ data0<- read_csv(here("data", "processed_data", "tx_master.csv")) #Master Data c
 ```{r}
 dust<- dust0 %>%
   filter(!is.na(date),
-         date %in% as.Date("2022-07-04"):as.Date("2022-07-19")) %>%
-  mutate(t7sum = log10(t7sum)) #Log transform Dust conc (as it is not normally distributed) 
+         date %in% as.Date("2022-07-04"):as.Date("2022-07-19")) 
 
 
 data<- data0 %>%
@@ -55,9 +54,9 @@ master0<-
   rename("dust" = "t7sum") #Now dust variable is the t7sum
 ```
 
-#### Make Lag data sets by Site
+### Make Lag data sets by Site
 
-This cleans out non-numeric values, creates site lag from CCA, and producea a final daily plot
+This cleans out non-numeric values, creates site lag from CCA, and produces a final daily plot
 
 ```{r}
 bo<- 
@@ -86,6 +85,36 @@ rd<-
 
 ```
 
+### Log10 Transform non-normally distributed data and Remove Non-Parametric Variables
+
+Distributions can be found in `1_distribution.qmd`
+
+```{r}
+#Blind Oso
+bo<-
+  bo %>%
+  mutate(amm = log10(amm), #Log-transforms data
+         din_dip = log10(din_dip),
+         doc = log10(doc),
+         dust = log10(dust)) %>%
+  select(!c(secchi, tn, tdn, don)) #Removes non-parametric data
+
+#Canals
+c2<- 
+  c2 %>%
+  mutate(orthop = log10(orthop),
+         dust = log10(dust)) %>%
+  select(!c(secchi, nn, sil, doc,toc, tn))
+
+#Gulf
+rd<- 
+  rd %>%
+  mutate(doc = log10(doc),
+         toc = log10(toc),
+         dust = log10(dust)) %>%
+  select(!c(sal, do_mgl, secchi, nn, tn))
+```
+
 # Correlation Matrix
 
 There are different methods for **correlation analysis** : **Pearson parametric correlation test**, **Spearman** and **Kendall** rank-based **correlation analysis**. The default is [pearson correlation coefficient](http://www.sthda.com/english/wiki/correlation-test-between-two-variables) which measures the linear **dependence** between two variables. [kendall and spearman](http://www.sthda.com/english/wiki/correlation-test-between-two-variables) correlation methods are non-parametric **rank-based correlation test**.
@@ -97,7 +126,7 @@ If your data contain missing values, use the following R code to handle missing 
     cor(x, method = "pearson", use = "complete.obs")
 
 ```{r, include = FALSE}
-b<- cor(bo)
+b<- cor(bo) #Default method = pearson
 round(b,2) #Round correlation coeff to "x" digits 
 
 c<- cor(c2)

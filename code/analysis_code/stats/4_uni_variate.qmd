@@ -112,6 +112,9 @@ fig3<- rd2 %>% ggplot(aes(lag, copies_mL)) +
   stat_correlation(method = "pearson")+
   labs(title = "LM DustxCopies (RD+1)",
        x = "log(dust)")
+fig1
+fig2
+fig3
 ```
 
 #### Stac
