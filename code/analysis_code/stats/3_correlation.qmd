@@ -169,7 +169,7 @@ flattenCorrMatrix(rclean$r, rclean$P)
 
 The function **corrplot()** takes the **correlation matrix** as the first argument. The second argument (type="upper") is used to display only the upper triangular of the **correlation matrix**.
 
-```{r}
+```{r, fig.width=3, fig.height=3}
 corrplot(b, type = "upper", order = "hclust", 
          tl.col = "black", tl.srt = 45,
          title = "Blind Oso",  mar=c(0,0,1,0)) #Adds and lowers title 
