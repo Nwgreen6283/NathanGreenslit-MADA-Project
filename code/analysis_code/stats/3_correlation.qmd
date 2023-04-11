@@ -96,7 +96,8 @@ bo<-
   mutate(amm = log10(amm), #Log-transforms data
          din_dip = log10(din_dip),
          doc = log10(doc),
-         dust = log10(dust)) %>%
+         dust = log10(dust),
+         chl = log10(chl)) %>%
   select(!c(secchi, tn, tdn, don)) #Removes non-parametric data
 
 #Canals

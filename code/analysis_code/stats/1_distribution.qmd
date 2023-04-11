@@ -137,6 +137,7 @@ shapiro.test(daily$t7sumlog) #Log trans data
 ```{r}
 shapiro.test(bo$temp)
 shapiro.test(bo$sal)
+shapiro.test((bo$chl))
 shapiro.test(bo$do_mgl)
 shapiro.test(bo$do_per)
 shapiro.test(bo$pH)
@@ -158,6 +159,7 @@ shapiro.test(bo$tn)
 ```{r}
 shapiro.test(c2$temp)
 shapiro.test(c2$sal)
+shapiro.test(c2$chl)
 shapiro.test(c2$do_mgl)
 shapiro.test(c2$do_per)
 shapiro.test(c2$pH)
@@ -179,6 +181,7 @@ shapiro.test(c2$tn)
 ```{r}
 shapiro.test(rd$temp)
 shapiro.test(rd$sal)
+shapiro.test(rd$chl)
 shapiro.test(rd$do_mgl)
 shapiro.test(rd$do_per)
 shapiro.test(rd$pH)
@@ -206,7 +209,8 @@ bo_log<-
          din_dip = log10(din_dip),
          tdn = log10(tdn),
          don = log10(don),
-         doc = log10(doc))
+         doc = log10(doc),
+         chl = log10(chl))
 
 c2_log<- 
    c2 %>%
@@ -236,6 +240,7 @@ Now re-run with log transformed data
 ```{r}
 shapiro.test(bo_log$temp)
 shapiro.test(bo_log$sal)
+shapiro.test(bo_log$chl)
 shapiro.test(bo_log$do_mgl)
 shapiro.test(bo_log$do_per)
 shapiro.test(bo_log$pH)
@@ -310,7 +315,7 @@ Variables under **Non-parametric** are those that need another test.
 | temp         | amm              | secchi         |
 | sal          | din_dip          | nn             |
 | don_mgl      | doc              | tdn            |
-| don_per      |                  | don            |
+| don_per      | chl              | don            |
 | pH           |                  |                |
 | orthop       |                  |                |
 | sil          |                  |                |
@@ -330,6 +335,7 @@ Variables under **Non-parametric** are those that need another test.
 | din_dip      |                  |                |
 | tdn          |                  |                |
 | don          |                  |                |
+| chl          |                  |                |
 
 ### Gulf
 
@@ -344,3 +350,4 @@ Variables under **Non-parametric** are those that need another test.
 | din_dip      |                  |                |
 | tdn          |                  |                |
 | don          |                  |                |
+| chl          |                  |                |

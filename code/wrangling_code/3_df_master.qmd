@@ -30,7 +30,8 @@ env<- read_csv(here("data", "processed_data", "ysi_2.csv")) #Clean Environmental
 
 ```{r}
 env<- env %>%
-select_if(~ !any(is.na(.))) #Drops Columns with NA
+  filter(!date == as.Date('2022-02-16') | !site == "RD") %>% #Gets rid of NA
+  select(1:20) #Removes NA columns
 ```
 
 #### Combine 3 data sets to make a large master data set
