@@ -35,8 +35,8 @@ data0<- read_csv(here("data", "processed_data", "tx_master.csv")) #Master Data c
 ```{r}
 dust<- dust0 %>%
   filter(!is.na(date),
-         date %in% as.Date("2022-07-04"):as.Date("2022-07-19")) %>%
-  mutate(t7sum = log10(t7sum)) #Log transform Dust conc (as it is not normal) 
+         date %in% as.Date("2022-07-04"):as.Date("2022-07-19")) #%>%
+  #mutate(t7sum = log10(t7sum)) #Log transform Dust conc (as it is not normal) 
 
 
 data<- data0 %>%
@@ -49,7 +49,7 @@ data<- data0 %>%
 master0<- 
   dust %>% full_join(data) %>%
   filter(hr_cst %in% "01") #While this is technically not for hour 1, this gets ride of all duplicates for the sake of analysis.
-master<- master0[c(1,8,14,32)] #Select columns of interest
+master<- master0[c(1,8,14,34)] #Select columns of interest
 
 #View new dataframe
 master
@@ -92,29 +92,25 @@ filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19')))
 #### Plot
 
 ```{r}
-fig1<- bo2 %>% ggplot(aes(x = lag, y = copies_mL)) +
+bo2 %>% ggplot(aes(x = lag, y = copies_mL)) +
   geom_point() +
   stat_smooth(method = "lm")+
-  stat_correlation(method = "pearson")+
+  stat_correlation(method = "spearman")+
   labs(title = "LM DustxCopies (BO+1)",
        x = "log(dust)")
-
-fig2<- c22 %>% ggplot(aes(x = lag, y = copies_mL)) +
+ c22 %>% ggplot(aes(x = lag, y = copies_mL)) +
   geom_point() +
   stat_smooth(method = "lm")+
-  stat_correlation(method = "pearson")+
+  stat_correlation(method = "spearman")+
   labs(title = "LM DustxCopies (C2+2)",
        x = "log(dust)")
-
-fig3<- rd2 %>% ggplot(aes(lag, copies_mL)) +
+ rd2 %>% ggplot(aes(lag, copies_mL)) +
   geom_point() +
   stat_smooth(method = "lm")+
-  stat_correlation(method = "pearson")+
+  stat_correlation(method = "spearman")+
   labs(title = "LM DustxCopies (RD+1)",
        x = "log(dust)")
-fig1
-fig2
-fig3
+
 ```
 
 #### Stac
