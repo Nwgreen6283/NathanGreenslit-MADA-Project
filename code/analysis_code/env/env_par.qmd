@@ -57,7 +57,7 @@ temp<- daily %>% ggplot() + geom_line(
     axis.title.x = element_blank(),
     axis.ticks.x = element_blank(),
     axis.text.x = element_blank(),
-    axis.title.y = element_text(size = 7),
+    axis.title.y = element_text(size = 10),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -86,7 +86,7 @@ sal<- daily %>% ggplot() + geom_line(
     axis.title.x = element_blank(),
     axis.ticks.x = element_blank(),
     axis.text.x = element_blank(),
-    axis.title.y = element_text(size = 7),
+    axis.title.y = element_text(size = 10),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -117,7 +117,7 @@ do<-
     axis.title.x = element_blank(),
     axis.ticks.x = element_blank(),
     axis.text.x = element_blank(),
-    axis.title.y = element_text(size = 7),
+    axis.title.y = element_text(size = 10),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -146,12 +146,14 @@ nn<-
   theme(
     plot.title= element_text(hjust = 0.5, size = 20),
     axis.title.x = element_blank(),
-    axis.ticks.x = element_blank(),
     axis.text.x = element_blank(),
-    axis.title.y = element_text(size = 7),
+    axis.ticks.x = element_blank(),
+    axis.title.y = element_text(size = 10),
     axis.text.y = element_text(size = 7),
-    legend.position = "none",
-    legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
+    legend.key.size = unit(0.3,'cm'),
+    legend.position = c(0.3,0.7),
+    legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid'),
+    legend.text = element_text(size = 7)) + #Moves legend onto plot  + #Moves legend onto plot 
     scale_color_manual(values = c("Blind Oso" = "#809C52",
                                 "Canals" = "#ba4716",
                                 "Gulf" = "4c848c"))
@@ -175,10 +177,10 @@ ortho<-
   #  title = "Temperature across Daily Time Series by Site",
     color = "Site")+
   theme(
-    axis.title.x = element_text(size = 10),
-    axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
     axis.ticks.x = element_blank(),
-    axis.title.y = element_text(size = 7),
+    axis.title.y = element_text(size = 10),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -205,9 +207,10 @@ don<-
   #  title = "Temperature across Daily Time Series by Site",
     color = "Site")+
   theme(
-    axis.title.x = element_text(size = 10),
-    axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
-    axis.title.y = element_text(size = 7),
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
+   axis.ticks.x = element_blank(),
+    axis.title.y = element_text(size = 10),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -234,10 +237,10 @@ doc<-
   #  title = "Temperature across Daily Time Series by Site",
     color = "Site")+
   theme(
-    axis.title.x = element_text(size = 10),
-    axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
     axis.ticks.x = element_blank(),
-    axis.title.y = element_text(size = 7),
+    axis.title.y = element_text(size = 10),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -265,9 +268,10 @@ pH<-
     color = "Site")+
   theme(
     plot.title= element_text(hjust = 0.5, size = 20),
-    axis.title.x = element_text(size = 10),
-    axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
-    axis.title.y = element_text(size = 7),
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.title.y = element_text(size = 10),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -298,7 +302,7 @@ amm<-
     axis.title.x = element_blank(),
     axis.ticks.x = element_blank(),
     axis.text.x = element_blank(),
-    axis.title.y = element_text(size = 7),
+    axis.title.y = element_text(size = 10),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -329,7 +333,7 @@ tn<-
     axis.title.x = element_blank(),
     axis.ticks.x = element_blank(),
     axis.text.x = element_blank(),
-    axis.title.y = element_text(size = 7),
+    axis.title.y = element_text(size = 10),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -360,7 +364,7 @@ sil<-
     axis.title.x = element_blank(),
     axis.ticks.x = element_blank(),
     axis.text.x = element_blank(),
-    axis.title.y = element_text(size = 7),
+    axis.title.y = element_text(size = 10),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -390,7 +394,7 @@ cop<-
     axis.title.x = element_blank(),
     axis.ticks.x = element_blank(),
     axis.text.x = element_blank(),
-    axis.title.y = element_text(size = 7),
+    axis.title.y = element_text(size = 10),
     axis.text.y = element_text(size = 7),
     legend.key.size = unit(0.3,'cm'),
     legend.position = c(0.2,0.7),
@@ -401,10 +405,22 @@ cop<-
                                 "Gulf" = "4c848c"))
 ```
 
-#### Combine Environment Plots
+#### ![](images/paste-21541164.png)Combine Environment Plots
 
-```{r, fig.width= 10, fig.height= 5}
-fig<- ggarrange(cop,temp,sal,sil,do,amm,nn,tn,ortho,doc, pH,don + font("x.text", size = 10), ncol = 4, nrow = 3,align = "v")
+```{r}
+fig<- ggarrange(temp,
+                sal,
+                #do,
+                nn,
+                ortho,
+                don,
+                doc,
+                #pH,
+                #amm,
+               # tn,
+               # sil,
+                #cop,
+                ncol = 3, nrow = 2,align = "v")
 
 fig
 ```

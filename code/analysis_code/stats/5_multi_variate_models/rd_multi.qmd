@@ -1,0 +1,343 @@
+---
+title: "multi-variate"
+format:
+  pdf:
+    theme: default
+---
+
+# Getting Started
+
+#### Libraries
+
+```{r, include = FALSE}
+library(tidyverse)
+library(here)
+library(Hmisc) #For lag function
+library(tidymodels) #For modeling
+library(ggpmisc) #For R2 equation on graph
+library(dotwhisker) #Fpr visualization
+library(lubridate)#Dates
+library(kableExtra) #Tables
+```
+
+#### Data
+
+```{r}
+dust<- read_csv(here("data", "processed_data","dust_master.csv")) #Different Dust attributes
+data<- read_csv(here("data", "processed_data", "tx_master.csv")) #Master Data
+```
+
+# Cleaning
+
+#### Clean and Trim
+
+```{r}
+dust<- dust %>%
+  filter(!is.na(date),
+         date %in% as.Date("2022-07-04"):as.Date("2022-07-19")) 
+
+
+data<- data %>%
+  filter(date %in% as.Date("2022-07-04"):as.Date("2022-07-19"))
+```
+
+#### Make into one data set
+
+```{r}
+master<- 
+  dust %>% full_join(data) %>%
+  filter(hr_cst %in% "01") #While this is technically not for hour 1, this gets ride of all duplicates for the sake of analysis.
+
+master<- master %>%
+  select(site, sal, temp, copies_mL,t7sum, date, orthop,nn, don,doc) %>%
+  mutate(t7sum = log10(t7sum))
+```
+
+#### Site-specific Data sets and Clean df
+
+```{r}
+b<- master %>%
+  filter(site %in% "Gulf" | date %in% as.Date('2022-07-05') : as.Date('2022-07-06'))
+b<- b %>%
+mutate(
+  lag =Lag(b$t7sum, shift  = 1)) %>% #Create 1 day lag
+filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19'))) %>%
+select(!c(date,t7sum,site)) %>%
+  rename("log10dust" = "lag")
+```
+
+# Models
+
+## 0. Null Model:
+
+### Create 5 Fold
+
+```{r}
+fold <- vfold_cv(b, v = 5, repeats = 5) #Data was too small to stratify (<20)
+```
+
+### Make Models
+
+```{r, include= FALSE}
+#Create Null Recipe for Growth at all three sites
+null<- recipe(copies_mL ~ 1, data = b) 
+
+#Set up linear model
+lm_mod<- linear_reg() %>%
+  set_engine("lm") %>%
+  set_mode("regression")
+
+#Workflow that adds recipe to model for three sites
+null_wflow<- 
+  workflow() %>%
+  add_model(lm_mod) %>%
+  add_recipe(null)
+
+
+#Use workflow to fit model to  data set
+null_fit<-
+  fit_resamples(null_wflow, resamples = fold)
+
+```
+
+### Get Metrics for Null
+
+#### RMSE
+
+```{r}
+null_met <- 
+  collect_metrics(null_fit)
+null_met
+rm0<- 50771.79
+rs0<- "NA"
+```
+
+#### AIC
+
+```{r}
+null_mod<- 
+  lm(copies_mL ~ 1, data = b)
+aic0<-AIC(null_mod) %>% round(digits = 2)
+```
+
+## 1. Dust Model
+
+#### Model
+
+```{r}
+#Create Recipe for Growth 
+growth_recipe1<- recipe(copies_mL ~ log10dust, data = b)
+
+#Workflow that adds recipe to model
+Growth_wflow1<- 
+  workflow() %>%
+  add_model(lm_mod) %>%
+  add_recipe(growth_recipe1)
+
+#Use workflow to fit model to  data set
+growth_fit1<- Growth_wflow1 %>%
+  fit(data = b)
+
+#View as Tibble 
+growth_fit1 %>%
+  extract_fit_parsnip() %>%
+  tidy()
+```
+
+#### Metrics
+
+```{r}
+aug_test1 <- augment(growth_fit1, b)
+rmse1 <- aug_test1 %>% rmse(truth = copies_mL, .pred)
+rsq1 <- aug_test1 %>% rsq(truth = copies_mL, .pred)
+
+mod1<- lm(copies_mL ~ log10dust, b)
+aic1<-AIC(mod1) %>% round(digits = 2)
+
+metrics1<- full_join(rmse1, rsq1)
+metrics1
+```
+
+## 2. Water Chemistry Model
+
+#### Model
+
+```{r}
+#Create Recipe for Growth 
+growth_recipe2<- recipe(copies_mL ~ sal+temp, data = b)
+
+#Workflow that adds recipe to model
+Growth_wflow2<- 
+  workflow() %>%
+  add_model(lm_mod) %>%
+  add_recipe(growth_recipe2)
+
+#Use workflow to fit model to  data set
+growth_fit2<- Growth_wflow2 %>%
+  fit(data = b)
+
+#View as Tibble 
+growth_fit2 %>%
+  extract_fit_parsnip() %>%
+  tidy()
+```
+
+#### Metrics
+
+```{r}
+aug_test2 <- augment(growth_fit2, b)
+rmse2 <- aug_test2 %>% rmse(truth = copies_mL, .pred)
+rsq2 <- aug_test2 %>% rsq(truth = copies_mL, .pred)
+
+mod2<- lm(copies_mL ~ sal+temp, b)
+aic2<- AIC(mod2)%>% round(digits = 2)
+
+metrics2<- full_join(rmse2, rsq2)
+metrics2
+```
+
+## 3. Chemistry + Dust
+
+#### Model
+
+```{r}
+#Create Recipe for Growth 
+growth_recipe3<- recipe(copies_mL ~ sal+temp + log10dust, data = b)
+
+#Workflow that adds recipe to model
+Growth_wflow3<- 
+  workflow() %>%
+  add_model(lm_mod) %>%
+  add_recipe(growth_recipe3)
+
+#Use workflow to fit model to  data set
+growth_fit3<- Growth_wflow3 %>%
+  fit(data = b)
+
+#View as Tibble 
+growth_fit3 %>%
+  extract_fit_parsnip() %>%
+  tidy()
+```
+
+#### Metrics
+
+```{r}
+aug_test3 <- augment(growth_fit3, b)
+rmse3 <- aug_test3 %>% rmse(truth = copies_mL, .pred)
+rsq3 <- aug_test3 %>% rsq(truth = copies_mL, .pred)
+
+mod3<- lm(copies_mL ~ sal+temp + log10dust, b)
+aic3<- AIC(mod3)%>% round(digits = 2)
+
+metrics3<- full_join(rmse3, rsq3)
+metrics3
+```
+
+## 4. Model 3 + Nutrients
+
+#### Model
+
+```{r}
+#Create Recipe for Growth 
+growth_recipe4<- recipe(copies_mL ~ sal+temp+orthop+log10dust+nn, data = b)
+
+#Workflow that adds recipe to model
+Growth_wflow4<- 
+  workflow() %>%
+  add_model(lm_mod) %>%
+  add_recipe(growth_recipe4)
+
+#Use workflow to fit model to  data set
+growth_fit4<- Growth_wflow4 %>%
+  fit(data = b)
+
+#View as Tibble 
+growth_fit4 %>%
+  extract_fit_parsnip() %>%
+  tidy()
+```
+
+#### Metrics
+
+```{r}
+aug_test4 <- augment(growth_fit4, b)
+rmse4 <- aug_test4 %>% rmse(truth = copies_mL, .pred)
+rsq4 <- aug_test4 %>% rsq(truth = copies_mL, .pred)
+
+mod4<- lm(copies_mL ~ sal+temp+orthop+log10dust+nn, b)
+aic4<- AIC(mod4)%>% round(digits = 2)
+
+metrics4<- full_join(rmse4, rsq4)
+metrics4
+```
+
+## 5. Module 4 + DOM
+
+#### Model
+
+```{r}
+#Create Recipe for Growth 
+growth_recipe5<- recipe(copies_mL ~ sal+temp+log10dust+orthop+nn+don+doc, data = b)
+
+#Workflow that adds recipe to model
+Growth_wflow5<- 
+  workflow() %>%
+  add_model(lm_mod) %>%
+  add_recipe(growth_recipe5)
+
+#Use workflow to fit model to  data set
+growth_fit5<- Growth_wflow5 %>%
+  fit(data = b)
+
+#View as Tibble 
+growth_fit5 %>%
+  extract_fit_parsnip() %>%
+  tidy()
+```
+
+#### Metrics
+
+```{r}
+aug_test5 <- augment(growth_fit5, b)
+rmse5 <- aug_test5 %>% rmse(truth = copies_mL, .pred)
+rsq5 <- aug_test5 %>% rsq(truth = copies_mL, .pred)
+
+mod5<- lm(copies_mL ~ sal+temp+log10dust+orthop+nn+don+doc, b)
+aic5<-AIC(mod5)%>% round(digits = 2)
+
+metrics5<- full_join(rmse5, rsq5)
+metrics5
+```
+
+# Tables
+
+#### Label Metrics
+
+```{r}
+#R2
+rs1<- rsq1$.estimate %>% round(digits = 2)
+rs2<- rsq2$.estimate %>% round(digits = 2)
+rs3<- rsq3$.estimate %>% round(digits = 2)
+rs4<- rsq4$.estimate %>% round(digits = 2)
+rs5<- rsq5$.estimate %>% round(digits = 2)
+
+#RMSE
+rm1<- rmse1$.estimate 
+rm2<- rmse2$.estimate
+rm3<- rmse3$.estimate
+rm4<- rmse4$.estimate
+rm5<- rmse5$.estimate
+```
+
+#### Make Table
+
+```{r}
+kable(data.frame(Model = c("Null Model", "Model 1: Dust", "Model 2: Water Chemistry", "Model 3: Chemistry + Dust", "Model 4: Model 3 + Nutrients", "Model 5: Model 4 + DOM"),
+             R2 = c(rs0,rs1,rs2,rs3,rs4,rs5),
+             RMSE = c(rm0,rm1,rm2,rm3,rm4,rm5),
+             AIC = c(aic0, aic1,aic2,aic3,aic4,aic5)),
+      caption = "Gulf: Comparative linear regression analysis of Vibrio copies per mL between 6 operational models.")
+```
+
+#### 

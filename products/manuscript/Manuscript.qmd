@@ -6,30 +6,16 @@ date: "`r Sys.Date()`"
 format:
   docx:
     toc: false
-    number-sections: true
+    number-sections: false
     highlight-style: github
 bibliography: MADA.bib
 ---
 
-# Questions for Dr. Handel:
+# Edits
 
-1.  In my `code/analysis_code/stats/3_uni_variate.qmd` code I was playing around with R2 for my linear models. Previously I have been plotting R2 onto the graphs using `stat_poly_equation()` and have also checked through `tidymodeling`. But then I came across the `stat_correlation()` command. When specifying "pearson" as the method, I get a **MUCH** higher R2 value for the models (\~0.48 to \~0.70). I have been trying to figure out what `stat_poly_equation` uses as its method and why there is such a difference. Additionally, my actual model produces the same lower R2 values (using `rsq()`) as the `stat_poly_equation()`. Is there some serious error that I am making here? At least for dust and copies_mL, these are normally distributed, so this is why I am assuming Pearson's is an accepted method.
-
-2.  Does my overall workflow in `code/analysis_code/stats/3_uni_variate.qmd` make sense? Is there anything that I am missing, or be a better option for analysis?
-
-    -   Why is my RMSE so high (see table under *Conclusion* section)?
-
-    -   If this looks good, I plan to do the same workflow for all of the environmental parameters (that seem to have a relationship) as well. For now, I just have plots to see what may be worth diving into.
-
-3.  Looking at `code/analysis_code/stats/4_multi_variate.qmd` , I am a little stuck on how to best create a multivariate model.
-
-    -   Example: We can see this Salinity at Blind Oso drop at the same time that dust is coming in. This will most likely have an impact of Vibrio growth, but Salinity is probably non-linear.
-
-    -   Taking a look at the section titled Blind Oso: Growth \~Salinity + Dust, does my overall workflow look correct?
-
-4.  Ultimately, I feel as though I am missing some "oomph" when it comes to my statistical analysis. The linear models seem adequate, but I know that there are multiple variables at play at these sites (and we have data to explore some of this). I am open to any suggestions that may diversify and expand my analyses! I am thinking some sort of PCA that depicts which predictor variables have the greatest influence on the outcome.
-
-Thank you!
+1.  I would do a lot of visual inspections to see how the different models fit and what they predict. You can try a linear model and a more complex ML one and compare to see if maybe something beyond a linear relationship improves results.
+2.  Given that you don't have a lot of data, I'm not sure a PCA makes sense. I think in-depth analysis of the relation between the variables and the outcome and then in addition to the linear models trying a few more complex ones will probably be the better approach.
+3.  The figures in the manuscript look good, but some are too small to read. Needs breaking up and/or increasing font size
 
 ```{r, echo=FALSE, message=FALSE}
 # load a few R packages
@@ -47,17 +33,27 @@ Each year, plumes of Saharan dust travel across the Atlantic to be deposited in 
 
 # Introduction
 
-The Sahara Desert is a significant source of atmospheric dust, eliciting an estimated one billion metric tons each year \[@dalmeidaModelSaharanDust1986\]. Annually, plumes of this dust travel across the Atlantic via easterly trade winds to be deposited in the surface waters of the Atlantic, Caribbean, and Gulf of Mexico. These dust events are highly episodic, occurring 3- 4 times a year typically in the summer months and lasting 3-5 days each. Dust aerosols can harbor a wide diversity of bacteria \[@kelloggCharacterizationAerosolizedBacteria2004\], fungi \[@ramirez-camejoFungalDiversitySahara2022\], virus-like particles \[@griffinAfricanDesertDust\], and minerals \[@formenti2003\]. These aerosols also serve as a significant source of macro and micronutrients such as phosphate, nitrate, and iron \[@millsIronPhosphorusColimit2004; @savoieNonseasaltSulfateNitrate1989 ; @graham1982\] . This addition of otherwise limiting resources can lead to rapid and potentially harmful blooms of certain microbial groups \[@lenesSaharanDustPhosphatic2008; @westrichSaharanDustNutrients2016a ; @westrichSaharanDustNutrients2016a\].
+## Saharan Dust
+
+The Sahara Desert is a significant source of atmospheric dust, eliciting an estimated one billion metric tons each year [@dalmeidaModelSaharanDust1986\]. Annually, plumes of this dust travel across the Atlantic via easterly trade winds to be deposited in the surface waters of the Atlantic, Caribbean, and Gulf of Mexico. These dust events are highly episodic, occurring 3- 4 times a year typically in the summer months and lasting 3-5 days each. Dust aerosols can harbor a wide diversity of bacteria \[@kelloggCharacterizationAerosolizedBacteria2004\], fungi \[@ramirez-camejoFungalDiversitySahara2022\], virus-like particles \[@griffinAfricanDesertDust\], and minerals \[@formenti2003\]. These aerosols also serve as a significant source of macro and micronutrients such as phosphate, nitrate, and iron \[@millsIronPhosphorusColimit2004; @savoieNonseasaltSulfateNitrate1989 ; @graham1982\] . This addition of otherwise limiting resources can lead to rapid and potentially harmful blooms of certain microbial groups \[@lenesSaharanDustPhosphatic2008; @westrichSaharanDustNutrients2016a ; @westrichSaharanDustNutrients2016a].
+
+## Microbial Blooms
 
 Previous work conducted in the West Florida Shelf has shown that increased iron availability can stimulate the growth of the nitrogen-fixing cyanobacterium *Trichodesmium*. The high amount of nitrogen produced via fixation can be adequate enough to stimulate toxic red tides, caused by the dinoflagellate *Karenia brevis* [@lenesSaharanDustPhosphatic2008].
+
+### Vibrio
 
 While it is documented that these dust events can stimulate growth of harmful phytoplankton, emerging evidence shows that heterotrophic bacteria are responding to the episodic influx of limiting resources and substrate, resulting in blooms of bacteria that are associated with disease, which we refer to as harmful bacterial blooms. Among those that respond are bacterium belonging to the genus *Vibrio*, a group of ubiquitous marine opportunistic heterotrophs. While considered conditionally rare (comprising of \<1% of the microbial community), under the proper conditions, this genus can rapidly bloom to make up a large percentage of the community over a short period of time [@westrichSaharanDustNutrients2016a ; @westrichVibrioPopulationDynamics2018a]. *Vibrio* species are found in brackish to marine waters with salinities ranging from 0-35 and will grow in waters with temperatures ranging from 5°C-40°C [@sampaioVibrioSppLife2022]. Each year, plumes of Saharan dust travel across the Atlantic via easterly trade winds. These plumes are then deposited in the surface waters of the mid-Atlantic, Caribbean, and Gulf of Mexico. These dust aerosols harbor a wide range of fungi, bacteria, virus-like-particles, minerals, and nutrients (NO3, Fe, PO4). Addition of these nutrients to otherwise oligotrophic settings can result in large and rapid blooms of potentially harmful microbes, presenting a danger to both marine and human health.
 
 *Vibrio* species are excellent opportunists, having multiple advantages that allow them to quickly respond to any newly introduced substrate or nutrients. These advantages include multiple copies of rRNA genes, a rapid doubling time, efficient chemotactic motility, large genomic repertoire (consisting of two circular chromosomes), and multiple Fe-siderophore complexes that allow for rapid uptake of iron into the cell [@jensenNonrandomMicroheterogeneity16S2009; @ringgaardChemotaxisArraysVibrio2018 ; @eagonPSEUDOMONASNATRIEGENSMARINE1962 ; @okadaVibriosCommonlyPossess2005 ; @payneVibrioIronTransport2016].
 
-Within the *Vibrionaceae* family, there are at least 12 species that are commonly known as human pathogens. Illness can be induced through either a foodborne route via the consumption of raw or uncooked seafood and contaminated drinking water, or through nonfoodborne routes such as wound exposure while swimming. The most common illnesses caused by *Vibrio* include self-limiting diarrhea and cholera (*V. cholerae*), shellfish-induced gastroenteritis (*V. parahaemolyticus, V. vulnificus*), extreme cases of necrotizing fasciitis and septicemia (*V. vulnificus*), and wound and ear infections  (*V. alginolyticus*, *V. vulnificus*) \[@baker-austinVibrioSppInfections2018\]. Some species also pose a threat to marine health, inducing mortality in oyster and clam larvae (*V. tubiashii, V. coralliilyticus*), bacterial bleaching and rapid tissue loss in corals (*V. mediterranei, V. coralliilyticus*) \[@richardsMortalitiesEasternPacific2015; @rosenbergVibrioShiloiOculina2004; @ben-haimVibrioCoralliilyticusSp2003\], and mortality in important aquaculture species such as penaeid shrimp (*V. parahaemolyticus*) and sea breams (*V. harveyi)* \[@tranDeterminationInfectiousNature2013; @haldarIdentificationVibrioHarveyi2010\] among others.
+Within the *Vibrionaceae* family, there are at least 12 species that are commonly known as human pathogens. Illness can be induced through either a foodborne route via the consumption of raw or uncooked seafood and contaminated drinking water, or through nonfoodborne routes such as wound exposure while swimming. The most common illnesses caused by *Vibrio* include self-limiting diarrhea and cholera (*V. cholerae*), shellfish-induced gastroenteritis (*V. parahaemolyticus, V. vulnificus*), extreme cases of necrotizing fasciitis and septicemia (*V. vulnificus*), and wound and ear infections  (*V. alginolyticus*, *V. vulnificus*) [@baker-austinVibrioSppInfections2018\]. Some species also pose a threat to marine health, inducing mortality in oyster and clam larvae (*V. tubiashii, V. coralliilyticus*), bacterial bleaching and rapid tissue loss in corals (*V. mediterranei, V. coralliilyticus*) \[@richardsMortalitiesEasternPacific2015; @rosenbergVibrioShiloiOculina2004; @ben-haimVibrioCoralliilyticusSp2003\], and mortality in important aquaculture species such as penaeid shrimp (*V. parahaemolyticus*) and sea breams (*V. harveyi)* \[@tranDeterminationInfectiousNature2013; @haldarIdentificationVibrioHarveyi2010] among others.
+
+### Previous Work
 
 Previous work has characterized *Vibrio* blooms in response to Saharan dust input in the oligotrophic setting of the Caribbean and subtropical Atlantic (Barbados and Florida Keys, respectively), with surface water concentrations of total *Vibrio* increasing by five to thirty times that found during non-dust conditions and returning to baseline levels within 24-48 hours. *Vibrio* composition within the larger microbial community also shifted following dust deposition, with initial levels of \<1.4% to a peak of 19.8% of the bacterial community [@westrichSaharanDustNutrients2016a]. A similar phenomenon was also observed in the surface waters of the tropical and open ocean mid-Atlantic with *Vibrio* populations increasing 1.5-fold in the mid-Atlantic following deposition [@westrichVibrioPopulationDynamics2018a] In a follow up study in the Florida Keys, episodic dust events during a daily time series promoted a succession of bacterial responses, with declines in *Prochlorococcus* coinciding with initial increases in bacteria belonging to the order *Vibrionales*, followed by subsequent shifts in response of different bacterial groups [@borchardtSaharanDustDeposition2020b]. To date, our understanding of *Vibrio* and other microbial response to dust input has focused on oligotrophic settings, where dust input is considered to be a critical source of limiting nutrients. However, the composition of desert dust can be complex and may have the potential to deliver critical resources that could be exploited by opportunistic microbes (like *Vibrio*) and elicit a growth response despite higher baseline nutrient levels. Given that human exposure is likely in these coastal waters, it is important to elucidate the relationship between dust input and microbial blooms in these higher nutrient environments.  
+
+## Present Research
 
 This study aims to (1) quantify *Vibrio* population dynamics and composition, and (2) characterize potential microbial blooms and community shifts in response to dust input in coastal sites with higher ambient nutrient levels. The findings from this study will provide an increased understanding of the conditions that can elicit potentially harmful blooms (i.e., *Vibrio*), highlighting the need for further research to understand the effects of dust deposition in non-oligotrophic waters. We predict that (1) *Vibrio* will be among the first to respond to the influx of dust constituents and (2) that the fertilization effects of dust deposition (and possible successional changes) will be dampened at sites with higher baseline nutrient levels, as dust derived nutrients become less critical for growth.
 
@@ -93,7 +89,7 @@ Total *Vibrio* concentrations were quantified using a SYBR Green quantitative PC
 
 This project works with three primary data sets. (1) Enumeration of Vibrio bacteria as copies/mL from quantitative PCR (copies_master.csv), (2) Dust concentrations as aerosol optical thickness (AOT) derived from the Naval Research Lab (nrl_conc.csv), and (3) Temperature and Salinity across the daily time series (ysi_2.csv). Below is a brief summary of how each data set was cleaned. More details can be found in the supplementary files, containing the code and comments describing what each line does. Please refer to the `project_README.md` file located in the NathanGreenslit-MADA-Project folder for details on the repository contents and instructions on reproducibility\
 
-#### Cleaning of Total Vibrio Enumeration dataset
+#### Cleaning of Total Vibrio Enumeration data set
 
 Quantitative PCR provides enumeration results as "cycle threshold or Cq" values. This depicts the cycle number in which enough of the DNA target was present to be amplified and thus detected. Lower Cq values correspond to higher target concentrations (as it takes less cycles to amplify), and vice verse for higher Cq values. The cleaning of this data set consisted of converting these Cq values into something that can be used to quantify Vibrio (copies of target per mL of seawater). To do so, I needed to take into account the amount of water sample that was concentrated on a filter, the total amount of DNA that was eluted following a DNA extraction, and the amount of DNA template added to each mix for qPCR (to name a few). Taking these into account, we are able to calculate our way from Cq values to copies of Vibrio per mL of seawater. qPCR was conducted in triplicate, so the last step was to take the average of the three replicates to have a final value per sample. A date column was also added for each sample.
 
@@ -109,17 +105,19 @@ This data set did not require any cleaning.
 
 # Results
 
+<!--# Have paragraph describing and then have figures. -->
+
 ## Exploratory/Descriptive analysis
 
 #### Dust AOD and Vibrio Enumeration
 
-![](images/paste-C33B6E43.png)
+![Figure 1: Total Daily Vibrio at All Sites](images/paste-C33B6E43.png)
 
 The top portion of the figure depicts total enumerated Vibrio as copies per mL, with color by site. There is a noticeable shift in copies in the Gulf site, a less noticeable but still present shift in Blind Oso Bay, and practically no changes in the Canal site. The bottom portion of the figure depicts the dust concentration (AOD) across the daily time series. This figure depicts the summed dust concentration 24hr prior to sample collection (time points 13hr--> 7hr the next day) across the daily time series. During the time series, two small periods of higher dust AOD occurred on the 9th and 13th respectively. A much larger spike in AOD was observed on the 16th. Initial shift in copies per mL at the Gulf and Blind Oso occur 24-48hr following initial dust introduction on the 13th, and experience another shift around 24-48hr of higher dust input on the 16th.
 
 #### Environmental Parameters
 
-![](images/000031.png)
+![Figure 2: Environmental parameters across daily time series](images/00000f%20(1).png)
 
 Temperature and salinity at the Canal site is relatively high and consistent as compared to the other sites. Blind Oso Bay experiences some shifts in temperatures and drastic fluctuations in salinity. The Gulf site had a drop in temperature (possibly due to upwelling) and relatively consistent ocean salinities.
 
@@ -127,7 +125,7 @@ Temperature and salinity at the Canal site is relatively high and consistent as 
 
 <!--# Add detail on other env variables -->
 
-## Basic statistical analysis
+## Statistical analysis
 
 ### Check Distributions:
 
@@ -139,13 +137,13 @@ Previous literature has shown that Vibrio respond 12-24 hours following dust dep
 
 CCF plots showed that BO has a significant lag relationship a value of -1. In other words, dust occurs, and one day later, we see a response in copies_mL. C2 has a lag at -2, and RD at -1.
 
-[**One important thing to note**]{.ul}: Our data set contains dust data for all of 2022. Our copies_mL data only contains values from 7/7/22 --> 7/19/22. Therefore, these CCA were made with only this time series. This limits our analysis, as we have dust data prior that can explain copies_mL on the earlier dates 7/7 or 7/8. But we cannot incorporate this into the CCA as we have NA for copies_mL for those early days. Below we will run linear models that DO contain these prior dust days. And since we have identified a lag, we can shift the dust data to line up with the copies_mL that it corresponds with directly - and we no longer have NAs. But this ultiamtely means that the lag identified above. may not be the best fit for our model below, so some additional work is needed that tests other lags in the code.
-
 ### Linear Regression Models
 
-![](images/Screen%20Shot%202023-04-06%20at%2010.23.28%20PM.png)
+![](images/Screen%20Shot%202023-04-17%20at%2011.21.32%20AM.png)
 
 Above are linear regressions that examine the relationship between dust concentration and copies_mL. As mentioned above, the lags identified may not correspond to the most significant relationship between the two variables.
+
+<!--# Update table -->
 
 | Site | Model Type | RMSE     | AIC      |
 |------|------------|----------|----------|
@@ -162,17 +160,15 @@ Above are linear regressions that examine the relationship between dust concentr
 
     -   Will need to interpret findings as exploratory and hypothesis generating, and will need to be careful about trying to draw generalizable conclusions.
 
--   I am also planning on running a multi-variate model to look at multiple predictors of interests (temp, salinity, nutrients). This code can be found in my `dust_copies_stats.qmd` code.
+### Multi-variate Linear Regressions
 
-### Residuals:
+![](images/Screen%20Shot%202023-04-17%20at%203.16.17%20PM.png)
 
-Instead of (or in addition to) plotting observed versus predicted for continuous outcomes, you can plot the difference between the two. These differences are called the residuals. What you are looking for is a cloud of points with no discernible pattern. If there is a pattern (e.g., an overall skew, or more points above the 0 y-axes than below), it again suggests that there is still some pattern/signal in the data that the model didn't capture.
+![](images/Screen%20Shot%202023-04-17%20at%203.17.06%20PM.png)
 
-![](images/000005-02.png){width="299"}
+![](images/Screen%20Shot%202023-04-17%20at%203.17.43%20PM.png)
 
-![](images/000009.png){width="300"}
-
-![](images/00000d.png){width="296"}
+<!--# Fix Table 1 titles -->
 
 ## Full analysis
 
@@ -183,6 +179,8 @@ Instead of (or in addition to) plotting observed versus predicted for continuous
 ## Summary and Interpretation
 
 ## Strengths and Limitations
+
+[**One important thing to note**]{.ul}: Our data set contains dust data for all of 2022. Our copies_mL data only contains values from 7/7/22 --> 7/19/22. Therefore, these CCA were made with only this time series. This limits our analysis, as we have dust data prior that can explain copies_mL on the earlier dates 7/7 or 7/8. But we cannot incorporate this into the CCA as we have NA for copies_mL for those early days. Below we will run linear models that DO contain these prior dust days. And since we have identified a lag, we can shift the dust data to line up with the copies_mL that it corresponds with directly - and we no longer have NAs. But this ultimately means that the lag identified above. may not be the best fit for our model below, so some additional work is needed that tests other lags in the code.
 
 ## Conclusions
 

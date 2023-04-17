@@ -297,7 +297,6 @@ shapiro.test(rd_log$don)
 shapiro.test(rd_log$doc)
 shapiro.test(rd_log$toc)
 shapiro.test(rd_log$tn)
-
 ```
 
 # Conclusion

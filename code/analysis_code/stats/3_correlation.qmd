@@ -7,8 +7,6 @@ format:
 
 **This code creates a correlation matrix to look at relationships between variables. This helps identify specific relationships of interest**
 
-[**THIS CODE IS STILL IN THE WORKS**]{.ul}
-
 [Link](http://www.sthda.com/english/wiki/correlation-matrix-a-quick-start-guide-to-analyze-format-and-visualize-a-correlation-matrix-using-r-software):
 
 # Getting Started

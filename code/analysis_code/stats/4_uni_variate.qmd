@@ -35,8 +35,8 @@ data0<- read_csv(here("data", "processed_data", "tx_master.csv")) #Master Data c
 ```{r}
 dust<- dust0 %>%
   filter(!is.na(date),
-         date %in% as.Date("2022-07-04"):as.Date("2022-07-19")) #%>%
-  #mutate(t7sum = log10(t7sum)) #Log transform Dust conc (as it is not normal) 
+         date %in% as.Date("2022-07-04"):as.Date("2022-07-19")) %>%
+  mutate(t7sum = log10(t7sum)) #Log transform Dust conc (as it is not normal) 
 
 
 data<- data0 %>%
@@ -92,22 +92,28 @@ filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19')))
 #### Plot
 
 ```{r}
-bo2 %>% ggplot(aes(x = lag, y = copies_mL)) +
+fig1<-
+  bo2 %>% ggplot(aes(x = lag, y = copies_mL)) +
   geom_point() +
   stat_smooth(method = "lm")+
-  stat_correlation(method = "spearman")+
+  stat_poly_eq(aes(x = lag, y = copies_mL),
+               rr.digits = 4)+
   labs(title = "LM DustxCopies (BO+1)",
        x = "log(dust)")
- c22 %>% ggplot(aes(x = lag, y = copies_mL)) +
+ fig2<-
+   c22 %>% ggplot(aes(x = lag, y = copies_mL)) +
   geom_point() +
   stat_smooth(method = "lm")+
-  stat_correlation(method = "spearman")+
+  stat_poly_eq(aes(x = lag, y = copies_mL),
+               rr.digits = 4)+
   labs(title = "LM DustxCopies (C2+2)",
        x = "log(dust)")
- rd2 %>% ggplot(aes(lag, copies_mL)) +
+fig3<-
+  rd2 %>% ggplot(aes(lag, copies_mL)) +
   geom_point() +
   stat_smooth(method = "lm")+
-  stat_correlation(method = "spearman")+
+  stat_poly_eq(aes(x = lag, y = copies_mL),
+               rr.digits = 4)+
   labs(title = "LM DustxCopies (RD+1)",
        x = "log(dust)")
 
