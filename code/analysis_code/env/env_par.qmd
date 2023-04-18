@@ -57,7 +57,7 @@ temp<- daily %>% ggplot() + geom_line(
     axis.title.x = element_blank(),
     axis.ticks.x = element_blank(),
     axis.text.x = element_blank(),
-    axis.title.y = element_text(size = 10),
+    axis.title.y = element_text(size = 15),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -86,7 +86,7 @@ sal<- daily %>% ggplot() + geom_line(
     axis.title.x = element_blank(),
     axis.ticks.x = element_blank(),
     axis.text.x = element_blank(),
-    axis.title.y = element_text(size = 10),
+    axis.title.y = element_text(size = 15),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -117,7 +117,7 @@ do<-
     axis.title.x = element_blank(),
     axis.ticks.x = element_blank(),
     axis.text.x = element_blank(),
-    axis.title.y = element_text(size = 10),
+    axis.title.y = element_text(size = 15),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -148,12 +148,12 @@ nn<-
     axis.title.x = element_blank(),
     axis.text.x = element_blank(),
     axis.ticks.x = element_blank(),
-    axis.title.y = element_text(size = 10),
+    axis.title.y = element_text(size = 15),
     axis.text.y = element_text(size = 7),
-    legend.key.size = unit(0.3,'cm'),
-    legend.position = c(0.3,0.7),
-    legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid'),
-    legend.text = element_text(size = 7)) + #Moves legend onto plot  + #Moves legend onto plot 
+   # legend.key.size = unit(0.3,'cm'),
+    legend.position = "none")+
+   # legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid'),
+   # legend.text = element_text(size = 7)) + #Moves legend onto plot  + #Moves legend onto plot 
     scale_color_manual(values = c("Blind Oso" = "#809C52",
                                 "Canals" = "#ba4716",
                                 "Gulf" = "4c848c"))
@@ -180,7 +180,7 @@ ortho<-
     axis.title.x = element_blank(),
     axis.text.x = element_blank(),
     axis.ticks.x = element_blank(),
-    axis.title.y = element_text(size = 10),
+    axis.title.y = element_text(size = 15),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -189,7 +189,7 @@ ortho<-
                                 "Gulf" = "4c848c"))
 ```
 
-#### DON
+#### DON (TDN - NN - Amm) 
 
 ```{r}
 don<-
@@ -210,7 +210,7 @@ don<-
     axis.title.x = element_blank(),
     axis.text.x = element_blank(),
    axis.ticks.x = element_blank(),
-    axis.title.y = element_text(size = 10),
+    axis.title.y = element_text(size = 15),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -238,9 +238,9 @@ doc<-
     color = "Site")+
   theme(
     axis.title.x = element_blank(),
-    axis.text.x = element_blank(),
+   # axis.text.x = element_blank(),
     axis.ticks.x = element_blank(),
-    axis.title.y = element_text(size = 10),
+    axis.title.y = element_text(size = 15),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -269,9 +269,9 @@ pH<-
   theme(
     plot.title= element_text(hjust = 0.5, size = 20),
     axis.title.x = element_blank(),
-    axis.text.x = element_blank(),
+  #  axis.text.x = element_blank(),
     axis.ticks.x = element_blank(),
-    axis.title.y = element_text(size = 10),
+    axis.title.y = element_text(size = 15),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -301,8 +301,8 @@ amm<-
     plot.title= element_text(hjust = 0.5, size = 20),
     axis.title.x = element_blank(),
     axis.ticks.x = element_blank(),
-    axis.text.x = element_blank(),
-    axis.title.y = element_text(size = 10),
+  #  axis.text.x = element_blank(),
+    axis.title.y = element_text(size = 15),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -333,7 +333,7 @@ tn<-
     axis.title.x = element_blank(),
     axis.ticks.x = element_blank(),
     axis.text.x = element_blank(),
-    axis.title.y = element_text(size = 10),
+    axis.title.y = element_text(size = 15),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
@@ -364,10 +364,160 @@ sil<-
     axis.title.x = element_blank(),
     axis.ticks.x = element_blank(),
     axis.text.x = element_blank(),
-    axis.title.y = element_text(size = 10),
+    axis.title.y = element_text(size = 15),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
     legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid')) + #Moves legend onto plot 
+    scale_color_manual(values = c("Blind Oso" = "#809C52",
+                                "Canals" = "#ba4716",
+                                "Gulf" = "4c848c"))
+```
+
+#### TDN
+
+```{r}
+tdn<-
+   daily %>%
+  ggplot() + geom_line(
+  aes(
+    x = date,
+    y = tdn,
+    color = site),
+  size = 1)+
+  theme_bw()+
+  labs(
+    x = "Date",
+    y = "TDN (µM)",
+    color = "Site")+
+  theme(
+    plot.title= element_text(hjust = 0.5, size = 20),
+    axis.title.x = element_blank(),
+    axis.ticks.x = element_blank(),
+   # axis.text.x = element_blank(),
+    axis.title.y = element_text(size = 15),
+    axis.text.y = element_text(size = 7),
+    legend.key.size = unit(0.3,'cm'),
+    legend.position = "none")+
+    scale_color_manual(values = c("Blind Oso" = "#809C52",
+                                "Canals" = "#ba4716",
+                                "Gulf" = "4c848c"))
+```
+
+#### DIN:DIP ((Amm + NN / Ortho))
+
+```{r}
+din_dip<- 
+  daily %>%
+  ggplot() + geom_line(
+  aes(
+    x = date,
+    y = din_dip,
+    color = site),
+  size = 1)+
+  theme_bw()+
+  labs(
+    x = "Date",
+    y = "DIN:DIP (µM)",
+    color = "Site")+
+  theme(
+    plot.title= element_text(hjust = 0.5, size = 20),
+    axis.title.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    #axis.text.x = element_blank(),
+    axis.title.y = element_text(size = 15),
+    axis.text.y = element_text(size = 7),
+    legend.key.size = unit(0.3,'cm'),
+    legend.position = "none")+
+    scale_color_manual(values = c("Blind Oso" = "#809C52",
+                                "Canals" = "#ba4716",
+                                "Gulf" = "4c848c"))
+```
+
+#### DIN (Amm-NN)
+
+```{r}
+din<- 
+  daily %>%
+  ggplot() + geom_line(
+  aes(
+    x = date,
+    y = din,
+    color = site),
+  size = 1)+
+  theme_bw()+
+  labs(
+    x = "Date",
+    y = "DIN (µM)",
+    color = "Site")+
+  theme(
+    plot.title= element_text(hjust = 0.5, size = 20),
+    axis.title.x = element_blank(),
+    axis.ticks.x = element_blank(),
+   # axis.text.x = element_blank(),
+    axis.title.y = element_text(size = 15),
+    axis.text.y = element_text(size = 7),
+    legend.key.size = unit(0.3,'cm'),
+    legend.position = "none")+
+    scale_color_manual(values = c("Blind Oso" = "#809C52",
+                                "Canals" = "#ba4716",
+                                "Gulf" = "4c848c"))
+```
+
+#### Secchi
+
+```{r}
+secchi<-
+  daily %>%
+  ggplot() + geom_line(
+  aes(
+    x = date,
+    y = secchi,
+    color = site),
+  size = 1)+
+  theme_bw()+
+  labs(
+    x = "Date",
+    y = "Secchi Depth (m)",
+    color = "Site")+
+  theme(
+    plot.title= element_text(hjust = 0.5, size = 20),
+    axis.title.x = element_blank(),
+    axis.ticks.x = element_blank(),
+   # axis.text.x = element_blank(),
+    axis.title.y = element_text(size = 15),
+    axis.text.y = element_text(size = 7),
+    legend.key.size = unit(0.3,'cm'),
+    legend.position = "none")+
+    scale_color_manual(values = c("Blind Oso" = "#809C52",
+                                "Canals" = "#ba4716",
+                                "Gulf" = "4c848c"))
+```
+
+#### Chlorophyll
+
+```{r}
+chl<-
+  daily %>%
+  ggplot() + geom_line(
+  aes(
+    x = date,
+    y = chl,
+    color = site),
+  size = 1)+
+  theme_bw()+
+  labs(
+    x = "Date",
+    y = "Chlorophyl (µg/L)",
+    color = "Site")+
+  theme(
+    plot.title= element_text(hjust = 0.5, size = 20),
+    axis.title.x = element_blank(),
+    axis.ticks.x = element_blank(),
+   # axis.text.x = element_blank(),
+    axis.title.y = element_text(size = 15),
+    axis.text.y = element_text(size = 7),
+    legend.key.size = unit(0.3,'cm'),
+    legend.position = "none")+
     scale_color_manual(values = c("Blind Oso" = "#809C52",
                                 "Canals" = "#ba4716",
                                 "Gulf" = "4c848c"))
@@ -393,34 +543,41 @@ cop<-
     plot.title= element_text(hjust = 0.5, size = 20),
     axis.title.x = element_blank(),
     axis.ticks.x = element_blank(),
-    axis.text.x = element_blank(),
-    axis.title.y = element_text(size = 10),
+  #  axis.text.x = element_blank(),
+    axis.title.y = element_text(size = 15),
     axis.text.y = element_text(size = 7),
-    legend.key.size = unit(0.3,'cm'),
-    legend.position = c(0.2,0.7),
-    legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid'),
-    legend.text = element_text(size = 7)) + #Moves legend onto plot 
+   # legend.key.size = unit(0.3,'cm'),
+    legend.position = "none")+
+  #  legend.background = element_rect(colour = 'black', fill = 'white', linetype='solid'),
+  #  legend.text = element_text(size = 7)) + #Moves legend onto plot 
     scale_color_manual(values = c("Blind Oso" = "#809C52",
                                 "Canals" = "#ba4716",
                                 "Gulf" = "4c848c"))
 ```
 
-#### ![](images/paste-21541164.png)Combine Environment Plots
+#### ALL
 
-```{r}
-fig<- ggarrange(temp,
-                sal,
-                #do,
-                nn,
-                ortho,
-                don,
-                doc,
+```{r, fig.width= 8, fig.height=4}
+fig<- ggarrange(#temp,
+                #sal,
+               # do,
+                #nn,
+                #ortho,
+                #don,
+                #doc,
                 #pH,
                 #amm,
-               # tn,
-               # sil,
-                #cop,
-                ncol = 3, nrow = 2,align = "v")
+                tn,
+                sil,
+                cop,
+                chl,
+                secchi,
+                din,
+                din_dip,
+                tdn,
+                ncol = 3, 
+                nrow = 3,
+                align = "v")
 
 fig
 ```

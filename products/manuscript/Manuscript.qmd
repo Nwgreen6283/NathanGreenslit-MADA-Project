@@ -137,9 +137,13 @@ Previous literature has shown that Vibrio respond 12-24 hours following dust dep
 
 CCF plots showed that BO has a significant lag relationship a value of -1. In other words, dust occurs, and one day later, we see a response in copies_mL. C2 has a lag at -2, and RD at -1.
 
+### Correlation Matirices
+
+<!--# Add these in -->
+
 ### Linear Regression Models
 
-![](images/Screen%20Shot%202023-04-17%20at%2011.21.32%20AM.png)
+![Figure 3: Linear regression models examining the relationship between dust and vibrio growth](images/Screen%20Shot%202023-04-17%20at%2011.21.32%20AM.png)
 
 Above are linear regressions that examine the relationship between dust concentration and copies_mL. As mentioned above, the lags identified may not correspond to the most significant relationship between the two variables.
 
@@ -176,11 +180,41 @@ Above are linear regressions that examine the relationship between dust concentr
 
 # Discussion
 
+This study aimed to examine microbial response to Saharan dust deposition in high nutrient coastal waters. Specifically focusing on bacteria belong to the genus *Vibrio*, we found that growth response following dust input varied by site. This could be due to differing site dynamics such as salinity, temperature, and nutrient levels.
+
 ## Summary and Interpretation
+
+### Methods
+
+For this analysis, we examined *Vibrio* growth dynamics in response to Saharan Dust depsoition in three sites in Corpus Christi, TX that had differing baseline nutrient levels. The Gulf, with relatively constant salinities and low nutrient levels, Blind Oso Bay with high nutrients and fluctuating salinities, and a residential canal system with consistent temperature and salinities and nutrient levels. Samples were collected before, during, and after a dust event and *Vibrio* were enumerated using qPCR. Data on nutrient levels and other environmental parameters (e.g. salinity and temperature) were also collected during this period. The three data sets (Vibrio Enumeration, Environmental parameters, and Dust Concentration) were then processed and cleaned for analysis.
+
+### Findings/Explanations
+
+#### Dust
+
+The daily time series captured two dust events. One light event starting on the 13th of July, where AOD reached 0.2, and a much heavier dust event from the 16th to the 18th of July with AOD = 55-57. Dust AOD returned to lower concentrations following the time series.
+
+<!--# What are AOD units? -->
+
+#### Environmental Parameters
+
+Environmental parameters were site-specific. Temperature and salinities were consistent and high at the Canals ( <!--# Add ranges -->). While salinity remained relatively constant at the Gulf , temperature was observed to drop starting on the 12th of July, possibly due to a coastal upwelling event. Blind Oso exhibited fluctuations in both temperature and salinity within the daily time series with a drop in salinity from 42 to 20 within an eight day period.
+
+Nutrients (orthophosphate and nitrate+nitrite) were observed to increase following dust deposition at both Blind Oso and the Canals site, with the former having more dramatic peaks. Nutrient levels at the Gulf remained relatively constant throughout the time series. DON and DOC had distinct peaks at Blind Oso on days following dust deposition, however the other two sites were relatively stable.
+
+#### Vibrio Enumeration
+
+Peaks in *Vibrio* growth were observed at the Gulf 1-2 days following dust deposition. Blind Oso exhibited a similar response, but was slightly dampened in comparison. This could be due to the site-specific nutrient dynamics. While the Gulf exhibited a sharper increase during the second, heavy dust event, Blind Oso exhibited a smaller increase as compared to the light dust event. \
+\
+If the Gulf has presumably lower nutrient levels, the constituents from the influx of dust may be used up rapidly, so we still see a sharp secondary growth response at the Gulf during the heavy dust event. Blind Oso Bay has presumably higher nutrient levels, so while we see an initial spike in growth, the secondary spike is not as dramatic. So in this case, it may be that the dust has reached a maximum to how much it can support growth, possibly due to the dust constituents not being as essential for growth at this inland site.
+
+#### Statistical Analysis
 
 ## Strengths and Limitations
 
 [**One important thing to note**]{.ul}: Our data set contains dust data for all of 2022. Our copies_mL data only contains values from 7/7/22 --> 7/19/22. Therefore, these CCA were made with only this time series. This limits our analysis, as we have dust data prior that can explain copies_mL on the earlier dates 7/7 or 7/8. But we cannot incorporate this into the CCA as we have NA for copies_mL for those early days. Below we will run linear models that DO contain these prior dust days. And since we have identified a lag, we can shift the dust data to line up with the copies_mL that it corresponds with directly - and we no longer have NAs. But this ultimately means that the lag identified above. may not be the best fit for our model below, so some additional work is needed that tests other lags in the code.
+
+<!--# Sample size  -->
 
 ## Conclusions
 
