@@ -83,37 +83,57 @@ rd<-
 
 ```
 
-### Log10 Transform non-normally distributed data and Remove Non-Parametric Variables
+#### Make Datasets for normal and non-normal variables
 
-<!--# If we are using a nonparametric correlation (i.e. Spearman) we do not log-transform data -->
+Variables that are normally distributed across all three sites will be in one df. All others will be in another.
+
+```{r}
+b_norm<- 
+  bo %>%
+  select(!c(sal, secchi, nn, tdn, don, doc, toc, tn))
+b_para<- 
+  bo %>%
+  select(sal, secchi, nn, tdn, don, doc, toc, tn)
+
+c_norm<- 
+  c2 %>%
+  select(!c(sal, secchi, nn, tdn, don, doc, toc, tn))
+c_para<- 
+  c2 %>%
+  select(sal, secchi, nn, tdn, don, doc, toc, tn)
+
+r_norm<- 
+  rd %>%
+  select(!c(sal, secchi, nn, tdn, don, doc, toc, tn))
+r_para<- 
+  rd %>%
+  select(sal, secchi, nn, tdn, don, doc, toc, tn)
+```
+
+### Log10 Transform non-normally distributed data for Norm df
 
 Distributions can be found in `1_distribution.qmd`
 
 ```{r}
 #Blind Oso
-#bo<-
-  #bo %>%
- # mutate(amm = log10(amm), #Log-transforms data
-        # din_dip = log10(din_dip),
-        # doc = log10(doc),
-        # dust = log10(dust),
-         #chl = log10(chl)) %>%
- # select(!c(secchi, tn, tdn, don)) #Removes non-parametric data
-
+b_norm<-
+  b_norm %>%
+  mutate(amm = log10(amm), #Log-transforms data
+         din_dip = log10(din_dip),
+         dust = log10(dust),
+         chl = log10(chl)) 
+ 
 #Canals
-#c2<- 
-  #c2 %>%
-  #mutate(orthop = log10(orthop),
-         #dust = log10(dust)) %>%
-  #select(!c(secchi, nn, sil, doc,toc, tn))
+c_norm<- 
+  c_norm %>%
+  mutate(orthop = log10(orthop),
+         dust = log10(dust)) 
+
 
 #Gulf
-#rd<- 
- # rd %>%
- # mutate(doc = log10(doc),
-      #   toc = log10(toc),
-        # dust = log10(dust)) %>%
-  #select(!c(sal, do_mgl, secchi, nn, tn))
+r_norm<- 
+  r_norm %>%
+  mutate(dust = log10(dust))
 ```
 
 # Correlation Matrix
@@ -127,13 +147,24 @@ If your data contain missing values, use the following R code to handle missing 
     cor(x, method = "pearson", use = "complete.obs")
 
 ```{r, include = FALSE}
-b<- cor(bo, method = "spearman") #Default method = pearson
+#Normal Data = Pearson's
+b<- cor(b_norm, method = "pearson") #Default method = pearson
 round(b,2) #Round correlation coeff to "x" digits 
 
-c<- cor(c2, method = "spearman")
+c<- cor(c_norm, method = "pearson")
 round(c,2)
 
-r<- cor(rd, method = "spearman")
+r<- cor(r_norm, method = "pearson")
+round(r,2)
+
+#Non-parametric Data  = Spearman's
+b1<- cor(b_para, method = "spearman") 
+round(b,2) #Round correlation coeff to "x" digits 
+
+c1<- cor(c_para, method = "spearman")
+round(c,2)
+
+r1<- cor(r_para, method = "spearman")
 round(r,2)
 ```
 
@@ -156,13 +187,13 @@ flattenCorrMatrix <- function(cormat, pmat) {
 The function **rcorr()** \[in **Hmisc** package\] can be used to compute the **significance levels** for **pearson** and **spearman correlations**. It returns both the correlation coefficients and the p-value of the correlation for all possible pairs of columns in the data table.
 
 ```{r}
-bclean<- rcorr(as.matrix(bo))
+bclean<- rcorr(as.matrix(b_norm))
 flattenCorrMatrix(bclean$r, bclean$P)
 
-cclean<- rcorr(as.matrix(c2))
+cclean<- rcorr(as.matrix(c_norm))
 flattenCorrMatrix(cclean$r, cclean$P)
 
-rclean<- rcorr(as.matrix(rd))
+rclean<- rcorr(as.matrix(r_norm))
 flattenCorrMatrix(rclean$r, rclean$P)
 ```
 
@@ -170,20 +201,36 @@ flattenCorrMatrix(rclean$r, rclean$P)
 
 The function **corrplot()** takes the **correlation matrix** as the first argument. The second argument (type="upper") is used to display only the upper triangular of the **correlation matrix**.
 
-<!--# This is using Spearman's with raw data -->
+##### Normal 
 
 ```{r}
 corrplot(b, type = "upper", 
          tl.col = "black", tl.srt = 45,
-         title = "Blind Oso",  mar=c(0,0,1,0)) #Adds and lowers title 
+         title = "Blind Oso_Pearson",  mar=c(0,0,1,0)) #Adds and lowers title 
 
 corrplot(c, type = "upper", 
          tl.col = "black", tl.srt = 45,
-         title = "Canals", mar=c(0,0,1,0))
+         title = "Canals_Pearson", mar=c(0,0,1,0))
 
 corrplot(r, type = "upper", 
          tl.col = "black", tl.srt = 45, mar=c(0,0,1,0))
-         title(main = "Gulf" )
+         title(main = "Gulf_Pearson" )
+```
+
+##### Non-Para
+
+```{r}
+corrplot(b1, type = "upper", 
+         tl.col = "black", tl.srt = 45,
+         title = "Blind Oso_Spearman",  mar=c(0,0,1,0)) #Adds and lowers title 
+
+corrplot(c1, type = "upper", 
+         tl.col = "black", tl.srt = 45,
+         title = "Canals_Spearman", mar=c(0,0,1,0))
+
+corrplot(r1, type = "upper", 
+         tl.col = "black", tl.srt = 45, mar=c(0,0,1,0))
+         title(main = "Gulf_Spearman" )
 ```
 
 It's also possible to **combine correlogram with the significance test**. We'll use the result *res.cor2* generated in the previous section with **rcorr**() function \[in **Hmisc** package\]:
