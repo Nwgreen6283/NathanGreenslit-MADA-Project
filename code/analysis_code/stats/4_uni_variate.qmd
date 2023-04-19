@@ -1,7 +1,7 @@
 ---
 title: "env_and_copies_stats"
 format:
-  html:
+  pdf:
     theme: default
 ---
 
@@ -19,6 +19,7 @@ library(tidymodels) #For modeling
 library(ggpmisc) #For R2 equation on graph
 library(dotwhisker) #Fpr visualization
 library(ggpubr) #For plot stacking
+library(kableExtra) #Tables
 ```
 
 #### Data
@@ -98,30 +99,58 @@ fig1<-
   stat_smooth(method = "lm")+
   stat_poly_eq(aes(x = lag, y = copies_mL),
                rr.digits = 4)+
-  labs(title = "LM DustxCopies (BO+1)",
-       x = "log(dust)")
+  stat_correlation(method = "pearson",
+                   label.x = 0.05,
+                   label.y = 0.7,
+                   small.r = TRUE)+
+  labs(title = "Blind Oso",
+       x = "log10(dust)",
+       y = "Copies per mL")+
+  theme_bw() +
+  theme(axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank())
  fig2<-
    c22 %>% ggplot(aes(x = lag, y = copies_mL)) +
   geom_point() +
   stat_smooth(method = "lm")+
   stat_poly_eq(aes(x = lag, y = copies_mL),
                rr.digits = 4)+
-  labs(title = "LM DustxCopies (C2+2)",
-       x = "log(dust)")
+  stat_correlation(method = "pearson",
+                   label.x = 0.05,
+                   label.y = 0.7,
+                   small.r = TRUE)+
+  labs(title = "Canals",
+       x = "log10(dust)",
+       y = "Copies per mL") +
+   theme_bw()+
+  theme(axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank())
+ 
 fig3<-
   rd2 %>% ggplot(aes(lag, copies_mL)) +
   geom_point() +
   stat_smooth(method = "lm")+
   stat_poly_eq(aes(x = lag, y = copies_mL),
                rr.digits = 4)+
-  labs(title = "LM DustxCopies (RD+1)",
-       x = "log(dust)")
+  stat_correlation(method = "pearson",
+                   label.x = 0.05,
+                   label.y = 0.7,
+                   small.r = TRUE)+
+  labs(title = "Gulf",
+       x = "log10(dust)",
+       y = "Copies per mL")+
+   theme_bw()+
+  theme(axis.text.x = element_blank(),
+        #axis.title.x = element_blank(),
+        axis.ticks.x = element_blank())
 
 ```
 
-#### Stac
+#### Stack
 
-```{r}
+```{r, fig.height=4}
 ggarrange(fig1, fig2, fig3 + font("x.text", size = 10), ncol = 1, nrow = 3)
 ```
 
@@ -192,6 +221,11 @@ null_met_rd <-
 null_met_bo
 null_met_c2
 null_met_rd
+
+rmnb<- 20927.53
+rmnc<- 7934.59
+rmnr<- 49831.58
+
 ```
 
 ##### AIC
@@ -208,6 +242,10 @@ AIC(c2_null_mod)
 rd_null_mod<- 
   lm(copies_mL ~ 1, data = rd2)
 AIC(rd_null_mod)
+
+aicnb<- 275.93
+aicnc<- 253.19
+aicnr<- 296.98
 ```
 
 We will come back to these metrics once we run the models on our actual data.
@@ -320,6 +358,10 @@ rsq <- aug_test_rd %>% rsq(truth = copies_mL, .pred)
 rd_metrics<- full_join(rmse, rsq)
 rd_metrics
 
+rmb<- 14422.91
+rmc<- 5191.22
+rmr<- 36132.11
+
 ```
 
 ##### AIC
@@ -335,6 +377,10 @@ AIC(c2_mod)
 
 rd_mod<- lm(copies_mL ~ lag, data = rd2)
 AIC(rd_mod)
+
+aicb<- 269.89
+aicc<- 245.37
+aicr<- 291.93
 ```
 
 #### Plot Residuals
@@ -366,7 +412,15 @@ abline(0,0)
 
 AIC and RMSE are lower (better performance) than the null.
 
-<!--# Why are these so high? -->
+#### Make Table
+
+```{r}
+kable(data.frame(Model = c("Null RMSE", "Actual RMSE", "Null AIC ", "Actual AIC"),
+                 Blind_Oso = c(rmnb,rmb,aicnb, aicb),
+                 Canals = c(rmnc, rmc, aicnc, aicc),
+                 Gulf = c(rmnr, rmr, aicnr, aicr)),
+      caption = "Linear Regression Model Metrics") 
+```
 
 # OTHER ENVIRONMENTAL PARAMETERS
 

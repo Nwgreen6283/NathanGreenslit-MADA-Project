@@ -1,7 +1,7 @@
 ---
 title: "lasso"
 format:
-  html:
+  pdf:
     theme: default
 ---
 
@@ -155,6 +155,10 @@ null_met_c2
 null_met_rd <- 
   collect_metrics(null_fit_rd)
 null_met_rd
+
+rmnb<- 20178.47
+rmnc<- 8091.394
+rmnr<- 52065.59
 ```
 
 #### AIC
@@ -245,6 +249,7 @@ rf_resample %>%
 #Selects best performing model
 best_rf <- rf_resample %>%
   select_best(method = "rmse")
+rmb<- 15645.98
 ```
 
 ##### Create Final Fit
@@ -365,6 +370,7 @@ rf_resample %>%
 #Selects best performing model
 best_rf <- rf_resample %>%
   select_best(method = "rmse")
+rmc<- 7038.47
 ```
 
 ##### Create Final Fit
@@ -485,6 +491,7 @@ rf_resample %>%
 #Selects best performing model
 best_rf <- rf_resample %>%
   select_best(method = "rmse")
+rmr<- 33826.74
 ```
 
 ##### Create Final Fit
@@ -531,4 +538,17 @@ rf_residual_plot <- ggplot(rf_residuals,
        x = "Copies/mL Prediction", 
        y = "Residuals")
 plot(rf_residual_plot) #view plot
+```
+
+# Conclusion
+
+#### Table
+
+```{r}
+kable(data.frame(Model = c("Null RMSE", "Actual RMSE"),
+                 Blind_Oso = c(rmnb,rmb),
+                 Canals = c(rmnc, rmc),
+                 Gulf = c(rmnr, rmr)),
+      caption = "Random Forest Regression Model Metrics") 
+
 ```

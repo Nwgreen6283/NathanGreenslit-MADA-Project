@@ -115,17 +115,17 @@ This data set did not require any cleaning.
 
 #### Dust AOD and Vibrio Enumeration
 
-This figure depicts the summed dust concentration 24hr prior to sample collection (time points 13hr--> 7hr the next day) across the daily time series. The daily time series captured two dust events. One light event starting on the 13th of July, where AOD reached 0.2, and a much heavier dust event from the 16th to the 18th of July with AOD = 55-57. Dust AOD returned to lower concentrations following the time series. The top portion of the figure depicts total enumerated Vibrio as copies per mL, with color by site. There is a noticeable shift in *Vibrio* growth at the Gulf site, a less noticeable but still present shift in Blind Oso Bay, and practically no changes in the Canal site. An initial shift in copies per mL at the Gulf and Blind Oso occur 24-48hr following initial dust introduction on the 13th, and experience another shift around 24-48hr of higher dust input on the 16th
+This figure depicts the summed dust concentration 24hr prior to sample collection (time points 13hr--> 7hr the next day) across the daily time series. The daily time series captured two dust events. One light event starting on the 13th of July, where AOD reached 0.2, and a much heavier dust event from the 16th to the 18th of July with AOD = 55-57. Dust AOD returned to lower concentrations following the time series. The top portion of the figure depicts total enumerated Vibrio as copies per mL, with color by site. There is a noticeable shift in *Vibrio* growth at the Gulf site, a less noticeable but still present shift in Blind Oso Bay, and practically no changes in the Canal site.
 
 ![Figure 1: Total Daily Vibrio at All Sites](images/paste-C33B6E43.png)
 
 #### Environmental Parameters
 
+Environmental parameters were site-specific. Temperature and salinities were consistent and high at the Canals ( <!--# Add ranges -->). While salinity remained relatively constant at the Gulf , temperature was observed to drop starting on the 12th of July, possibly due to a coastal upwelling event. Blind Oso exhibited fluctuations in both temperature and salinity within the daily time series with a drop in salinity from 42 to 20 within an eight day period.
+
+Nutrients (orthophosphate and nitrate+nitrite) were observed to increase following dust deposition at both Blind Oso and the Canals site, with the former having more dramatic peaks. Nutrient levels at the Gulf remained relatively constant throughout the time series. DON and DOC had distinct peaks at Blind Oso on days following dust deposition, where DON exhibited smaller peaks at the Canals.
+
 ![Figure 2: Environmental parameters across daily time series](images/00000f%20(1).png)
-
-Temperature and salinity at the Canal site is relatively high and consistent as compared to the other sites. Blind Oso Bay experiences some shifts in temperatures and drastic fluctuations in salinity. The Gulf site had a drop in temperature (possibly due to upwelling) and relatively consistent ocean salinities.
-
-\*need to add details on other environmental variables
 
 <!--# Add detail on other env variables -->
 
@@ -145,44 +145,29 @@ CCF plots showed that BO has a significant lag relationship a value of -1. In ot
 
 Data that is normally distributed was run with Pearson's Correlation Coefficient. Data that is not normally distributed was run with Spearman's Correlation Coefficient.
 
-![](images/000081.png)
+![Figure 3](images/000081.png)
 
 ### Linear Regression Models
 
-![Figure 3: Linear regression models examining the relationship between dust and vibrio growth](images/Screen%20Shot%202023-04-17%20at%2011.21.32%20AM.png)
+![Figure 4](images/000055.png){width="481"}
 
-Above are linear regressions that examine the relationship between dust concentration and copies_mL. As mentioned above, the lags identified may not correspond to the most significant relationship between the two variables.
-
-<!--# Update table -->
-
-| Site | Model Type | RMSE     | AIC      |
-|------|------------|----------|----------|
-| BO   | Null       | 20472.82 | 275.9331 |
-| BO   | Actual     | 14422.91 | 269.8923 |
-| C2   | Null       | 8472.898 | 253.1876 |
-| C2   | Actual     | 5191.22  | 245.3679 |
-| RD   | Null       | 50386.56 | 296.9821 |
-| RD   | Actual     | 36132.11 | 291.933  |
-
-[A few things to note:]{.ul}
-
--   My stats code contains some chunks that create predicted values based off of the current data set. Since my data set is small, I am not able to portion of \~25% to use to test my model as it could impact the strength of my model. Therefore, plotting the predicted vs. actual will give an R2 of 1.00. I am using AIC as a metric of model performance and comparing data produced models to null models.
-
-    -   Will need to interpret findings as exploratory and hypothesis generating, and will need to be careful about trying to draw generalizable conclusions.
+![Table 1: Univariate Linear Regression Model Metrics](images/Screen%20Shot%202023-04-19%20at%201.33.37%20PM.png){width="367"}
 
 ### Multi-variate Models
 
 #### Random Forest
 
+![Table 2: Random Forest Model Metrics](images/Screen%20Shot%202023-04-19%20at%202.08.25%20PM.png){width="367"}
+
 #### Linear Regressions
 
-![](images/Screen%20Shot%202023-04-17%20at%203.16.17%20PM.png)
+![Table 3: Blind Oso: Comparative linear regression analysis of Vibrio growth between six operational models.](images/Screen%20Shot%202023-04-19%20at%201.36.29%20PM.png){width="367"}
 
-![](images/Screen%20Shot%202023-04-17%20at%203.17.06%20PM.png)
+![Table 4: Canals: Comparative linear regression analysis of Vibrio growth between six operational models.](images/Screen%20Shot%202023-04-19%20at%201.37.02%20PM.png){width="367"}
 
-![](images/Screen%20Shot%202023-04-17%20at%203.17.43%20PM.png)
+![Table 5: Gulf: Comparative linear regression analysis of Vibrio growth between six operational models.](images/Screen%20Shot%202023-04-19%20at%201.37.21%20PM.png){width="367"}
 
-<!--# Fix Table 1 titles -->
+Multi-variate models that included dust, water chemistry, nutrients, and DOM performed the best, with mean RMSE values much lower than the Null Model.
 
 ## Full analysis
 
@@ -202,15 +187,13 @@ For this analysis, we examined *Vibrio* growth dynamics in response to Saharan D
 
 <!--# What are AOD units? -->
 
-#### Environmental Parameters
-
-Environmental parameters were site-specific. Temperature and salinities were consistent and high at the Canals ( <!--# Add ranges -->). While salinity remained relatively constant at the Gulf , temperature was observed to drop starting on the 12th of July, possibly due to a coastal upwelling event. Blind Oso exhibited fluctuations in both temperature and salinity within the daily time series with a drop in salinity from 42 to 20 within an eight day period.
-
-Nutrients (orthophosphate and nitrate+nitrite) were observed to increase following dust deposition at both Blind Oso and the Canals site, with the former having more dramatic peaks. Nutrient levels at the Gulf remained relatively constant throughout the time series. DON and DOC had distinct peaks at Blind Oso on days following dust deposition, however the other two sites were relatively stable.
-
 #### Vibrio Enumeration
 
-Overall, *Vibrio* growth was observed following dust events at both the Gulf and Blind Oso. Peaks in growth were observed 24-48 hours following dust deposition. Linear regression analysis confirmed a correlation between growth and dust input (R2 = 0.49, 0.56, 0.44 for Blind Oso, Canals, and Gulf respectively). However, the environmental dynamics of each site most likely contributed the degree of response per site. Multivariate models were tested using specific environmental parameters: dust, DOM (DON, DOC), temperature, salinity, orthophosphate, and nitrate+nitrite. Ultimately, a model that included water chemistry, dust, nutrient, and dissolved organic matter parameters provided the best performance (R2 = 0.73, 0.7, and 0.76 for Blind Oso, Canals, and Gulf respectively), suggesting that while dust may contribute to a growth response in *Vibrio* following dust input, the site specific dynamics aid in dictating the degree of response observed.
+Overall, *Vibrio* growth was observed following dust events at both the Gulf and Blind Oso. Similar to previous findings peaks in growth were observed 24-48 hours following dust deposition [@westrichVibrioPopulationDynamics2018a; @westrichSaharanDustNutrients2016a]. Linear regression analysis confirmed a correlation between growth and dust input (R2 = 0.49, 0.56, 0.44 for Blind Oso, Canals, and Gulf respectively).
+
+#### Site-Specific Dynamics
+
+However, the environmental dynamics of each site most likely contributed the degree of response per site. Multivariate models were tested using specific environmental parameters: dust, DOM (DON, DOC), temperature, salinity, orthophosphate, and nitrate+nitrite. Ultimately, a model that included water chemistry, dust, nutrient, and dissolved organic matter parameters provided the best performance (R2 = 0.73, 0.7, and 0.76 for Blind Oso, Canals, and Gulf respectively), suggesting that while dust may contribute to a growth response in *Vibrio* following dust input, the site specific dynamics aid in dictating the degree of response observed.
 
 The Canals may have a heavily dampened growth response due to a high and constant salinity of 40-42. In general, optimal growth occurs at salinities of \~25-35, and less tolerant species will drop as salinities climb <!--# CITE --> .
 
@@ -224,7 +207,7 @@ At Blind Oso for example, the salinity is observed to drop from 42-20 within an 
 
 <!--# Sample size  -->
 
-## Conclusions
+## Conclusions/Broader Impacts
 
 {{< pagebreak >}}
 
