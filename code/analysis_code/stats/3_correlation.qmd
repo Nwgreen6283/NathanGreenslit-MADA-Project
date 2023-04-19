@@ -19,6 +19,7 @@ library(here)
 library(Hmisc)#Cor Tables and Lag
 library(corrplot) #Cor Plots
 library(lubridate) #For dates
+library(ggpubr) #Plot stacking
 ```
 
 #### Data
@@ -83,7 +84,7 @@ rd<-
 
 ```
 
-#### Make Datasets for normal and non-normal variables
+### Make Datasets for normal and non-normal variables
 
 Variables that are normally distributed across all three sites will be in one df. All others will be in another.
 
@@ -166,6 +167,16 @@ round(c,2)
 
 r1<- cor(r_para, method = "spearman")
 round(r,2)
+
+#All Data = Spearman's
+b2<- cor(bo, method = "spearman") 
+round(b,2) #Round correlation coeff to "x" digits 
+
+c2<- cor(c2, method = "spearman")
+round(c,2)
+
+r2<- cor(rd, method = "spearman")
+round(r,2)
 ```
 
 #### Make Function to Format
@@ -201,26 +212,23 @@ flattenCorrMatrix(rclean$r, rclean$P)
 
 The function **corrplot()** takes the **correlation matrix** as the first argument. The second argument (type="upper") is used to display only the upper triangular of the **correlation matrix**.
 
-##### Normal 
-
-```{r}
-corrplot(b, type = "upper", 
+```{r, fig.width=6}
+par(mfrow=c(3,3))
+#Normal Data 
+ corrplot(b, type = "upper", 
          tl.col = "black", tl.srt = 45,
          title = "Blind Oso_Pearson",  mar=c(0,0,1,0)) #Adds and lowers title 
 
-corrplot(c, type = "upper", 
+ corrplot(c, type = "upper", 
          tl.col = "black", tl.srt = 45,
          title = "Canals_Pearson", mar=c(0,0,1,0))
 
-corrplot(r, type = "upper", 
+ corrplot(r, type = "upper", 
          tl.col = "black", tl.srt = 45, mar=c(0,0,1,0))
-         title(main = "Gulf_Pearson" )
-```
-
-##### Non-Para
-
-```{r}
-corrplot(b1, type = "upper", 
+         title(main = "Gulf_Pearson")
+         
+#Non-Parametric Data
+ corrplot(b1, type = "upper", 
          tl.col = "black", tl.srt = 45,
          title = "Blind Oso_Spearman",  mar=c(0,0,1,0)) #Adds and lowers title 
 
@@ -231,7 +239,22 @@ corrplot(c1, type = "upper",
 corrplot(r1, type = "upper", 
          tl.col = "black", tl.srt = 45, mar=c(0,0,1,0))
          title(main = "Gulf_Spearman" )
+         
+#Non-Parametric Data
+ corrplot(b2, type = "upper", 
+         tl.col = "black", tl.srt = 45,
+         title = "Blind Oso_Spearman_all",  mar=c(0,0,1,0)) #Adds and lowers title 
+
+corrplot(c2, type = "upper", 
+         tl.col = "black", tl.srt = 45,
+         title = "Canals_Spearman_all", mar=c(0,0,1,0))
+
+corrplot(r2, type = "upper", 
+         tl.col = "black", tl.srt = 45, mar=c(0,0,1,0))
+         title(main = "Gulf_Spearman_all" )
 ```
+
+##### 
 
 It's also possible to **combine correlogram with the significance test**. We'll use the result *res.cor2* generated in the previous section with **rcorr**() function \[in **Hmisc** package\]:
 

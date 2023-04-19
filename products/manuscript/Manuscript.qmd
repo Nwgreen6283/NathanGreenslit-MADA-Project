@@ -143,7 +143,9 @@ CCF plots showed that BO has a significant lag relationship a value of -1. In ot
 
 ### Correlation Matrices
 
-<!--# Add these in -->
+Data that is normally distributed was run with Pearson's Correlation Coefficient. Data that is not normally distributed was run with Spearman's Correlation Coefficient.
+
+![](images/000081.png)
 
 ### Linear Regression Models
 
@@ -168,7 +170,11 @@ Above are linear regressions that examine the relationship between dust concentr
 
     -   Will need to interpret findings as exploratory and hypothesis generating, and will need to be careful about trying to draw generalizable conclusions.
 
-### Multi-variate Linear Regressions
+### Multi-variate Models
+
+#### Random Forest
+
+#### Linear Regressions
 
 ![](images/Screen%20Shot%202023-04-17%20at%203.16.17%20PM.png)
 

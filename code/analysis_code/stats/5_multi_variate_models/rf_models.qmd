@@ -1,0 +1,534 @@
+---
+title: "lasso"
+format:
+  html:
+    theme: default
+---
+
+# Getting Started
+
+#### Libraries
+
+```{r, include = FALSE}
+library(tidyverse)
+library(here)
+library(Hmisc) #For lag function
+library(tidymodels) #For modeling
+library(ggpmisc) #For R2 equation on graph
+library(dotwhisker) #Fpr visualization
+library(lubridate)#Dates
+library(kableExtra) #Tables
+library(glmnet)
+```
+
+#### Data
+
+```{r}
+dust<- read_csv(here("data", "processed_data","dust_master.csv")) #Different Dust attributes
+data<- read_csv(here("data", "processed_data", "tx_master.csv")) #Master Data
+```
+
+# Cleaning
+
+#### Clean and Trim
+
+```{r}
+dust<- dust %>%
+  filter(!is.na(date),
+         date %in% as.Date("2022-07-04"):as.Date("2022-07-19")) 
+
+
+data<- data %>%
+  filter(date %in% as.Date("2022-07-04"):as.Date("2022-07-19"))
+```
+
+#### Make into one data set
+
+```{r}
+master<- 
+  dust %>% full_join(data) %>%
+  filter(hr_cst %in% "01") #While this is technically not for hour 1, this gets ride of all duplicates for the sake of analysis.
+
+master<- master %>%
+  select(site, sal, temp, copies_mL,t7sum, date, orthop,nn, don,doc) %>%
+  mutate(t7sum = log10(t7sum))
+```
+
+#### Site-specific Data sets and Clean df
+
+```{r}
+b<- master %>%
+  filter(site %in% "Blind Oso" | date %in% as.Date('2022-07-05') : as.Date('2022-07-06'))
+b<- b %>%
+mutate(
+  lag =Lag(b$t7sum, shift  = 1)) %>% #Create 1 day lag
+filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19'))) %>%
+select(!c(date,t7sum,site)) %>%
+  rename("log10dust" = "lag")
+
+c<- master %>%
+  filter(site %in% "Canals" | date %in% as.Date('2022-07-05') : as.Date('2022-07-06'))
+c<- c %>%
+mutate(
+  lag =Lag(c$t7sum, shift  = 2)) %>% #Create 2 day lag
+filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19'))) %>%
+select(!c(date,t7sum,site)) %>%
+  rename("log10dust" = "lag")
+
+r<- master %>%
+  filter(site %in% "Gulf" | date %in% as.Date('2022-07-05') : as.Date('2022-07-06'))
+r<- r %>%
+mutate(
+  lag =Lag(r$t7sum, shift  = 1)) %>% #Create 1 day lag
+filter(between(date, as.Date('2022-07-07'), as.Date('2022-07-19'))) %>%
+select(!c(date,t7sum,site)) %>%
+  rename("log10dust" = "lag")
+```
+
+# Models
+
+## 0. Null Model:
+
+### Create 5 Fold
+
+```{r}
+fold_bo <- vfold_cv(b, v = 5, repeats = 5) 
+fold_c2 <- vfold_cv(c, v = 5, repeats = 5) 
+fold_rd <- vfold_cv(r, v = 5, repeats = 5) 
+```
+
+### Make Models
+
+```{r, include= FALSE}
+#Create Null Recipe for Growth at all three sites
+null_bo<- recipe(copies_mL ~ 1, data = b) 
+null_c2<- recipe(copies_mL ~ 1, data = c) 
+null_rd<- recipe(copies_mL ~ 1, data = r) 
+
+#Set up linear model
+lm_mod<- linear_reg() %>%
+  set_engine("lm") %>%
+  set_mode("regression")
+
+#Workflow that adds recipe to model for three sites
+null_wflow_bo<- 
+  workflow() %>%
+  add_model(lm_mod) %>%
+  add_recipe(null_bo)
+
+null_wflow_c2<- 
+  workflow() %>%
+  add_model(lm_mod) %>%
+  add_recipe(null_c2)
+
+null_wflow_rd<- 
+  workflow() %>%
+  add_model(lm_mod) %>%
+  add_recipe(null_rd)
+
+
+#Use workflow to fit model to  data set
+null_fit_bo<-
+  fit_resamples(null_wflow_bo, resamples = fold_bo)
+
+null_fit_c2<-
+  fit_resamples(null_wflow_c2, resamples = fold_c2)
+
+null_fit_rd<-
+  fit_resamples(null_wflow_rd, resamples = fold_rd)
+
+```
+
+### Get Metrics for Null
+
+#### RMSE
+
+```{r}
+null_met_bo <- 
+  collect_metrics(null_fit_bo)
+null_met_bo
+
+null_met_c2 <- 
+  collect_metrics(null_fit_c2)
+null_met_c2
+
+null_met_rd <- 
+  collect_metrics(null_fit_rd)
+null_met_rd
+```
+
+#### AIC
+
+```{r}
+bo_null_mod<- 
+  lm(copies_mL ~ 1, data = b)
+AIC(bo_null_mod) %>% round(digits = 2)
+
+c2_null_mod<- 
+  lm(copies_mL ~ 1, data = c)
+AIC(c2_null_mod) %>% round(digits = 2)
+
+rd_null_mod<- 
+  lm(copies_mL ~ 1, data = r)
+AIC(rd_null_mod) %>% round(digits = 2)
+```
+
+## Blind Oso Random Forest
+
+#### Recipe
+
+```{r}
+rec<- recipe(copies_mL ~ ., data = b)
+```
+
+```{r}
+cores <- parallel::detectCores()
+cores
+```
+
+#### Specify Model
+
+```{r}
+rf_mod <- 
+  rand_forest(mtry = tune(), min_n = tune(), trees = 1000) %>% 
+  set_engine("ranger", num.threads = cores) %>% 
+  set_mode("regression")
+```
+
+#### Creating Workflow
+
+```{r}
+rf_wf <- workflow() %>%
+  add_model(rf_mod) %>%
+  add_recipe(rec)
+```
+
+#### Create Tuning Grid
+
+```{r}
+rf_grid  <- expand.grid(mtry = c(3, 4, 5, 6),
+                        min_n = c(40,50,60), 
+                        trees = c(500,1000)  )
+```
+
+#### Cross-validation
+
+```{r}
+rf_resample <- 
+  rf_wf %>% 
+  tune_grid(fold_bo,
+            grid = 25,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(rmse))
+```
+
+```{r}
+rf_resample %>%
+  collect_metrics()
+```
+
+##### Plot Model Performance
+
+```{r}
+#Plot of actual train data
+rf_resample %>%
+  autoplot()
+```
+
+##### Showing and Selecting Best Performing Models
+
+```{r}
+#Showing best performing tree models
+rf_resample %>%
+  show_best(n=1)
+
+#Selects best performing model
+best_rf <- rf_resample %>%
+  select_best(method = "rmse")
+```
+
+##### Create Final Fit
+
+```{r}
+rf_final_wf <- 
+  rf_wf %>% 
+  finalize_workflow(best_rf)
+
+#Create workflow for fitting model to train_data2 predictions
+rf_final_fit <- 
+  rf_final_wf %>%
+  fit(b) 
+```
+
+##### Calculate Residuals
+
+```{r}
+rf_residuals <- rf_final_fit %>%
+  augment(b) %>% #use augment() to make predictions from train data
+  select(c(.pred, copies_mL)) %>%
+  mutate(.resid = copies_mL - .pred) #calculate residuals and make new row.
+
+rf_residuals
+```
+
+##### Model Predictions from Tuned Model vs Actual Outcomes
+
+```{r}
+rf_pred_plot <- ggplot(rf_residuals, 
+                          aes(x = copies_mL, 
+                              y = .pred)) + 
+  geom_point() + 
+  labs(title = "Predictions vs Actual: Random Forest", 
+       x = "Copies/mL Actual", 
+       y = "Copies/mL Prediction")
+rf_pred_plot
+
+rf_residual_plot <- ggplot(rf_residuals, 
+                              aes(y = .resid, 
+                                  x = .pred)) + 
+  geom_point() + 
+  labs(title = "Predictions vs Residuals: Random Forest", 
+       x = "Copies/mL Prediction", 
+       y = "Residuals")
+plot(rf_residual_plot) #view plot
+```
+
+## Canals Random Forest
+
+#### Recipe
+
+```{r}
+rec<- recipe(copies_mL ~ ., data = c)
+```
+
+```{r}
+cores <- parallel::detectCores()
+cores
+```
+
+#### Specify Model
+
+```{r}
+rf_mod <- 
+  rand_forest(mtry = tune(), min_n = tune(), trees = 1000) %>% 
+  set_engine("ranger", num.threads = cores) %>% 
+  set_mode("regression")
+```
+
+#### Creating Workflow
+
+```{r}
+rf_wf <- workflow() %>%
+  add_model(rf_mod) %>%
+  add_recipe(rec)
+```
+
+#### Create Tuning Grid
+
+```{r}
+rf_grid  <- expand.grid(mtry = c(3, 4, 5, 6),
+                        min_n = c(40,50,60), 
+                        trees = c(500,1000)  )
+```
+
+#### Cross-validation
+
+```{r}
+rf_resample <- 
+  rf_wf %>% 
+  tune_grid(fold_c2,
+            grid = 25,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(rmse))
+```
+
+```{r}
+rf_resample %>%
+  collect_metrics()
+```
+
+##### Plot Model Performance
+
+```{r}
+#Plot of actual train data
+rf_resample %>%
+  autoplot()
+```
+
+##### Showing and Selecting Best Performing Models
+
+```{r}
+#Showing best performing tree models
+rf_resample %>%
+  show_best(n=1)
+
+#Selects best performing model
+best_rf <- rf_resample %>%
+  select_best(method = "rmse")
+```
+
+##### Create Final Fit
+
+```{r}
+rf_final_wf <- 
+  rf_wf %>% 
+  finalize_workflow(best_rf)
+
+#Create workflow for fitting model to train_data2 predictions
+rf_final_fit <- 
+  rf_final_wf %>%
+  fit(c) 
+```
+
+##### Calculate Residuals
+
+```{r}
+rf_residuals <- rf_final_fit %>%
+  augment(c) %>% #use augment() to make predictions from train data
+  select(c(.pred, copies_mL)) %>%
+  mutate(.resid = copies_mL - .pred) #calculate residuals and make new row.
+
+rf_residuals
+```
+
+##### Model Predictions from Tuned Model vs Actual Outcomes
+
+```{r}
+rf_pred_plot <- ggplot(rf_residuals, 
+                          aes(x = copies_mL, 
+                              y = .pred)) + 
+  geom_point() + 
+  labs(title = "Predictions vs Actual: Random Forest", 
+       x = "Copies/mL Actual", 
+       y = "Copies/mL Prediction")
+rf_pred_plot
+
+rf_residual_plot <- ggplot(rf_residuals, 
+                              aes(y = .resid, 
+                                  x = .pred)) + 
+  geom_point() + 
+  labs(title = "Predictions vs Residuals: Random Forest", 
+       x = "Copies/mL Prediction", 
+       y = "Residuals")
+plot(rf_residual_plot) #view plot
+```
+
+## Gulf Random Forest
+
+#### Recipe
+
+```{r}
+rec<- recipe(copies_mL ~ ., data = r)
+```
+
+```{r}
+cores <- parallel::detectCores()
+cores
+```
+
+#### Specify Model
+
+```{r}
+rf_mod <- 
+  rand_forest(mtry = tune(), min_n = tune(), trees = 1000) %>% 
+  set_engine("ranger", num.threads = cores) %>% 
+  set_mode("regression")
+```
+
+#### Creating Workflow
+
+```{r}
+rf_wf <- workflow() %>%
+  add_model(rf_mod) %>%
+  add_recipe(rec)
+```
+
+#### Create Tuning Grid
+
+```{r}
+rf_grid  <- expand.grid(mtry = c(3, 4, 5, 6),
+                        min_n = c(40,50,60), 
+                        trees = c(500,1000)  )
+```
+
+#### Cross-validation
+
+```{r}
+rf_resample <- 
+  rf_wf %>% 
+  tune_grid(fold_rd,
+            grid = 25,
+            control = control_grid(save_pred = TRUE),
+            metrics = metric_set(rmse))
+```
+
+```{r}
+rf_resample %>%
+  collect_metrics()
+```
+
+##### Plot Model Performance
+
+```{r}
+#Plot of actual train data
+rf_resample %>%
+  autoplot()
+```
+
+##### Showing and Selecting Best Performing Models
+
+```{r}
+#Showing best performing tree models
+rf_resample %>%
+  show_best(n=1)
+
+#Selects best performing model
+best_rf <- rf_resample %>%
+  select_best(method = "rmse")
+```
+
+##### Create Final Fit
+
+```{r}
+rf_final_wf <- 
+  rf_wf %>% 
+  finalize_workflow(best_rf)
+
+#Create workflow for fitting model to train_data2 predictions
+rf_final_fit <- 
+  rf_final_wf %>%
+  fit(r) 
+```
+
+##### Calculate Residuals
+
+```{r}
+rf_residuals <- rf_final_fit %>%
+  augment(r) %>% #use augment() to make predictions from train data
+  select(c(.pred, copies_mL)) %>%
+  mutate(.resid = copies_mL - .pred) #calculate residuals and make new row.
+
+rf_residuals
+```
+
+##### Model Predictions from Tuned Model vs Actual Outcomes
+
+```{r}
+rf_pred_plot <- ggplot(rf_residuals, 
+                          aes(x = copies_mL, 
+                              y = .pred)) + 
+  geom_point() + 
+  labs(title = "Predictions vs Actual: Random Forest", 
+       x = "Copies/mL Actual", 
+       y = "Copies/mL Prediction")
+rf_pred_plot
+
+rf_residual_plot <- ggplot(rf_residuals, 
+                              aes(y = .resid, 
+                                  x = .pred)) + 
+  geom_point() + 
+  labs(title = "Predictions vs Residuals: Random Forest", 
+       x = "Copies/mL Prediction", 
+       y = "Residuals")
+plot(rf_residual_plot) #view plot
+```

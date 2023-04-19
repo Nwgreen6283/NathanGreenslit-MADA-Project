@@ -73,7 +73,7 @@ select(!c(date,t7sum,site)) %>%
 ### Create 5 Fold
 
 ```{r}
-fold_bo <- vfold_cv(b, v = 5, repeats = 5) #Data was too small to stratify (<20)
+fold_bo <- vfold_cv(b, v = 5, repeats = 5) 
 ```
 
 ### Make Models
