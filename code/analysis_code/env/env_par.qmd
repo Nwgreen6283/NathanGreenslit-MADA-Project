@@ -189,7 +189,7 @@ ortho<-
                                 "Gulf" = "4c848c"))
 ```
 
-#### DON (TDN - NN - Amm) 
+#### DON (TDN - NN - Amm)
 
 ```{r}
 don<-
@@ -207,9 +207,9 @@ don<-
   #  title = "Temperature across Daily Time Series by Site",
     color = "Site")+
   theme(
-    axis.title.x = element_blank(),
-    axis.text.x = element_blank(),
-   axis.ticks.x = element_blank(),
+    #axis.title.x = element_blank(),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+   #axis.ticks.x = element_blank(),
     axis.title.y = element_text(size = 15),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
@@ -237,9 +237,9 @@ doc<-
   #  title = "Temperature across Daily Time Series by Site",
     color = "Site")+
   theme(
-    axis.title.x = element_blank(),
-   # axis.text.x = element_blank(),
-    axis.ticks.x = element_blank(),
+    #axis.title.x = element_blank(),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    #axis.ticks.x = element_blank(),
     axis.title.y = element_text(size = 15),
     axis.text.y = element_text(size = 7),
     legend.position = "none",
@@ -391,9 +391,9 @@ tdn<-
     color = "Site")+
   theme(
     plot.title= element_text(hjust = 0.5, size = 20),
-    axis.title.x = element_blank(),
-    axis.ticks.x = element_blank(),
-   # axis.text.x = element_blank(),
+   # axis.title.x = element_blank(),
+    #axis.ticks.x = element_blank(),
+    axis.text.x = element_text(angle = 45, hjust = 1),
     axis.title.y = element_text(size = 15),
     axis.text.y = element_text(size = 7),
     legend.key.size = unit(0.3,'cm'),
@@ -511,9 +511,9 @@ chl<-
     color = "Site")+
   theme(
     plot.title= element_text(hjust = 0.5, size = 20),
-    axis.title.x = element_blank(),
-    axis.ticks.x = element_blank(),
-   # axis.text.x = element_blank(),
+    #axis.title.x = element_blank(),
+   # axis.ticks.x = element_blank(),
+    axis.text.x = element_text(angle = 45, hjust = 1),
     axis.title.y = element_text(size = 15),
     axis.text.y = element_text(size = 7),
     legend.key.size = unit(0.3,'cm'),
@@ -558,25 +558,25 @@ cop<-
 #### ALL
 
 ```{r, fig.width= 8, fig.height=4}
-fig<- ggarrange(#temp,
-                #sal,
-               # do,
-                #nn,
-                #ortho,
-                #don,
-                #doc,
+fig<- ggarrange(temp,
+                sal,
+                #do,
+                nn,
+                ortho,
+                don,
+                doc,
                 #pH,
                 #amm,
-                tn,
-                sil,
-                cop,
-                chl,
-                secchi,
-                din,
-                din_dip,
+                #tn,
+                #sil,
+                #cop,
                 tdn,
-                ncol = 3, 
-                nrow = 3,
+                #secchi,
+                #din,
+                #din_dip,
+                chl,
+                ncol = 4, 
+                nrow = 2,
                 align = "v")
 
 fig
