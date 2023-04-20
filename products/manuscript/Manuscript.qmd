@@ -39,7 +39,7 @@ Each year, plumes of Saharan dust travel across the Atlantic to be deposited in 
 
 ## Saharan Dust
 
-The Sahara Desert is a significant source of atmospheric dust, eliciting an estimated one billion metric tons each year \[@dalmeidaModelSaharanDust1986\]. Annually, plumes of this dust travel across the Atlantic via easterly trade winds to be deposited in the surface waters of the Atlantic, Caribbean, and Gulf of Mexico. These dust events are highly episodic, occurring 3- 4 times a year typically in the summer months and lasting 3-5 days each. Dust aerosols can harbor a wide diversity of bacteria \[@kelloggCharacterizationAerosolizedBacteria2004\], fungi \[@ramirez-camejoFungalDiversitySahara2022\], virus-like particles \[@griffinAfricanDesertDust\], and minerals \[@formenti2003\]. These aerosols also serve as a significant source of macro and micronutrients such as phosphate, nitrate, and iron \[@millsIronPhosphorusColimit2004; @savoieNonseasaltSulfateNitrate1989 ; @graham1982\] . This addition of otherwise limiting resources can lead to rapid and potentially harmful blooms of certain microbial groups \[@lenesSaharanDustPhosphatic2008; @westrichSaharanDustNutrients2016a ; @westrichSaharanDustNutrients2016a\].
+The Sahara Desert is a significant source of atmospheric dust, eliciting an estimated one billion metric tons each year [@dalmeidaModelSaharanDust1986\]. Annually, plumes of this dust travel across the Atlantic via easterly trade winds to be deposited in the surface waters of the Atlantic, Caribbean, and Gulf of Mexico. These dust events are highly episodic, occurring 3- 4 times a year typically in the summer months and lasting 3-5 days each. Dust aerosols can harbor a wide diversity of bacteria \[@kelloggCharacterizationAerosolizedBacteria2004\], fungi \[@ramirez-camejoFungalDiversitySahara2022\], virus-like particles \[@griffinAfricanDesertDust\], and minerals \[@formenti2003\]. These aerosols also serve as a significant source of macro and micronutrients such as phosphate, nitrate, and iron \[@millsIronPhosphorusColimit2004; @savoieNonseasaltSulfateNitrate1989 ; @graham1982\] . This addition of otherwise limiting resources can lead to rapid and potentially harmful blooms of certain microbial groups \[@lenesSaharanDustPhosphatic2008; @westrichSaharanDustNutrients2016a ; @westrichSaharanDustNutrients2016a].
 
 ## Microbial Blooms
 
@@ -47,11 +47,11 @@ Previous work conducted in the West Florida Shelf has shown that increased iron 
 
 ### Vibrio
 
-While it is documented that these dust events can stimulate growth of harmful phytoplankton, emerging evidence shows that heterotrophic bacteria are responding to the episodic influx of limiting resources and substrate, resulting in blooms of bacteria that are associated with disease, which we refer to as harmful bacterial blooms. Among those that respond are bacterium belonging to the genus *Vibrio*, a group of ubiquitous marine opportunistic heterotrophs. While considered conditionally rare (comprising of \<1% of the microbial community), under the proper conditions, this genus can rapidly bloom to make up a large percentage of the community over a short period of time [@westrichSaharanDustNutrients2016a ; @westrichVibrioPopulationDynamics2018a]. *Vibrio* species are found in brackish to marine waters with salinities ranging from 0-35 and will grow in waters with temperatures ranging from 5°C-40°C [@sampaioVibrioSppLife2022]. Each year, plumes of Saharan dust travel across the Atlantic via easterly trade winds. These plumes are then deposited in the surface waters of the mid-Atlantic, Caribbean, and Gulf of Mexico. These dust aerosols harbor a wide range of fungi, bacteria, virus-like-particles, minerals, and nutrients (NO3, Fe, PO4). Addition of these nutrients to otherwise oligotrophic settings can result in large and rapid blooms of potentially harmful microbes, presenting a danger to both marine and human health.
+While it is documented that these dust events can stimulate growth of harmful phytoplankton, emerging evidence shows that heterotrophic bacteria are responding to the episodic influx of limiting resources and substrate, resulting in blooms of bacteria that are associated with disease, which we refer to as harmful bacterial blooms. Among those that respond are bacterium belonging to the genus *Vibrio*, a group of ubiquitous marine opportunistic heterotrophs. While considered conditionally rare (comprising of \<1% of the microbial community), under the proper conditions, this genus can rapidly bloom to make up a large percentage of the community over a short period of time [@westrichSaharanDustNutrients2016a ; @westrichVibrioPopulationDynamics2018a]. *Vibrio* species are found in brackish to marine waters with salinities ranging from 0-35 and will grow in waters with temperatures ranging from 5°C-40°C [@sampaioVibrioSppLife2022].
 
 *Vibrio* species are excellent opportunists, having multiple advantages that allow them to quickly respond to any newly introduced substrate or nutrients. These advantages include multiple copies of rRNA genes, a rapid doubling time, efficient chemotactic motility, large genomic repertoire (consisting of two circular chromosomes), and multiple Fe-siderophore complexes that allow for rapid uptake of iron into the cell [@jensenNonrandomMicroheterogeneity16S2009; @ringgaardChemotaxisArraysVibrio2018 ; @eagonPSEUDOMONASNATRIEGENSMARINE1962 ; @okadaVibriosCommonlyPossess2005 ; @payneVibrioIronTransport2016].
 
-Within the *Vibrionaceae* family, there are at least 12 species that are commonly known as human pathogens. Illness can be induced through either a foodborne route via the consumption of raw or uncooked seafood and contaminated drinking water, or through nonfoodborne routes such as wound exposure while swimming. The most common illnesses caused by *Vibrio* include self-limiting diarrhea and cholera (*V. cholerae*), shellfish-induced gastroenteritis (*V. parahaemolyticus, V. vulnificus*), extreme cases of necrotizing fasciitis and septicemia (*V. vulnificus*), and wound and ear infections  (*V. alginolyticus*, *V. vulnificus*) \[@baker-austinVibrioSppInfections2018\]. Some species also pose a threat to marine health, inducing mortality in oyster and clam larvae (*V. tubiashii, V. coralliilyticus*), bacterial bleaching and rapid tissue loss in corals (*V. mediterranei, V. coralliilyticus*) \[@richardsMortalitiesEasternPacific2015; @rosenbergVibrioShiloiOculina2004; @ben-haimVibrioCoralliilyticusSp2003\], and mortality in important aquaculture species such as penaeid shrimp (*V. parahaemolyticus*) and sea breams (*V. harveyi)* \[@tranDeterminationInfectiousNature2013; @haldarIdentificationVibrioHarveyi2010\] among others.
+Within the *Vibrionaceae* family, there are at least 12 species that are commonly known as human pathogens. Illness can be induced through either a foodborne route via the consumption of raw or uncooked seafood and contaminated drinking water, or through nonfoodborne routes such as wound exposure while swimming. The most common illnesses caused by *Vibrio* include self-limiting diarrhea and cholera (*V. cholerae*), shellfish-induced gastroenteritis (*V. parahaemolyticus, V. vulnificus*), extreme cases of necrotizing fasciitis and septicemia (*V. vulnificus*), and wound and ear infections  (*V. alginolyticus*, *V. vulnificus*) [@baker-austinVibrioSppInfections2018\]. Some species also pose a threat to marine health, inducing mortality in oyster and clam larvae (*V. tubiashii, V. coralliilyticus*), bacterial bleaching and rapid tissue loss in corals (*V. mediterranei, V. coralliilyticus*) \[@richardsMortalitiesEasternPacific2015; @rosenbergVibrioShiloiOculina2004; @ben-haimVibrioCoralliilyticusSp2003\], and mortality in important aquaculture species such as penaeid shrimp (*V. parahaemolyticus*) and sea breams (*V. harveyi)* \[@tranDeterminationInfectiousNature2013; @haldarIdentificationVibrioHarveyi2010] among others.
 
 ### Previous Work
 
@@ -109,11 +109,9 @@ This data set did not require any cleaning.
 
 # Results
 
-<!--# Have paragraph describing and then have figures. -->
-
 ## Exploratory/Descriptive analysis
 
-#### Dust AOD and Vibrio Enumeration
+#### Dust AOD and Vibrio Enumeration <!--# What are AOD units? -->
 
 This figure depicts the summed dust concentration 24hr prior to sample collection (time points 13hr--> 7hr the next day) across the daily time series. The daily time series captured two dust events. One light event starting on the 13th of July, where AOD reached 0.2, and a much heavier dust event from the 16th to the 18th of July with AOD = 55-57. Dust AOD returned to lower concentrations following the time series. The top portion of the figure depicts total enumerated Vibrio as copies per mL, with color by site. There is a noticeable shift in *Vibrio* growth at the Gulf site, a less noticeable but still present shift in Blind Oso Bay, and practically no changes in the Canal site.
 
@@ -141,9 +139,9 @@ CCF plots showed that BO has a significant lag relationship a value of -1. In ot
 
 ### Correlation Matrices
 
-Data that is normally distributed was run with Pearson's Correlation Coefficient. Data that is not normally distributed was run with Spearman's Correlation Coefficient.
+Correlation matrices were run on each variable (in order of left to right: temperature, salinity, nitrate+nitrite, orthophosphate, dissolved organic nitrogen, dissolved organic carbon, total dissolved nitrogen, chlorophyll, *Vibrio* gene copies/mL, and dust). A majority of the environmental variables had a non-normal distribution, thus Spearman's Correlation (indicated by the color gradient) was used to examine the relationship between the variables.
 
-![Figure 3](images/000081.png)
+![](images/000175.png)
 
 ### Linear Regression Models
 
@@ -171,51 +169,54 @@ Multi-variate models that included dust, water chemistry, nutrients, and DOM per
 
 ## Full analysis
 
+<!--# Add RF graphs here -->
+
 {{< pagebreak >}}
 
 # Discussion
 
-This study aimed to examine microbial response to Saharan dust deposition in high nutrient coastal waters. Specifically focusing on bacteria belong to the genus *Vibrio*, we found that growth response following dust input varied by site.
-
 ## Summary and Interpretation
 
-### Methods
+This study aimed to examine microbial response to Saharan dust deposition in high nutrient coastal waters, specifically focusing on bacteria belong to the genus *Vibrio*, a bacterium that is important for marine processes such as carbon cycling, as well as human and marine health.
+
+## Methods
 
 For this analysis, we examined *Vibrio* growth dynamics in response to Saharan Dust deposition in three sites in Corpus Christi, TX that had differing baseline nutrient levels. The Gulf, with relatively constant salinities and low nutrient levels, Blind Oso Bay with high nutrients and fluctuating salinities, and a residential canal system with consistent temperature and salinities and nutrient levels. Samples were collected before, during, and after a dust event and *Vibrio* were enumerated using qPCR. Data on nutrient levels and other environmental parameters (e.g. salinity and temperature) were also collected during this period. The three data sets (Vibrio Enumeration, Environmental parameters, and Dust Concentration) were then processed and cleaned for analysis.
 
-### Findings/Explanations
+## Findings/Explanations
 
-<!--# What are AOD units? -->
+*Vibrio* growth was found to significantly correlate with dust aerosol optical density at Blind Oso (r = 0.7, p = 0.01), Canals (r = 0.75, p = 0.005), and the Gulf (r = 0.67, p = 0.02). The introduction of dust constituents have the potential to serve as a temporary alleviation from the limitation of nutrients that are essential for growth. *Vibrio* species have one of the fastest doubling times among bacteria [@gibsonDistributionBacterialDoubling2018 ; @eagonPSEUDOMONASNATRIEGENSMARINE1962\], and are able to rapidly exploit introduced nutrients due their rapid motility, diverse genomic repertoire, and iron-chelating complexes \[@ringgaardChemotaxisArraysVibrio2018; @okadaVibriosCommonlyPossess2005 ; @payneVibrioIronTransport2016]. These advantageous traits have resulted in *Vibrio* being classified as 'oppurtunitrophs'. The following declines in *Vibrio* gene copies/mL may be attributed to topdown control, such as viral lysis <!--# Cite -->, or bottom-up controls due to an exhaustion of the resources provided by the dust.
 
-#### Vibrio and Dust
-
-*Vibrio* growth was found to significantly correlate with dust aerosol optical density at Blind Oso (r = 0.7, p = 0.01), Canals (r = 0.75, p = 0.005), and the Gulf (r = 0.67, p = 0.02). Similar to previous findings peaks in growth were observed 24-48 hours following dust deposition, with both the Gulf and Blind Oso having a peak response 24hr following peak dust deposition, and the Canals 48hr after peak deposition [@westrichVibrioPopulationDynamics2018a; @westrichSaharanDustNutrients2016a]. <!--# Add xfold increases -->.
-
-The introduction of dust constituents have the potential to serve as a temporary alleviation from the limitation of nutrients that are essential for growth. *Vibrio* species have one of the fastest doubling times among bacteria \[@gibsonDistributionBacterialDoubling2018 ; @eagonPSEUDOMONASNATRIEGENSMARINE1962\], and are able to rapidly exploit introduced nutrients due their rapid motility, diverse genomic repertoire, and iron-chelating complexes \[@ringgaardChemotaxisArraysVibrio2018 ; @okadaVibriosCommonlyPossess2005 ; @payneVibrioIronTransport2016\]. These advantageous traits have resulted in *Vibrio* being classified as 'oppurtunitrophs'. The following declines in *Vibrio* gene copies/mL may be attributed to topdown control, such as viral lysis <!--# Cite -->, or bottom-up controls due to an exhaustion of the resources provided by the dust.
-
-#### Site-Specific Dynamics
+Similar to previous findings, peaks in growth were observed 24-48 hours following dust deposition, with both the Gulf and Blind Oso having a peak response 24hr following peak dust deposition, and the Canals 48hr after peak deposition [@westrichVibrioPopulationDynamics2018a; @westrichSaharanDustNutrients2016a]. <!--# Add xfold increases -->.
 
 Multivariate models were tested using specific environmental parameters that have been associated with *Vibrio* population dynamics [@bullington2022]. Ultimately, a model that included water chemistry, dust, nutrient, and dissolved organic matter parameters provided the best performance (Table 3, Table 4, Table5), suggesting that while dust may contribute to a growth response in *Vibrio*, the site specific nutrient and chemistry dynamics play an important role in dictating the degree of response observed.
 
+*Vibrio* gene copies/mL at the Gulf experienced the greatest change in growth <!--# Add xfold --> as compared to the other two sites. This response in a lower nutrient marine environment lines up with previous work that was conducted in the Florida Keys and North Atlantic, where a 30-fold and 1.6-fold population increase was observed within a 24hr period following dust deposition.
+
+While *Vibrio* growth exhibited a strong correlation at the Canals, the degree of growth was lesser in comparison to the other sites (Figure 1). Field studies have suggested that salinities for optimal growth lie between 5-25, depending on the species [@sullivanEffectsTemperatureSalinity2018]. The higher salinities at this site (40-42) may have attributed to this observed weaker growth response.
+
+*Vibrio* growth was observed at Blind Oso Bay, but slightly dampened in comparison to the Gulf. This site is an enclosed shallow tributary that frequently experiences high levels of nutrients (e.g.total dissolved nitrogen) and chlorophyll due to its proximity to the Oso Wastewater Plant (OSP) [@wetz]. The Bay experienced a dramatic drop in salinity from July 11th to July 19th that could be attributed to discharge from the OSP. While growth was significantly correlated with dust deposition, there are many environmental factors at play at this site, making it difficult to identify the specific mechanisms that are eliciting the growth response.
+
+Additionally, the Gulf exhibited a sharper increase during the second, heavier dust event, while Blind Oso exhibited a smaller increase during the heavy dust event. This difference in response may be attributed to the nutrient dynamics of the sites. In marine waters, nutrients are typically limiting due to tight microbial recycling <!--# CITE -->. Therefore the introduction on nutrients at such a site may result in rapid uptake and utilization. At Blind Oso, a priming effect may be occurring, where these dust constituents may not be as essential for growth following an initial deposition, reaching a maximum in how much it can support growth.
+
 <!--# Add monthly average of nutrients -->
-
-Similar to previous work done in coastal and offshore sites, the Gulf experienced
-
-Blind Oso Bay is an enclosed shallow tributary that frequently expereince high levels of nutrients (total dissolved nitrogen) and chlorophyll due to its proximity to the Oso Wastewater Plant (OSP). The Bay experienced a dramatic drop in salinity from July 11th to July 19th. This decrease in salinity could be attributed to discharge from the OSP.
-
-The Canals may have a heavily dampened growth response due to a high and constant salinity of 40-42. In general, optimal growth occurs at salinities of \~25-35, and less tolerant species will drop as salinities climb <!--# CITE --> .
-
-Additionally, the Gulf exhibited a sharper increase during the second, heavier dust event, while Blind Oso exhibited a smaller increase during the heavy dust event. This difference in response may be attributed to the nutrient dynamics of the sites. In marine waters, nutrients are typically limiting due to tight microbial recycling <!--# CITE -->. Therefore the introduction on nutrients at such a site may result in rapid uptake and utilization. At Blind Oso, these dust constituents may not be as essential for growth, and the dust may have reached a maximum in how much it can support growth.
 
 ## Strengths and Limitations
 
 At Blind Oso for example, the salinity is observed to drop from 42-20 within an eight day period that coincided with dust input. It is difficult to parse these two variables out as either or both could have contributed to growth at this site.
 
-[**One important thing to note**]{.ul}: Our data set contains dust data for all of 2022. Our copies_mL data only contains values from 7/7/22 --> 7/19/22. Therefore, these CCA were made with only this time series. This limits our analysis, as we have dust data prior that can explain copies_mL on the earlier dates 7/7 or 7/8. But we cannot incorporate this into the CCA as we have NA for copies_mL for those early days. Below we will run linear models that DO contain these prior dust days. And since we have identified a lag, we can shift the dust data to line up with the copies_mL that it corresponds with directly - and we no longer have NAs. But this ultimately means that the lag identified above. may not be the best fit for our model below, so some additional work is needed that tests other lags in the code.
+<!--# Difficult to parse out sites  -->
 
 <!--# Sample size  -->
 
-## Conclusions/Broader Impacts
+## Conclusions
+
+Ultimately, *Vibrio* growth was observed following dust deposition in each of these sites. However, the degree of response varied by site. This may be explained by each site having a specific and complex environment with varying water chemistry and nutrient levels.
+
+Sites like the Gulf, that have lower nutrient levels, may have a more responsive microbial population, as they are temporarily relieved form nutrient limitation. Inland sites similar to the Canals or Blind Oso may exhibit dampened *Vibrio* growth following dust input, as the dust derived nutrients may be less critical for growth, as there is already a supporting nutrient foundation, or the environmental conditions may not be favorable for growth initially. The growth response at Blind Oso, despite having higher nutrients, suggests that there may be other constiuents in the dust that are not present in the site that elicit this response. More work will be needed to fully understand the dynamics, as there were many other attributes that may have also contributed to growth in the Bay.
+
+To date, our understanding of *Vibrio* and other microbial response to dust input has focused on oligotrophic settings, where dust input is considered to be a critical source of limiting nutrients, and iron in particular. This study aided in filling the gap in how comparable previous findings in oligotrophic settings are to coastal areas with higher ambient nutrient levels. The composition of desert dust can be complex and may have the potential to deliver critical resources that could be more readily exploited by opportunistic bacteria (like *Vibrio*) and elicit a population bloom despite higher baseline nutrient levels. During these bloom periods, human exposure through recreation or consumption of raw seafood may be more likely, presenting a risk to the health of the public.
+
 
 {{< pagebreak >}}
 

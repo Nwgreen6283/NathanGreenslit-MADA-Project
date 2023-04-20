@@ -84,57 +84,20 @@ rd<-
 
 ```
 
-### Make Datasets for normal and non-normal variables
-
-Variables that are normally distributed across all three sites will be in one df. All others will be in another.
+#### Make  datasets for MADA analysis
 
 ```{r}
-b_norm<- 
+b1<- 
   bo %>%
-  select(!c(sal, secchi, nn, tdn, don, doc, toc, tn))
-b_para<- 
-  bo %>%
-  select(sal, secchi, nn, tdn, don, doc, toc, tn)
+  select(temp, sal, nn, orthop, don, doc, tdn, chl, copies_mL, dust)
 
-c_norm<- 
+c1<- 
   c2 %>%
-  select(!c(sal, secchi, nn, tdn, don, doc, toc, tn))
-c_para<- 
-  c2 %>%
-  select(sal, secchi, nn, tdn, don, doc, toc, tn)
+  select(temp, sal, nn, orthop, don, doc, tdn, chl, copies_mL, dust)
 
-r_norm<- 
+r1<- 
   rd %>%
-  select(!c(sal, secchi, nn, tdn, don, doc, toc, tn))
-r_para<- 
-  rd %>%
-  select(sal, secchi, nn, tdn, don, doc, toc, tn)
-```
-
-### Log10 Transform non-normally distributed data for Norm df
-
-Distributions can be found in `1_distribution.qmd`
-
-```{r}
-#Blind Oso
-b_norm<-
-  b_norm %>%
-  mutate(amm = log10(amm), #Log-transforms data
-         din_dip = log10(din_dip),
-         dust = log10(dust),
-         chl = log10(chl)) 
- 
-#Canals
-c_norm<- 
-  c_norm %>%
-  mutate(orthop = log10(orthop),
-         dust = log10(dust)) 
-
-
-#Gulf
-r_norm<- 
-  r_norm %>%
-  mutate(dust = log10(dust))
+  select(temp, sal, nn, orthop, don, doc, tdn, chl, copies_mL, dust)
 ```
 
 # Correlation Matrix
@@ -148,110 +111,35 @@ If your data contain missing values, use the following R code to handle missing 
     cor(x, method = "pearson", use = "complete.obs")
 
 ```{r, include = FALSE}
-#Normal Data = Pearson's
-b<- cor(b_norm, method = "pearson") #Default method = pearson
-round(b,2) #Round correlation coeff to "x" digits 
+b2<- cor(b1, method = "spearman") 
+round(b1,2) #Round correlation coeff to "x" digits 
 
-c<- cor(c_norm, method = "pearson")
-round(c,2)
+c2<- cor(c1, method = "spearman")
+round(c1,2)
 
-r<- cor(r_norm, method = "pearson")
-round(r,2)
-
-#Non-parametric Data  = Spearman's
-b1<- cor(b_para, method = "spearman") 
-round(b,2) #Round correlation coeff to "x" digits 
-
-c1<- cor(c_para, method = "spearman")
-round(c,2)
-
-r1<- cor(r_para, method = "spearman")
-round(r,2)
-
-#All Data = Spearman's
-b2<- cor(bo, method = "spearman") 
-round(b,2) #Round correlation coeff to "x" digits 
-
-c2<- cor(c2, method = "spearman")
-round(c,2)
-
-r2<- cor(rd, method = "spearman")
-round(r,2)
-```
-
-#### Make Function to Format
-
-Simple function for formatting a **correlation matrix** into a table with 4 columns containing : Column 1 : row names (variable 1 for the correlation test), Column 2 : column names (variable 2 for the correlation test), Column 3 : the **correlation coefficients**, Column 4 : the **p-values** of the correlations
-
-```{r}
-flattenCorrMatrix <- function(cormat, pmat) {
-  ut <- upper.tri(cormat)
-  data.frame(
-    row = rownames(cormat)[row(cormat)[ut]],
-    column = rownames(cormat)[col(cormat)[ut]],
-    cor  =(cormat)[ut],
-    p = pmat[ut])}
-```
-
-#### Make Matrix
-
-The function **rcorr()** \[in **Hmisc** package\] can be used to compute the **significance levels** for **pearson** and **spearman correlations**. It returns both the correlation coefficients and the p-value of the correlation for all possible pairs of columns in the data table.
-
-```{r}
-bclean<- rcorr(as.matrix(b_norm))
-flattenCorrMatrix(bclean$r, bclean$P)
-
-cclean<- rcorr(as.matrix(c_norm))
-flattenCorrMatrix(cclean$r, cclean$P)
-
-rclean<- rcorr(as.matrix(r_norm))
-flattenCorrMatrix(rclean$r, rclean$P)
+r2<- cor(r1, method = "spearman")
+round(r1,2)
 ```
 
 #### Visualize with `corrplot()` function
 
 The function **corrplot()** takes the **correlation matrix** as the first argument. The second argument (type="upper") is used to display only the upper triangular of the **correlation matrix**.
 
-```{r, fig.width=6}
-par(mfrow=c(3,3))
-#Normal Data 
- corrplot(b, type = "upper", 
-         tl.col = "black", tl.srt = 45,
-         title = "Blind Oso_Pearson",  mar=c(0,0,1,0)) #Adds and lowers title 
+```{r}
+par(mfrow=c(1,3))
 
- corrplot(c, type = "upper", 
-         tl.col = "black", tl.srt = 45,
-         title = "Canals_Pearson", mar=c(0,0,1,0))
-
- corrplot(r, type = "upper", 
-         tl.col = "black", tl.srt = 45, mar=c(0,0,1,0))
-         title(main = "Gulf_Pearson")
-         
-#Non-Parametric Data
- corrplot(b1, type = "upper", 
-         tl.col = "black", tl.srt = 45,
-         title = "Blind Oso_Spearman",  mar=c(0,0,1,0)) #Adds and lowers title 
-
-corrplot(c1, type = "upper", 
-         tl.col = "black", tl.srt = 45,
-         title = "Canals_Spearman", mar=c(0,0,1,0))
-
-corrplot(r1, type = "upper", 
-         tl.col = "black", tl.srt = 45, mar=c(0,0,1,0))
-         title(main = "Gulf_Spearman" )
-         
 #Non-Parametric Data
  corrplot(b2, type = "upper", 
-         tl.col = "black", tl.srt = 45,
-         title = "Blind Oso_Spearman_all",  mar=c(0,0,1,0)) #Adds and lowers title 
+         tl.col = "black", tl.srt = 90,
+         title = "Blind Oso",  mar=c(0,0,1,0)) #Adds and lowers title 
 
 corrplot(c2, type = "upper", 
-         tl.col = "black", tl.srt = 45,
-         title = "Canals_Spearman_all", mar=c(0,0,1,0))
+         tl.col = "black", tl.srt = 90,
+         title = "Canals", mar=c(0,0,1,0))
 
 corrplot(r2, type = "upper", 
-         tl.col = "black", tl.srt = 45, mar=c(0,0,1,0))
-         title(main = "Gulf_Spearman_all" )
+         tl.col = "black", tl.srt = 90, mar=c(0,0,1,0))
+         title(main = "Gulf" )
 ```
 
 ##### 
