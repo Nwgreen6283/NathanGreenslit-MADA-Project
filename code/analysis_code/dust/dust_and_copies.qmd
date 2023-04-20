@@ -53,12 +53,14 @@ dust_fig<- daily_dust_sum %>% ggplot() +geom_line(
   theme_bw()+
   labs(
     x = "Date",
-    y = "Dust Aerosol Optical Density")+
+    y = "Dust Aerosol Optical Density",
+    title = "Dust AOD over Daily Time Series")+
   theme(
     axis.title.y = element_text(size = 10),
     axis.text.y = element_text(size = 10),
     axis.title.x = element_text(size = 15),
-    axis.text.x = element_text(size = 10))
+    axis.text.x = element_text(size = 10),
+    plot.title = element_text(hjust = 0.5, size = 20))
   
 
 dust_fig
@@ -80,9 +82,9 @@ tot_vib<- copies_d %>% ggplot()+geom_line(
     color = "  Site") +
   theme(
     plot.title = element_text(hjust = 0.5, size = 20),  #center title
-    axis.text.x = element_blank(),
-    axis.title.x = element_blank(),
-    axis.ticks.x = element_blank(),
+  # axis.text.x = element_blank(),
+   # axis.title.x = element_blank(),
+   # axis.ticks.x = element_blank(),
     axis.title.y = element_text(size = 10),
     axis.text.y = element_text(size = 10),
     legend.position = c(0.1, 0.8),

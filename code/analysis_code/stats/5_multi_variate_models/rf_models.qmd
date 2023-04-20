@@ -283,19 +283,21 @@ rf_pred_plot <- ggplot(rf_residuals,
                           aes(x = copies_mL, 
                               y = .pred)) + 
   geom_point() + 
-  labs(title = "Predictions vs Actual: Random Forest", 
+  labs(title = "Blind Oso: Predictions vs Actual: Random Forest", 
        x = "Copies/mL Actual", 
-       y = "Copies/mL Prediction")
+       y = "Copies/mL Prediction") +
+  theme_bw()
 rf_pred_plot
 
 rf_residual_plot <- ggplot(rf_residuals, 
                               aes(y = .resid, 
                                   x = .pred)) + 
   geom_point() + 
-  labs(title = "Predictions vs Residuals: Random Forest", 
+  labs(title = "Blind Oso: Predictions vs Residuals: Random Forest", 
        x = "Copies/mL Prediction", 
        y = "Residuals")
-plot(rf_residual_plot) #view plot
+plot(rf_residual_plot) + #view plot
+  theme_bw()
 ```
 
 ## Canals Random Forest
@@ -404,9 +406,10 @@ rf_pred_plot <- ggplot(rf_residuals,
                           aes(x = copies_mL, 
                               y = .pred)) + 
   geom_point() + 
-  labs(title = "Predictions vs Actual: Random Forest", 
+  labs(title = "Canals: Predictions vs Actual: Random Forest", 
        x = "Copies/mL Actual", 
-       y = "Copies/mL Prediction")
+       y = "Copies/mL Prediction") +
+  theme_bw()
 rf_pred_plot
 
 rf_residual_plot <- ggplot(rf_residuals, 
@@ -525,9 +528,10 @@ rf_pred_plot <- ggplot(rf_residuals,
                           aes(x = copies_mL, 
                               y = .pred)) + 
   geom_point() + 
-  labs(title = "Predictions vs Actual: Random Forest", 
+  labs(title = "Gulf: Predictions vs Actual: Random Forest", 
        x = "Copies/mL Actual", 
-       y = "Copies/mL Prediction")
+       y = "Copies/mL Prediction") + 
+  theme_bw()
 rf_pred_plot
 
 rf_residual_plot <- ggplot(rf_residuals, 

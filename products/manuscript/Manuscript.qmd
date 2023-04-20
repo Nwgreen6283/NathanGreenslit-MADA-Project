@@ -67,9 +67,7 @@ With a heightened risk of *Vibrio* exposure in coastal waters, it is vital to un
 
 How do Saharan dust events influence Vibrio populations in high nutrient coastal waters?
 
-*What I am looking for* I expect to see a more dramatic growth response in the Gulf (low nutrient), whereas the higher nutrient sites may exhibit a dampened growth response since they already have high baseline nutrient levels. If we still see a growth response despite already having supportive background nutrient levels at these sites, this may suggest that there are other constituents in the dust that can elicit a growth response. Nutrients, dust input, salinity, and temperature will be the primary factors of interest.
-
-*How I will analyze it* - Look at Vibrio growth over time series (estimated from qPCR) - Examine relationships between dust input and Vibrio growth - Examine influence of site-specific environmental parameters (Temperature, Salinity, Nutrients) on growth response - Run linear models on factors like: dust x growth and nutrients x growth - NMDS to see which parameters have the strongest influence on growth
+I expect to see a more dramatic growth response in the Gulf (low nutrient), whereas the higher nutrient sites may exhibit a dampened growth response since they already have high baseline nutrient levels. If we still see a growth response despite already having supportive background nutrient levels at these sites, this may suggest that there are other constituents in the dust that can elicit a growth response. Nutrients, dust input, salinity, and temperature will be the primary factors of interest.
 
 # Methods
 
@@ -81,13 +79,13 @@ Sampling took place at three locations in Corpus Christi, TX: Blind Oso Bay, a r
 
 #### Collection
 
-A high resolution (daily) time series was conducted starting on July 7th and ending on July 19th, 2022 capturing before, during, and after a Saharan dust event. Samples were collected in 1L autoclaved Polypropylene Bottles and immediately placed in a cooler on ice. Following transport to the laboratory, the samples were concentrated onto 0.2µm pore size, hydrophobic polycarbonate membranes (25mm in diameter) and stored at -80°C until DNA Extraction using a ZymoBIOMICS DNA Miniprep Kit (Cat#:4300).
+A high resolution (daily) time series was conducted starting on July 7th and ending on July 19th, 2022 capturing before, during, and after a Saharan dust event. Samples were collected in 1L autoclaved Polypropylene Bottles and immediately placed in a cooler on ice. Following transport to the laboratory, the samples were concentrated onto 0.2µm pore size, hydrophobic polycarbonate membranes (25mm in diameter) and stored at -80°C until DNA Extraction using a ZymoBIOMICS DNA Miniprep Kit (Cat#:4300). To evalulate contamination in the lab, negative controls (DI and MilliQ Water) were introduced at sample collection, filtration, DNA Extraction, and downstream quantitative polymerase chain reaction (qPCR).
 
 Vertical profiles of salinity, temperature, pH, and dissolved oxygen were obtained using a YSI ProPlus sonde. Samples were collected for chlorophyl *a* analysis, inorganic nutrients, dissolved and particulate organic matter, and microbial analysis.
 
 #### Vibrio Enumeration
 
-Total *Vibrio* concentrations were quantified using a SYBR Green quantitative PCR (qPCR) method. Estimates were made using genus-specific quantitative polymerase chain reaction (qPCR) PCR product using Vibrio group specific primers targeting a variable region of the 16S rRNA gene, 567F, 5′GGCGTAAAGCGCATGCAGGT3′ and 680R, 5′-GAAATTCTACCCCCCTCTACAG-3. Master mix and PCR conditions were derived from [@westrichSaharanDustNutrients2016a]. Briefly, 5µL of 2X SYBR PowerUp Master Mix (Applied Biosystems, Foster City, CA) were added to primers with a final concentration of 0.16µM and PCR water for a final volume of 10µL. Reactions were run in triplicate on a CFX96 Touch Real-Time PCR Detection System (Bio-Rad Laboratories, Hercules, CA) with the following cycling conditions: 2 minutes at 50◦C for UDG activation and 95◦C for 2 min to activate AmpliTaq polymerase and UP, followed by 40 cycles of 95◦C for 3 seconds for denaturation and 60◦C for 30 seconds for annealing and extension. Each run was followed by a dissociation step (60C to 95C by 0.5C increments) to determine a melt curve for analysis of specificity. Each test was run with positive and negative controls in triplicate. Cycle threshold values for each qPCR test was compared to a standard curve representing 10\^1 to 10\^6 gene copies per reaction volume. <!--# Add Std Curve specs -->
+Total *Vibrio* concentrations were quantified using a SYBR Green qPCR method. Estimates were made using genus-specific quantitative polymerase chain reaction (qPCR) PCR product using Vibrio group specific primers targeting a variable region of the 16S rRNA gene, 567F, 5′GGCGTAAAGCGCATGCAGGT3′ and 680R, 5′-GAAATTCTACCCCCCTCTACAG-3. Master mix and PCR conditions were derived from [@westrichSaharanDustNutrients2016a]. Briefly, 5µL of 2X SYBR PowerUp Master Mix (Applied Biosystems, Foster City, CA) were added to primers with a final concentration of 0.16µM and PCR water for a final volume of 10µL. Reactions were run in triplicate on a CFX96 Touch Real-Time PCR Detection System (Bio-Rad Laboratories, Hercules, CA) with the following cycling conditions: 2 minutes at 50◦C for UDG activation and 95◦C for 2 min to activate AmpliTaq polymerase and UP, followed by 40 cycles of 95◦C for 3 seconds for denaturation and 60◦C for 30 seconds for annealing and extension. Each run was followed by a dissociation step (60C to 95C by 0.5C increments) to determine a melt curve for analysis of specificity. Each test was run with positive and negative controls in triplicate. Cycle threshold values for each qPCR test was compared to a standard curve representing 10\^1 to 10\^6 gene copies per reaction volume.
 
 ## Data import and cleaning
 
@@ -109,13 +107,21 @@ This data set did not require any cleaning.
 
 # Results
 
-## Exploratory/Descriptive analysis
+## Exploratory Analysis
 
-#### Dust AOD and Vibrio Enumeration <!--# What are AOD units? -->
+### Visualization
 
-This figure depicts the summed dust concentration 24hr prior to sample collection (time points 13hr--> 7hr the next day) across the daily time series. The daily time series captured two dust events. One light event starting on the 13th of July, where AOD reached 0.2, and a much heavier dust event from the 16th to the 18th of July with AOD = 55-57. Dust AOD returned to lower concentrations following the time series. The top portion of the figure depicts total enumerated Vibrio as copies per mL, with color by site. There is a noticeable shift in *Vibrio* growth at the Gulf site, a less noticeable but still present shift in Blind Oso Bay, and practically no changes in the Canal site.
+#### Dust AOD <!--# What are AOD units? -->
 
-![Figure 1: Total Daily Vibrio at All Sites](images/paste-C33B6E43.png){width="1491"}
+This figure depicts the summed dust concentration 24hr prior to sample collection (time points 13hr--> 7hr the next day) across the daily time series. The daily time series captured two dust events. One light event starting on the 13th of July, where AOD reached 0.2, and a much heavier dust event from the 16th to the 18th of July with AOD = 55-57. Dust AOD returned to lower concentrations following the time series.
+
+![Figure 1:](images/000009-01.png)
+
+#### Vibrio Enumeration
+
+This figure depicts total enumerated Vibrio as copies per mL, with color by site. There is a noticeable shift in *Vibrio* growth at the Gulf site, a less noticeable but still present shift in Blind Oso Bay, and practically no changes in the Canal site.
+
+![Figure 2:](images/000005-03.png)
 
 #### Environmental Parameters
 
@@ -123,31 +129,33 @@ Environmental parameters were site-specific. Temperature and salinities were con
 
 Nutrients (orthophosphate and nitrate+nitrite) were observed to increase following dust deposition at both Blind Oso and the Canals site, with the former having more dramatic peaks. Nutrient levels at the Gulf remained relatively constant throughout the time series. DON and DOC had distinct peaks at Blind Oso on days following dust deposition, where DON exhibited smaller peaks at the Canals.
 
-![Figure 2:](images/000019.png)
+![Figure 3:](images/000019.png)
 
-## Statistical analysis
+### Statistical analysis
 
-### Check Distributions:
+#### Check Distributions:
 
 Shapiro-Wilk's tests were conducted to assess distribution of the data. Any data that did not have a normal distribution was log-transformed and the test was run again. Variables that continue to fail normality will have non-parametric tests run on them.
 
-### Cross-correlation Analysis:
+#### Cross-correlation Analysis:
 
 Previous literature has shown that Vibrio respond 12-24 hours following dust deposition events. Based on this, we need to look at lags between the two times series for dust data and growth data. To do this, we can set up a cross-correlation analysis, which allows us to examine the lag/lead relationship between the two variables.
 
 CCF plots showed that BO has a significant lag relationship a value of -1. In other words, dust occurs, and one day later, we see a response in copies_mL. C2 has a lag at -2, and RD at -1.
 
-### Correlation Matrices
+#### Correlation Matrices
 
 Correlation matrices were run on each variable (in order of left to right: temperature, salinity, nitrate+nitrite, orthophosphate, dissolved organic nitrogen, dissolved organic carbon, total dissolved nitrogen, chlorophyll, *Vibrio* gene copies/mL, and dust). A majority of the environmental variables had a non-normal distribution, thus Spearman's Correlation (indicated by the color gradient) was used to examine the relationship between the variables.
 
-![](images/000175.png)
+![Figure 4:](images/000175.png)
+
+## Full analysis
 
 ### Linear Regression Models
 
 Linear regression models between dust AOD and copies per mL of Vibrio. R2 values indicates the strength of the linear model, and the Pearson Correlation Coefficient indicates the strength of the linear relationship between the two variables.
 
-![Figure 4](images/000055.png){width="1491"}
+![Figure 5:](images/000055.png){width="1491"}
 
 ![Table 1: Uni-variate Linear Regression Model Metrics](images/Screen%20Shot%202023-04-19%20at%201.33.37%20PM.png){width="367"}
 
@@ -156,6 +164,10 @@ Linear regression models between dust AOD and copies per mL of Vibrio. R2 values
 #### Random Forest
 
 ![Table 2: Random Forest Model Metrics](images/Screen%20Shot%202023-04-19%20at%202.08.25%20PM.png){width="367"}
+
+![Figure 6:](images/000017-02.png)
+
+![Figure 7:](images/000007-02.png)
 
 #### Linear Regressions
 
@@ -167,7 +179,7 @@ Linear regression models between dust AOD and copies per mL of Vibrio. R2 values
 
 Multi-variate models that included dust, water chemistry, nutrients, and DOM performed the best, with mean RMSE values much lower than the Null Model.
 
-## Full analysis
+## 
 
 <!--# Add RF graphs here -->
 
@@ -193,7 +205,7 @@ Multivariate models were tested using specific environmental parameters that hav
 
 *Vibrio* gene copies/mL at the Gulf experienced the greatest change in growth <!--# Add xfold --> as compared to the other two sites. This response in a lower nutrient marine environment lines up with previous work that was conducted in the Florida Keys and North Atlantic, where a 30-fold and 1.6-fold population increase was observed within a 24hr period following dust deposition.
 
-While *Vibrio* growth exhibited a strong correlation at the Canals, the degree of growth was lesser in comparison to the other sites (Figure 1). Field studies have suggested that salinities for optimal growth lie between 5-25, depending on the species [@sullivanEffectsTemperatureSalinity2018]. The higher salinities at this site (40-42) may have attributed to this observed weaker growth response.
+While *Vibrio* growth exhibited a strong correlation at the Canals, the degree of growth was lesser in comparison to the other sites (Figure 2). Field studies have suggested that salinities for optimal growth lie between 5-25, depending on the species [@sullivanEffectsTemperatureSalinity2018]. The higher salinities at this site (40-42) may have attributed to this observed weaker growth response.
 
 *Vibrio* growth was observed at Blind Oso Bay, but slightly dampened in comparison to the Gulf. This site is an enclosed shallow tributary that frequently experiences high levels of nutrients (e.g.total dissolved nitrogen) and chlorophyll due to its proximity to the Oso Wastewater Plant (OSP) [@wetz]. The Bay experienced a dramatic drop in salinity from July 11th to July 19th that could be attributed to discharge from the OSP. While growth was significantly correlated with dust deposition, there are many environmental factors at play at this site, making it difficult to identify the specific mechanisms that are eliciting the growth response.
 
@@ -201,13 +213,13 @@ Additionally, the Gulf exhibited a sharper increase during the second, heavier d
 
 <!--# Add monthly average of nutrients -->
 
-## Strengths and Limitations
+## Limitations
 
-At Blind Oso for example, the salinity is observed to drop from 42-20 within an eight day period that coincided with dust input. It is difficult to parse these two variables out as either or both could have contributed to growth at this site.
+One primary limitation of this project was the small samples size (n = 12 per site). One sample per day limits the interpretation of the results of this project and changes the scope from an explanatory report to exploratory.
 
-<!--# Difficult to parse out sites  -->
+Additionally, while qPCR can reliably detect the concentration of DNA of the target, the results do not differentiate between living and dead cells, and therefore provides an estimate of quantification.
 
-<!--# Sample size  -->
+While it can be proposed that the degree of microbial response is contingent on the environmental settings of the site, further work is needed to look at each specific environmental parameter and how it may impact *Vibrio* abundance. At Blind Oso for example, the drastic drop in salinity during an eight day period coincided with dust input. It then becomes difficult to parse these two variables out as either may have contributed to growth at this site.
 
 ## Conclusions
 
@@ -216,7 +228,6 @@ Ultimately, *Vibrio* growth was observed following dust deposition in each of th
 Sites like the Gulf, that have lower nutrient levels, may have a more responsive microbial population, as they are temporarily relieved form nutrient limitation. Inland sites similar to the Canals or Blind Oso may exhibit dampened *Vibrio* growth following dust input, as the dust derived nutrients may be less critical for growth, as there is already a supporting nutrient foundation, or the environmental conditions may not be favorable for growth initially. The growth response at Blind Oso, despite having higher nutrients, suggests that there may be other constiuents in the dust that are not present in the site that elicit this response. More work will be needed to fully understand the dynamics, as there were many other attributes that may have also contributed to growth in the Bay.
 
 To date, our understanding of *Vibrio* and other microbial response to dust input has focused on oligotrophic settings, where dust input is considered to be a critical source of limiting nutrients, and iron in particular. This study aided in filling the gap in how comparable previous findings in oligotrophic settings are to coastal areas with higher ambient nutrient levels. The composition of desert dust can be complex and may have the potential to deliver critical resources that could be more readily exploited by opportunistic bacteria (like *Vibrio*) and elicit a population bloom despite higher baseline nutrient levels. During these bloom periods, human exposure through recreation or consumption of raw seafood may be more likely, presenting a risk to the health of the public.
-
 
 {{< pagebreak >}}
 
