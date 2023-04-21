@@ -62,7 +62,7 @@ bo<-
   master0 %>%
   filter(site %in% "Blind Oso"| date %in% c( as.Date("2022-07-05"), as.Date("2022-07-06"))) %>%
   select(!site) %>% 
-  mutate(dust =Lag(dust, shift  = 1)) %>% #Lag from cca.qmd
+  mutate(dust_lag =Lag(dust, shift  = 1)) %>% #Lag from cca.qmd
   filter(date %in% as.Date('2022-07-07') : as.Date('2022-07-19')) %>%
   select(!date)
 
@@ -70,7 +70,7 @@ c2<-
   master0 %>%
   filter(site %in% "Canals"| date %in% c( as.Date("2022-07-05"), as.Date("2022-07-06"))) %>%
   select(!site) %>% 
-  mutate(dust =Lag(dust, shift  = 2)) %>%
+  mutate(dust_lag =Lag(dust, shift  = 2)) %>%
   filter(date %in% as.Date('2022-07-07') : as.Date('2022-07-19')) %>%
   select(!date)
 
@@ -78,26 +78,26 @@ rd<-
   master0 %>%
   filter(site %in% "Gulf"| date %in% c( as.Date("2022-07-05"), as.Date("2022-07-06"))) %>%
   select(!site) %>% 
-  mutate(dust =Lag(dust, shift  = 1)) %>%
+  mutate(dust_lag =Lag(dust, shift  = 1)) %>%
   filter(date %in% as.Date('2022-07-07') : as.Date('2022-07-19')) %>%
   select(!date)
 
 ```
 
-#### Make  datasets for MADA analysis
+#### Make datasets for MADA analysis
 
 ```{r}
 b1<- 
   bo %>%
-  select(temp, sal, nn, orthop, don, doc, tdn, chl, copies_mL, dust)
+  select(temp, sal, nn, orthop, don, doc, tdn, chl, copies_mL, dust, dust_lag)
 
 c1<- 
   c2 %>%
-  select(temp, sal, nn, orthop, don, doc, tdn, chl, copies_mL, dust)
+  select(temp, sal, nn, orthop, don, doc, tdn, chl, copies_mL, dust, dust_lag)
 
 r1<- 
   rd %>%
-  select(temp, sal, nn, orthop, don, doc, tdn, chl, copies_mL, dust)
+  select(temp, sal, nn, orthop, don, doc, tdn, chl, copies_mL, dust, dust_lag)
 ```
 
 # Correlation Matrix

@@ -29,9 +29,8 @@ In order to reproduce the work from this project, one needs to follow these step
 
     1.  env_par.qmd\`: Examines Temperature and Salinity across time series
 
-```{=html}
 <!-- -->
-```
+
 (3) qPCR:
 
     1.  \`daily_qmd\`: examines Vibrio enumeration over daily time series. This is also done as part of the \`daily_dusts.qmd\` code.
