@@ -45,7 +45,9 @@ data<- data0 %>%
 master0<- 
   dust %>% full_join(data) %>%
   filter(hr_cst %in% "01") #While this is technically not for hour 1, this gets ride of all duplicates for the sake of analysis.
-master<- master0[c(1:9,14,32)]
+master<- 
+  master0 %>%
+  select(date,site, copies_mL, t7sum)
 
 ```
 

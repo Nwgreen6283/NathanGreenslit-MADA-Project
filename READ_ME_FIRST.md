@@ -48,4 +48,4 @@ In order to reproduce the work from this project, one needs to follow these step
 
     4.  \`4_uni_variate.qmd\` : runs univariate models on variable and predictors of interest.
 
-    5.  \`5_multi_variate.qmd\`: runs multivariate models on variable of interest (copies_mL)
+    5.  \`5_multi_variate_models folder\`: Contains scripts that runs multivariate models on variable of interest (copies_mL) and random forest models.
