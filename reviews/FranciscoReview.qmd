@@ -1,0 +1,179 @@
+---
+title: Project Review Template 
+author: RAQUEL FRANCISCO
+date: "`r file.mtime(knitr::current_input())`"
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# Overview
+
+Title of project: Manuscript for a Data Analysis Project
+
+Name of project author(s): Nathan Greenslit
+
+Name of project reviewer: Raquel Francisco
+
+# Specific project content evaluation
+
+## Background, Context and Motivation
+
+### Feedback and Comments
+
+Very interesting topic. Strong introduction and justification. Simple and elegant use of regression model. Great use of models and exploratory graphs with a small data set that explores both qualitative and spatial-temporal data.
+
+No errors seen in the introduction.
+
+### Summary assessment
+
+-   strong contextualization and motivation
+
+## Question description
+
+### Feedback and Comments
+
+Strong hypothesis backed up by previous research. Excellent introduction that lead well into the knowledge gap and it's importance to answer.
+
+### Summary assessment
+
+-   question/hypotheses fully clear
+
+## Data description
+
+### Feedback and Comments
+
+Reproducible! Data source provided and easily accessed. Data cleaning was simple and logical. Data visualization was great. Only qualm was that there were many folders for raw data and data cleaning that were a bit difficult to navigate.
+
+### Summary assessment
+
+-   source and overall structure of data well explained
+
+## Data wrangling and exploratory analysis
+
+### Feedback and Comments
+
+•	Data explore (i.e., 1. Dust, etc)
+
+  o I really enjoyed all your raw data. I would consider in the future merging these data exploration files for ease similar to your stats folder. For example just having one data exploration files with all the qmds. I don’t see the benefit in so many folders.
+
+•	Distribution
+
+  o Loved this section. Very unique.
+ 
+
+### Summary assessment
+
+-   essentially no weaknesses in wrangling and exploratory component
+
+## Appropriateness of Analysis
+
+### Feedback and Comments
+
+•	2_cca
+
+  o Error line 79:
+  
+     Warning: Unknown or uninitialised column: copies_mL.Error in ts(x) : 'ts' object must have one or more observations
+
+• Same error for 85, 91, 113, 120, 127
+
+Maybe I’m missing a package? If so add to library. (PS I made sure to run this one second as instructed.)
+
+•	Univariate
+
+  o For having a small data set, your models look like they are working with you 😊
+
+•	Multivariate
+
+  o In your read me you state: 5_multi_variate.qmd: runs multivariate models on variable of interest (copies_mL) BUT it seem like you have a multivariate folder with multiple qmds, please correct statement
+  
+     Rf_models.qmd error line 221-226 (so rest of script wont run.)
+    
+     Error: All inputs to metric_set() must be functions. These inputs are not: (1).
+
+
+### Summary assessment
+
+-   strong and reasonable analysis
+
+## Presentation
+
+### Feedback and Comments
+
+•	Manuscript
+
+  o Line 42, I don’t think you italicize families (but double check)
+
+### Summary assessment
+
+-   results are very well presented
+
+## Discussion/Conclusions
+
+### Feedback and Comments
+
+Strong conclusions that were re-enforced by both the raw data and the modeled data (both univariate and multivariate models).
+
+### Summary assessment
+
+- strong, complete and clear discussion
+
+## Further comments
+
+I think this was a well explored dataset with interesting results.
+
+# Overall project content evaluation
+
+## Structure
+
+### Feedback and Comments
+
+Readme files were excellent! Very easy to follow and allowed me to run
+the majority of your code with little to no problems at all. It really
+made everything look very intentional.
+
+### Summary assessment
+
+-   well structured
+
+## Documentation
+
+### Feedback and Comments
+
+The code was clear and straightforward. The only issues I had with the organization was the large amount of subfolders, however, this may just be a personal preference.
+
+### Summary assessment
+
+-   fully and well documented
+
+## Reproducibility
+
+### Feedback and Comments
+
+Very minor error messages came up when reproducing code (found above). Only one area was unable to render.
+
+### Summary assessment
+
+-   fully reproducible without issues
+
+## Thoroughness
+
+### Feedback and Comments
+
+I found this manuscript incredibly thorough with lots of data exploration and an ample amount of analysis. I look forward to when this is published! I am sure it will be great!
+
+### Summary assessment
+
+-   strong level of thorougness
+
+## Further comments
+
+I believe this project was well done and implemented many of the
+strategies review in the course. I believe it should receive full marks
+(3/3).
