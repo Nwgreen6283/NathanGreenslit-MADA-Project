@@ -58,14 +58,13 @@ Reproducible! Data source provided and easily accessed. Data cleaning was simple
 
 ### Feedback and Comments
 
-•	Data explore (i.e., 1. Dust, etc)
+• Data explore (i.e., 1. Dust, etc)
 
-  o I really enjoyed all your raw data. I would consider in the future merging these data exploration files for ease similar to your stats folder. For example just having one data exploration files with all the qmds. I don’t see the benefit in so many folders.
+o I really enjoyed all your raw data. I would consider in the future merging these data exploration files for ease similar to your stats folder. For example just having one data exploration files with all the qmds. I don't see the benefit in so many folders.
 
-•	Distribution
+• Distribution
 
-  o Loved this section. Very unique.
- 
+o Loved this section. Very unique.
 
 ### Summary assessment
 
@@ -75,28 +74,27 @@ Reproducible! Data source provided and easily accessed. Data cleaning was simple
 
 ### Feedback and Comments
 
-•	2_cca
+• 2_cca
 
-  o Error line 79:
-  
+o Error line 79:
+
      Warning: Unknown or uninitialised column: copies_mL.Error in ts(x) : 'ts' object must have one or more observations
 
 • Same error for 85, 91, 113, 120, 127
 
-Maybe I’m missing a package? If so add to library. (PS I made sure to run this one second as instructed.)
+Maybe I'm missing a package? If so add to library. (PS I made sure to run this one second as instructed.)
 
-•	Univariate
+• Univariate
 
-  o For having a small data set, your models look like they are working with you 😊
+o For having a small data set, your models look like they are working with you 😊
 
-•	Multivariate
+• Multivariate
 
-  o In your read me you state: 5_multi_variate.qmd: runs multivariate models on variable of interest (copies_mL) BUT it seem like you have a multivariate folder with multiple qmds, please correct statement
-  
+o In your read me you state: 5_multi_variate.qmd: runs multivariate models on variable of interest (copies_mL) BUT it seem like you have a multivariate folder with multiple qmds, please correct statement
+
      Rf_models.qmd error line 221-226 (so rest of script wont run.)
-    
-     Error: All inputs to metric_set() must be functions. These inputs are not: (1).
 
+     Error: All inputs to metric_set() must be functions. These inputs are not: (1).
 
 ### Summary assessment
 
@@ -106,9 +104,9 @@ Maybe I’m missing a package? If so add to library. (PS I made sure to run this
 
 ### Feedback and Comments
 
-•	Manuscript
+• Manuscript
 
-  o Line 42, I don’t think you italicize families (but double check)
+o Line 42, I don't think you italicize families (but double check)
 
 ### Summary assessment
 
@@ -122,7 +120,7 @@ Strong conclusions that were re-enforced by both the raw data and the modeled da
 
 ### Summary assessment
 
-- strong, complete and clear discussion
+-   strong, complete and clear discussion
 
 ## Further comments
 
@@ -134,9 +132,7 @@ I think this was a well explored dataset with interesting results.
 
 ### Feedback and Comments
 
-Readme files were excellent! Very easy to follow and allowed me to run
-the majority of your code with little to no problems at all. It really
-made everything look very intentional.
+Readme files were excellent! Very easy to follow and allowed me to run the majority of your code with little to no problems at all. It really made everything look very intentional.
 
 ### Summary assessment
 
@@ -174,6 +170,4 @@ I found this manuscript incredibly thorough with lots of data exploration and an
 
 ## Further comments
 
-I believe this project was well done and implemented many of the
-strategies review in the course. I believe it should receive full marks
-(3/3).
+I believe this project was well done and implemented many of the strategies review in the course. I believe it should receive full marks (3/3).
