@@ -1,0 +1,176 @@
+---
+title: Project Review Template 
+author: YOUR NAME
+date: "`r file.mtime(knitr::current_input())`"
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+---
+
+# Overview
+
+Title of project: Nathan Greenslit MADA Project
+
+Name of project author(s): Nathan Greenslit
+
+Name of project reviewer: Leah Lariscy
+
+# Instructions
+
+For each component, pick one summary statement by deleting the ones that do not apply and keeping only the one that you think most closely summarizes a given component.
+
+# Specific project content evaluation
+
+Evaluate the different parts of the project by filling in the sections below.
+
+## Background, Context and Motivation
+
+How well is the context of the project described? Is a comprehensive background, including summary of previous/related work given? Is the project well placed into the context of existing work (including proper referencing of existing work). Is it clear why the project was undertaken and what new information it hopes to provide?
+
+### Feedback and Comments
+
+Background was thoroughly explained. From your writing I can see your work is very relevant to public health near coastal waters and I have a good idea of what work has already been done and what you hope to accomplish. I can't say I would change much here. Good work!
+
+### Summary assessment
+
+-   strong contextualization and motivation
+
+## Question description
+
+How well and clear are the question(s)/hypotheses the project aims to address described? Is it clear how the questions relate to the data?
+
+### Feedback and Comments
+
+It is clear what your goal is in the analysis and is mostly clear how you plan to use your data to explore your hypothesis.
+
+### Summary assessment
+
+-   question/hypotheses fully clear
+
+## Data description
+
+How well is the data overall described? Is the source provided? Is a codebook or other meta-information available that makes it clear what the data is?
+
+### Feedback and Comments
+
+I personally would at least want to see a list of variables for each set, even if it just ends up in the supplementary file (especially for environmental factors since this wasn't discussed in detail). However, I though you did a fantastic job with the data source description as it was very detailed.
+
+### Summary assessment
+
+-   source and overall structure of data well explained
+
+## Data wrangling and exploratory analysis
+
+How well is the data cleaned/processed and explored? Are all steps reasonable and well explained? Are alternatives discussed and considered? Are meaningful exploratory results shown (e.g. in the supplementary materials)?
+
+### Feedback and Comments
+
+Data cleaning description was detailed, all steps made sense and were explained well. Exploratory analysis was clear and figures were appropriate (and looked really good).
+
+### Summary assessment
+
+-   essentially no weaknesses in wrangling and exploratory component
+
+## Appropriateness of Analysis
+
+Were the analysis methods appropriate for the data? Was the analysis done properly? Were different components of the analysis (e.g. performance measure, variable selection, data pre-processing, model evaluation) done in the best way possible and explained well?
+
+### Feedback and Comments
+
+Your analysis methods seemed completely appropriate, and you did a great job explaining why you chose to do what you did.
+
+### Summary assessment
+
+-   strong and reasonable analysis
+
+## Presentation
+
+How well are results presented? Are tables and figures easy to read and understand? Are the main figures/tables publication level quality?
+
+### Feedback and Comments
+
+Figures look professional and publishable.
+
+### Summary assessment
+
+-   results are very well presented
+
+## Discussion/Conclusions
+
+Are the study findings properly discussed? Are strengths and limitations acknowledged? Are findings interpreted properly?
+
+### Feedback and Comments
+
+Good enough to be published to be honest.. really great work!
+
+### Summary assessment
+
+-   strong, complete and clear discussion
+
+## Further comments
+
+*Add any other comments regarding the different aspects of the project here. Write anything you think can help your classmate improve their project.*
+
+I would have liked to see more data description, but the project overall is solid and well done!
+
+# Overall project content evaluation
+
+Evaluate overall features of the project by filling in the sections below.
+
+## Structure
+
+Is the project well structured? Are files in well labeled folders? Do files have reasonable names? Are all "junk" files not needed for analysis/reproduction removed? By just looking at files and folders, can you get an idea of how things fit together?
+
+### Feedback and Comments
+
+Files were organized well and the README file was thorough
+
+### Summary assessment
+
+-   well structured
+
+## Documentation
+
+How well is the project documented? Are you able to understand each step of the whole analysis, each decision that was made, and each line of code? Is enough information provided as comments in code or as part of Rmd files?
+
+### Feedback and Comments
+
+The code was well-documented for the most part. There were comments on a large portion of the code explaining what the code was doing, and use of visual mode is especially helpful because sections were well laid out.
+
+### Summary assessment
+
+-   fully and well documented
+
+## Reproducibility
+
+Are all results fully reproducible? Is documentation provided which clearly explains how to reproduce things, and does it work without the need for any manual intervention? Are you able to re-run the whole analysis without having to do manual interventions/edits?
+
+### Feedback and Comments
+
+I did not run into any issues with reproducing scripts, there were detailed instructions left in the README file. However, results in the manuscript are not reproducible so that should be addressed.
+
+### Summary assessment
+
+-   fully reproducible without issues
+
+## Thoroughness
+
+How thorough was the overall study? Were alternatives (e.g. different ways of processing the data or different models) considered? Were alternatives discussed? Were the questions/hypotheses fully and thoroughly addressed?
+
+### Feedback and Comments
+
+This study seemed very thorough. Alternative analysis methods, limitations to the data, and hypotheses were fully discussed.
+
+### Summary assessment
+
+-   strong level of thoroughness
+
+## Further comments
+
+*Add any other comments regarding the overall project here. Write anything you think can help your classmate improve their project.*
+
+Great job Nathan :-) this is seriously awesome work! I would make sure your images are reproducible in the manuscript and I would also change the title to include information about the data.
+
+\`\`\`
