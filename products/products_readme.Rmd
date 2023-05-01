@@ -1,0 +1,8 @@
+---
+title: "products_readme"
+author: "Nathan"
+date: "5/1/2023"
+output: html_document
+---
+
+This folder contains a manuscript folder. This folder contains the `manuscript.qmd` file where the background, analysis, and results are synthesized. THe `MADA.bib` file is the reference bibliography. 

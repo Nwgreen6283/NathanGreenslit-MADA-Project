@@ -1,3 +1,29 @@
-This folder contains two raw data sets:\
-(1) `dust.csv`:dust concentrations in AOT from the Naval Research lab. Concentrations (AOT) were collected at 4 time points (UTC): T0,T6,T12, and T18.\
-(2) `copies_master.csv`:  qPCR results for Total Vibrio enumeration. 
+This folder contains two raw data sets:
+
+## `dust.csv`
+
+#### Variables:
+
+yyymmddtt: Year_month_day_time of collection
+
+dust: dust aerosol optical density. Concentrations (AOT) were collected at 4 time points (UTC): T0,T6,T12, and T18.
+
+smoke: smoke
+
+seasalt: seasalt
+
+SS Total AOT: Total aerosol optical thickness
+
+date: date
+
+type: denotes daily sampling time period
+
+## `copies_master.csv`
+
+#### Variables:
+
+Type: Denoted daily sampling period
+
+Sample: Site and Day short code. Ex. BO11 = Blind Oso on 7/11/23
+
+Cq: Cycle threshold value from qPCR. Indicated the cycle number that amplification was detected. A lower Cq value indicates earlier detection, and a higher concentration of target,\

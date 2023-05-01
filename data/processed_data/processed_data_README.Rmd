@@ -1,8 +1,39 @@
----
+------------------------------------------------------------------------
 
 This folder contains processed data that has been cleaned from code in the `wrangling` folder.\
-(1) `total_clean_copies`: Vibrio enumeration (as copies per mL) across time series.\
-(2) `dust_clean.rds`: Cleaned dust data
-(3) `ysi_2.csv`: Environmental parameter data-- did not need cleaning
-(4) `tx_master.csv` which is a compilation of all relevant data. 
-(5)`dust_master.csv`: Manually created dust data examining different dust permutations: time points, sums, avereages (helpful for statistics)
+
+## `total_clean_copies.csv`
+
+Vibrio enumeration as gene copies per mL across time series
+
+#### Variables
+
+date, site, type (monthly or daily time series), and copies_mL.
+
+## `dust_clean.rds`
+
+Cleaned dust data
+
+#### Variables
+
+date, SUM (AOT summed by date), hr_cst (hour of collection in CST), and dust (AOT)
+
+## `ysi_2.csv`
+
+Environmental parameter data-- did not need cleaning
+
+#### Variables
+
+site, date, chlorophyll (chl), salinity (sal), temperature (temp), Dissolved Oxygen in mg/L (do_mgl), Dissolved Oxygen in % (do_per), pH, secchi depth (secchi), ammonium (amm), Nitrite+Nitrate (nn), orthophosphate (orthop), silicate (sil), dissolved inorganic nitrogen (din), dissolved inorganic nitrogen:dissolved inorganic phosphorous (din_dip), total dissolved nitrogen (tdn), dissolved organic nitrogen (don), dissolved organic carbon (doc), total organic carbon (toc), total nitrogen (tn).
+
+## `tx_master.csv`
+
+A compilation of all cleaned variables mentioned above
+
+## `dust_master.csv`
+
+Manually created dust data examining different dust permutations: time points, sums, averages (helpful for statistics)
+
+#### Variables
+
+date, time at collection 1 hour (t1), 7 hour (t7), 13 hour (t13), and 19 hour (t19). Sum of all 4 time points (tsum), average of all four time points (tavg), 24 hour hour composite sum (t7sum), 24 hour composite average (t7sum).
