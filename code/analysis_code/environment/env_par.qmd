@@ -580,12 +580,8 @@ fig<- ggarrange(temp,
                 align = "v")
 
 fig
+
+ggsave(here("results", "plots", "env.png"))
 ```
 
-# Save as PNG
-
-```{r}
-png(file = here("results", "plots", "temp_sal.png"))
-fig
-dev.off()
-```
+# 

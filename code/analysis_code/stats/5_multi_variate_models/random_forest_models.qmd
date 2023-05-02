@@ -289,6 +289,10 @@ rf_pred_plot <- ggplot(rf_residuals,
   theme_bw()
 rf_pred_plot
 
+ggsave(here("results", "plots", "rf_bo.png"))
+```
+
+```{r}
 rf_residual_plot <- ggplot(rf_residuals, 
                               aes(y = .resid, 
                                   x = .pred)) + 
@@ -412,6 +416,11 @@ rf_pred_plot <- ggplot(rf_residuals,
   theme_bw()
 rf_pred_plot
 
+ggsave(here("results", "plots", "rf_c2.png"))
+
+```
+
+```{r}
 rf_residual_plot <- ggplot(rf_residuals, 
                               aes(y = .resid, 
                                   x = .pred)) + 
@@ -533,6 +542,12 @@ rf_pred_plot <- ggplot(rf_residuals,
        y = "Copies/mL Prediction") + 
   theme_bw()
 rf_pred_plot
+
+ggsave(here("results", "plots", "rf_rd.png"))
+
+```
+
+```{r}
 
 rf_residual_plot <- ggplot(rf_residuals, 
                               aes(y = .resid, 

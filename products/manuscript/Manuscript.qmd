@@ -100,13 +100,19 @@ This data set did not require any cleaning.
 
 This figure depicts the summed dust concentration 24hr prior to sample collection (time points 13hr--> 7hr the next day) across the daily time series. The daily time series captured two dust events. One light event starting on the 13th of July, where AOD reached 0.2, and a much heavier dust event from the 16th to the 18th of July with AOD = 55-57. Dust AOD returned to lower concentrations following the time series.
 
-![Figure 1: Dust Aerosol Optical Density (AOD) over daily time series.](images/000009-01.png)
+```{r, echo=FALSE, message=FALSE, fig.cap="Figure 1: Dust Aerosol Optical Density (AOD) over daily time series"}
+knitr::include_graphics(here("results", "plots", "dust.png"))
+```
+
 
 ### Vibrio Enumeration
 
 This figure depicts total enumerated Vibrio as copies per mL, with color by site. There is a noticeable shift in *Vibrio* growth at the Gulf, a less noticeable but still present shift in Blind Oso Bay, and little fluctuation at the Canals.
 
-![Figure 2: Vibrio gene copies/mL over daily time series across site.](images/000005-03.png)
+
+```{r, echo=FALSE, message=FALSE, fig.cap="Figure 2: Vibrio gene copies/mL over daily time series across site"}
+knitr::include_graphics(here("results", "plots", "copies.png"))
+```
 
 ### Environmental Parameters
 
@@ -114,7 +120,11 @@ Environmental parameters were site-specific. Temperature and salinities were con
 
 Nutrients (orthophosphate and nitrate+nitrite) were observed to increase following dust deposition at both Blind Oso and the Canals site, with the former having more dramatic peaks. Nutrient levels at the Gulf remained relatively constant throughout the time series. Dissolved organic matter (DOC, DON), TDN, and Chlorophyll exhibited distinct peaks in the latter half of the time series at Blind Oso, while less clear trends were seen in the other two sites.
 
-![Figure 3: Envonmental parameters across daily time series with color by site.](images/000019.png)
+
+```{r, echo=FALSE, message=FALSE, fig.cap="Figure 3: Envonmental parameters across daily time series with color by site"}
+knitr::include_graphics(here("results", "plots", "env.png"))
+```
+
 
 ## Statistical Analysis
 
@@ -134,13 +144,17 @@ Correlation matrices were run on each variable (in order of left to right: tempe
 
 ![Figure 4: Correlation matrices of environmental parameteres by site.](images/000009-02.png)
 
+
 ## Full analysis
 
 ### Linear Regression Models
 
 Linear regression models between dust AOD and copies per mL of Vibrio. R2 values indicates the strength of the linear model, and the Pearson Correlation Coefficient indicates the strength of the linear relationship between the two variables.
 
-![Figure 5: Linear Regression Output for Dust AOD (log-transformed) and Vibrio gene copies/mL](images/000055.png){width="1491"}
+
+```{r, echo=FALSE, message=FALSE, fig.cap="Figure 5: Linear Regression Output for Dust AOD (log-transformed) and Vibrio gene copies/mL"}
+knitr::include_graphics(here("results", "plots", "uni.png"))
+```
 
 ![Table 1: Uni-variate Linear Regression Model Metrics](images/Screen%20Shot%202023-04-19%20at%201.33.37%20PM.png){width="367"}
 
@@ -150,11 +164,20 @@ Linear regression models between dust AOD and copies per mL of Vibrio. R2 values
 
 ![Table 2: Random Forest Model Metrics](images/Screen%20Shot%202023-04-19%20at%202.08.25%20PM.png){width="367"}
 
-![Figure 6: Vibrio gene copies/mL at Blind Oso predicted by Random Forest](images/000017-02.png)
+```{r, echo=FALSE, message=FALSE, fig.cap="Figure 6: Vibrio gene copies/mL at Blind Oso predicted by Random Forest"}
+knitr::include_graphics(here("results", "plots", "rf_bo.png"))
+```
 
-![Figure 7: Vibrio gene copies/mL at Canals predicted by Random Forest](images/000007-02.png)
 
-![Figure 8: Vibrio gene copies/mL at the Gulf predicted by Random Forest](images/000007-03.png)
+```{r, echo=FALSE, message=FALSE, fig.cap="Figure 7: Vibrio gene copies/mL at Canals predicted by Random Forest"}
+knitr::include_graphics(here("results", "plots", "rf_c2.png"))
+```
+
+
+
+```{r, echo=FALSE, message=FALSE, fig.cap="Figure 8: Vibrio gene copies/mL at the Gulf predicted by Random Forest"}
+knitr::include_graphics(here("results", "plots", "rf_rd.png"))
+```
 
 #### Linear Regressions
 

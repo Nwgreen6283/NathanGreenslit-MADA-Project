@@ -64,6 +64,7 @@ dust_fig<- daily_dust_sum %>% ggplot() +geom_line(
   
 
 dust_fig
+ggsave(here("results", "plots", "dust.png"))
 ```
 
 #### Total Daily Vibrio
@@ -94,6 +95,7 @@ tot_vib<- copies_d %>% ggplot()+geom_line(
                                 "Gulf" = "4c848c"))
 
 tot_vib
+ggsave(here("results", "plots", "copies.png"))
 ```
 
 #### Combine Dust and Copies
