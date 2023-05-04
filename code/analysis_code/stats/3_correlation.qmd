@@ -143,20 +143,3 @@ corrplot(r2, type = "upper",
 ```
 
 ##### 
-
-It's also possible to **combine correlogram with the significance test**. We'll use the result *res.cor2* generated in the previous section with **rcorr**() function \[in **Hmisc** package\]:
-
-<!--# Get this to work -->
-
-```{r}
-# Insignificant correlation are crossed
-#corrplot(bclean$r, type="upper", order="hclust", 
-        # p.mat = bclean$P, sig.level = 0.05, insig = "blank")
-
-#corrplot(cclean$r, type="upper", order="hclust", 
-        # p.mat = cclean$P, sig.level = 0.05, insig = "blank")
-
-#corrplot(rclean$r, type="upper", order="hclust", 
-         #p.mat = rclean$P, sig.level = 0.05, insig = "blank")
-
-```

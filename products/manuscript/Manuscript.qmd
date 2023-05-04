@@ -121,7 +121,7 @@ Environmental parameters were site-specific. Temperature and salinities were con
 Nutrients (orthophosphate and nitrate+nitrite) were observed to increase following dust deposition at both Blind Oso and the Canals site, with the former having more dramatic peaks. Nutrient levels at the Gulf remained relatively constant throughout the time series. Dissolved organic matter (DOC, DON), TDN, and Chlorophyll exhibited distinct peaks in the latter half of the time series at Blind Oso, while less clear trends were seen in the other two sites.
 
 
-```{r, echo=FALSE, message=FALSE, fig.cap="Figure 3: Envonmental parameters across daily time series with color by site(Blind Oso = green, Canals = red, and the Gulf = Blue"}
+```{r, echo=FALSE, message=FALSE, fig.cap="Figure 3: Envonmental parameters across daily time series with color by site (Blind Oso = green, Canals = red, and the Gulf = Blue)"}
 knitr::include_graphics(here("results", "plots", "env.png"))
 ```
 
@@ -220,7 +220,7 @@ Additionally, while qPCR can reliably detect the concentration of DNA of the tar
 
 While it can be proposed that the degree of microbial response is contingent on the environmental settings of the site, further work is needed to look at each specific environmental parameter and assess how it may impact *Vibrio* abundance. At Blind Oso for example, the drastic drop in salinity during an eight day period coincided with dust input. It then becomes difficult to parse these two variables out as either may have contributed to growth at this site.
 
-The annual dust data set indicates a period of slightly elevated AOD (0.16) on the 5th of July, prior to sampling. This light dust period could have the potential to impact initial *Vibrio* levels at the beginning of the time series, which may serve as an explanation for initial higher *Vibrio* gene copies/mL at the Canals, and why the correlation between dust and *Vibrio* gene copies/mL was so high at this site. Future work should expand upon the temporal resolution, allowing for an extended period of low dust AOD prior to sampling.
+The annual dust data set indicates a period of slightly elevated AOD (0.16) on the 5th of July, prior to sampling (SI). This light dust period could have the potential to impact initial *Vibrio* levels at the beginning of the time series, which may serve as an explanation for initial higher *Vibrio* gene copies/mL at the Canals, and why the correlation between dust and *Vibrio* gene copies/mL was so high at this site. Future work should expand upon the temporal resolution, allowing for an extended period of low dust AOD prior to sampling.
 
 ## Conclusions
 
