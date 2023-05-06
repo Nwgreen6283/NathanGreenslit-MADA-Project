@@ -557,7 +557,7 @@ cop<-
 
 #### ALL
 
-```{r, fig.width= 8, fig.height=4}
+```{r}
 fig<- ggarrange(temp,
                 sal,
                 #do,

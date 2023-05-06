@@ -150,7 +150,7 @@ fig3<-
 
 #### Stack
 
-```{r, fig.height=4}
+```{r}
 ggarrange(fig1, fig2, fig3 + font("x.text", size = 10), ncol = 1, nrow = 3)
 ggsave(here("results", "plots", "uni.png"))
 ```

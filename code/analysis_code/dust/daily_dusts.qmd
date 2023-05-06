@@ -38,7 +38,7 @@ dust<- dust %>%
 ```{r}
 dust<-
   dust %>%
-  filter(date %in% as.Date('2022-07-07') : as.Date('2022-07-19'))
+  filter(date %in% as.Date('2022-07-01') : as.Date('2022-07-31'))
 ```
 
 ### Plot T7sum over Daily Time series
@@ -53,4 +53,6 @@ dust %>% ggplot()+ geom_line(
        x = "Date",
        y = "Dust Concentration (AOD)")+
   theme_bw()
+
+ggsave(here("results", "plots", "dust_july.png"))
 ```

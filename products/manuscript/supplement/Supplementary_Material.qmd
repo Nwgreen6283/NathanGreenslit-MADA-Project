@@ -1,0 +1,50 @@
+---
+title: "Greenslit Project Supplementary Material"
+
+subtitle: ""
+author: Nathan Greenslit
+date: "`r Sys.Date()`"
+format:
+  pdf:
+    toc: false
+    number-sections: true
+    highlight-style: github
+---
+
+```{r, echo=FALSE, message=FALSE}
+# load a few R packages
+library(here)
+library(knitr)
+```
+
+# Additional Figures 
+
+## Dust for July
+
+```{r}
+knitr::include_graphics(here("results", "plots", "dust_july.png"))
+```
+
+**Dust AOD for month of July. Note slightly elevated dust levels prior to sampling period on the 5th. This may have impacted initial Vibrio levels on the 7th.**
+
+## Distribution Tests (Q-Q Plots)
+
+#### Copies per mL
+
+![](images/paste-2F0DEEC8.png)
+
+![](images/paste-0D0E739C.png)
+
+![](images/paste-879F1B24.png)
+
+#### Dust
+
+![](images/paste-8CCC7BA6.png)
+
+## Cross Correlation Analysis
+
+![](images/paste-3B108E2C.png)
+
+![![](images/paste-62178137.png)](images/paste-022F00A9.png)
+
+**A negative Lag value indicates that x is a predictor of y, or in this case, dust is a predictor of copies_mL- so we will be looking at these negative values. A positive ACF indicates a positive relationship between the two variables, where a negative ACF indicates a negative relationship. According to the ccf plots, BO has a significant lag relationship a value of -1. In other words, dust occurs, and one day later, we see a response in copies_mL. C2 has a lag at -2, and RD at -1**

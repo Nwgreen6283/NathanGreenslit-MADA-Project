@@ -130,13 +130,13 @@ knitr::include_graphics(here("results", "plots", "env.png"))
 
 ### Distributions
 
-Density and Q-Q plots as well as Shapiro-Wilk's tests were conducted to assess distribution of the data. Any data that did not have a normal distribution was log-transformed and the test was run again. Variables that continue to fail normality will have non-parametric tests run on them. <!--# Add more details about visualization -->
+Density and Q-Q plots as well as Shapiro-Wilk's tests were conducted to assess distribution of the data (SI). Any data that did not have a normal distribution was log-transformed and the test was run again. Variables that continue to fail normality will have non-parametric tests run on them. <!--# Add more details about visualization -->
 
 ### Cross-correlation Analysis
 
 Previous literature has shown that Vibrio respond 12-24 hours following dust deposition events [@westrichSaharanDustNutrients2016a]. Based on this, we need to look at lags between the two times series for dust data and growth data. To do this, we can set up a cross-correlation analysis, which allows us to examine the lag/lead relationship between the two variables.
 
-CCF plots (found in supplemtary scripts) showed that BO has a significant lag relationship a value of -1. In other words, dust occurs, and one day later, we see a response in *Vibrio* gene copies per mL. C2 has a lag at -2, and RD at -1.
+CCF plots (found in supplementary file) showed that BO has a significant lag relationship a value of -1. In other words, dust occurs, and one day later, we see a response in *Vibrio* gene copies per mL. C2 has a lag at -2, and RD at -1.
 
 ### Correlation Matrices
 

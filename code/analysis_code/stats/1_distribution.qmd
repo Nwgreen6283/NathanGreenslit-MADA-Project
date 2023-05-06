@@ -89,11 +89,14 @@ ggdensity(
 **Q-Q plot**: **Q-Q plot** (or quantile-quantile plot) draws the correlation between a given sample and the normal distribution. A 45-degree reference line is also plotted.
 
 ```{r}
-ggqqplot(bo$copies_mL)
+ggqqplot(bo$copies_mL) + 
+labs(title = "BO")
 
-ggqqplot(c2$copies_mL)
+ggqqplot(c2$copies_mL)+
+  labs(title = "C2")
 
-ggqqplot(rd$copies_mL)
+ggqqplot(rd$copies_mL) +
+  labs(title= "RD")
 ```
 
 ### Normality Test
@@ -116,7 +119,8 @@ ggqqplot(rd$copies_mL)
 
 ```{r}
 ggqqplot(daily$t7sum)
-ggqqplot(daily$t7sumlog)
+ggqqplot(daily$t7sumlog) + 
+  labs(title = "log10(Dust)")
 ```
 
 ### 
